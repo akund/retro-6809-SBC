@@ -1,0 +1,30 @@
+
+; SBC system, clock 8.0 Mhz
+; for AS09 Assembler for M6809 [1.42]
+
+;{ --------------------------------------------------- CPU Memory Mapping -------------------------------------
+;-----------------------CSRAM-------------------------------------------
+RAM_ORG				equ		$0000
+RAM_END				equ		$7FFF 				;32KB size
+
+;-----------------------CS0---------------------------------------------
+CS0					equ		$8000
+
+;-----------------------CS1---------------------------------------------
+USB_COM_PORT		equ		$a000
+
+;-----------------------CS2---------------------------------------------
+CS2_0				equ		$c000
+CS2_1				equ		$c800
+UART				equ		$d000
+PORTA				equ		$d800
+CRA					equ		$d801
+PORTB				equ		$d802
+CRB					equ		$d803
+
+;-----------------------CS3---------------------------------
+ROM_ORG  			equ		$e000 ; second 8K SBC ROM section begin
+MON_ORG  			equ		$f000 ; first 8K SBC ROM section begin
+ROM_Integrity		equ		$fff0 ; SBC_ROM checksum data check (16-bit value)
+INT_VECTOR			equ		$fff2
+;}

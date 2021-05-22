@@ -1,0 +1,46 @@
+					code
+					org     $2000
+
+;-------------------- program start ----------------------------					
+START				ldy		#0									; RAM begin
+					leay	GV_Size,y							; the global variables allocation
+					
+					ldx		#VERSION							; version at run begin
+					pshs	x
+					ldx		#PUTSTR 					
+					pshs	x
+					lbsr	ROMlib
+					leas	4,s
+
+					ldx		#sMONITORSTART						; print help menu at startup
+					pshs	x
+					lbsr	ROMlib
+					leas	2,s					
+
+					;---------- endless loop  ------------------
+asm_loop   			ldx		#sMonProcessCmd						; monitor recursive call 					
+					pshs	x
+					lbsr	ROMlib
+					leas	2,s					
+					
+					ldx		#APL_OutputStream					; I/Os handling
+					pshs	x
+					lbsr	ROMlib
+					leas	2,s					
+					
+					lbsr	main								; C environement recussive call					
+					bra		asm_loop
+VERSION     		db      13,"sokoban 0.1, ",0				; version
+		
+;-------------- ROMlib called function wrapper ------------------
+ROMlib				puls	x									; retrieve the call return addr
+					stx		CallBackAddr,y						; save the call return addr
+					puls	x									; retrieve the called funct addr (arg1)
+					leay    -GV_Size,y  						; restore to ROM GV stack
+					jsr     ,x									; executed the called function, D contains the returned value
+					leay    GV_Size,y  							; get back app GV stack
+					leas	-2,s								; re-allocate the arg1 space
+					ldx		CallBackAddr,y
+					pshs	x									; re-allocate the call return addr
+					rts
+

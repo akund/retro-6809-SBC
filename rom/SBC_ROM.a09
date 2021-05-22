@@ -1,0 +1,78 @@
+; coding convention:
+; normal function paramters are passed by the stack: arg 1 is "2,s", arg 2 is "4,s", ...
+; the returned value is in D
+; the registers X,Y,U need to be saved is modified within the function
+;
+; special function lead by an 's' (e.g. sFUNCTION) is a low level fast assembler execution. The parameters are passed by the registers.
+;
+;{ ----------------------------------- Program Start -----------------------------------------
+MONITOR_PROCESS_ID	equ		$10
+BASIC_PROCESS_ID	equ		$20
+CR        			equ  	$0d             	; carriage return
+
+					code	
+
+VERSION         	db      CR,"Retro 6809 SBC version 1.5.0.0, 2014-2021 Adrian Kundert",CR		; version [major, minor, branch, build] string ended by NULL. branch = 0 is a release
+					db		"https://github.com/akund/retro-6809-SBC",CR,0
+CheckSum16			equ		$d4da
+
+RESET           	orcc	#%01010000			; disable all interrrupts in case of software reset
+					lds		#BSS_SEG_ORG				
+					
+					; init (clear 16-bit) the re-mapping int vector table
+					ldx		#IntVectSWI3
+					clra
+					clrb
+					std		,x++	;sw3
+					std		,x++	;sw2
+					std		,x++	;firq
+					std		,x++	;irq
+					std		,x++	;sw1
+					std		,x++	;nmi
+					std		,x++	;start
+					
+					ldx		#VERSION			; version at boot up
+					lbsr	sPUTSTR
+					
+					ldx		#ROM_ORG					
+					lbsr	sROMcheck			; check the ROM integrity					
+					
+					;--------- init peripherals and  others ------------------------------;
+					lbsr	PIA_Init			; set port A and B (requires a minimal delay after the reset)
+					
+					;---------- initialize monitor resources ----------------------------;
+					lbsr	sMONITORSTART
+					
+					;---------- initialize BASIC resources ------------------------------;															
+					lbsr	APL_init
+					
+					leas	-1,s				; last APL status @ 2,u
+					leas	-2,s				; heart beat countdown @ 0,u
+					leau	0,s					
+
+;-------------------------------- main loop ---------------------------------------------------;	
+loop				lbsr	sMonProcessCmd		; monitor process call
+					
+					lbsr	BASICprocess		; BASIC process call
+					
+					cmpa	#APL_RESET			; reset supervision
+					bne		_loop1
+					cmpa	2,u
+					beq		_loop1
+					sta		2,u
+					ldx		#APL_RESET_STR
+					lbsr	sPUTSTR
+					
+					;--------- heart beat ~1 sec period -----------------------------------;
+_loop1				ldd		0,u					; get heart beat countdown
+					sta		PORTA  				; port a and b led flashing and dot on the screen					
+					stb		PORTB
+					subd    #1
+					bne     _loop2
+					ldb		#'.'
+					;stb		USB_COM_PORT   		; write the dot as life check
+					ldd		#$1fff
+_loop2				std		0,u					; save heart beat countdown					
+					bra		loop
+APL_RESET_STR      	db      CR,"APL reset",CR,0
+

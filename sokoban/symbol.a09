@@ -1,0 +1,37 @@
+
+							; reversed order: at -1,y begins the C GV
+sGV_IndexBegin		equ		-_GLOBALS				; GV used in the C context
+CallBackAddr		equ		sGV_IndexBegin-2		; word variable for GV stack
+GV_Size				equ		-CallBackAddr
+
+;----------------- asm resources ROM 1.5.0.0 ---------------------
+UART				equ		$d000
+CR        			equ  	$0d             	; carriage return
+sMONITORSTART 		equ 	$f635
+BYTE2MON			equ		$fe17
+HEXBYTE2			equ		$fdf7
+waitSendDone		equ		$f32a
+waitCTS				equ		$f332
+
+APL_OutputStream	equ		$f121
+APL_Outp			equ		APL_OutputStream
+PUTSTR				equ		$fdb3
+sMonProcessCmd 		equ		$f69f
+
+sendCont			equ		$f2a7
+setpoint			equ		$f226
+setTile				equ		$f24a
+setSound			equ		$f28a
+
+isKeyboa			equ		$f1be
+getKeybo			equ		$f1a1
+msDelay				equ		$f2de
+
+KeyboardRbSize		equ     $8
+KeyboardRbHead		equ		$7fe4
+KeyboardRbTail     	equ		$7fe5
+KeyboardRbuffer		equ		$7fe6
+
+;---------------------------------------------------------------
+
+					end

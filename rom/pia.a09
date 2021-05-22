@@ -1,0 +1,18 @@
+;--------------------------------------------------- PIA ----------------------------------------------------
+PIA_Init ;{
+;---------------------------------------------------
+; set port A and B
+;---------------------------------------------------
+				clr             CRA
+				clr             CRB
+				lda             #$ff ; 1 as output
+				sta             PORTA
+				sta             PORTB
+				lda             #$4
+				sta             CRA
+				sta             CRB
+				lda				#$ff
+				sta				PORTA ; init port a values
+				sta				PORTB 
+				rts
+;}

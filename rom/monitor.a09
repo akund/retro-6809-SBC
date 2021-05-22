@@ -1,0 +1,733 @@
+;{ --------------------------------------------------- Monitor for debugging over serial port -----------------------------------------
+					
+MON_VERSION     	db		"0.7.1.0",0			; version [major, minor, branch, build] string ended by NULL. branch = 0 is a release
+					
+sMON_PORT_WR		stb		USB_COM_PORT		; use the defined monitor port
+					rts
+
+;---------------------------------------------------
+; write commands menu with version in terminal
+;---------------------------------------------------
+STR_MONITOR      	db      CR,"starting monitor process ID ",0
+STR_VERSION			db		CR,"Monitor for 6809 Computer v",0
+STR_COMMAND			db		CR,"command menu",CR
+					db		"r [first addr], optional [n repeat] -> read the addresses",CR
+					db		"w [addr] [data], optional [n repeat] -> write to the addresses",CR
+					db		"e [src] [dst] [length], optional [protection] -> copy to eeprom memory",CR
+					db		"l or l [offset] -> load a SRec data",CR
+					db		"g [addr] -> execute at the address",CR
+					db		"s [process ID] -> stop the process",CR
+					db		"q -> quit debugging mode",CR
+					db		"b [addr] -> debugging mode, set a breakpoint at the address",CR
+					db		"q -> quit debugging mode",CR
+					db		"B [BASIC line entry]",CR
+					db		"L -> load a BASIC program",CR
+					db		"h -> this menu",CR,0
+
+sMONITORSTART		ldd		#BrkPtOff			; init break point variable
+					std		BrkPtAddr										
+					lbsr	sRbInit				; monitor init ring buffer
+					andcc	#%11101111			; enable irq for USB_COM_PORT
+					
+					ldx		#STR_MONITOR		; monitor start-up message
+					lbsr	sPUTSTR				;	
+					ldb		#MONITOR_PROCESS_ID
+					pshs	d
+					lbsr	HEXBYTE2MONPORT
+					ldb		#CR
+					pshs	d
+					lbsr	BYTE2MONPORT
+					leas	4,s					; clear 2 pushes
+					rts
+												; print help menu at startup
+sMONITORMENU		ldx		#STR_VERSION
+					lbsr	sPUTSTR
+					ldx		#MON_VERSION
+					lbsr	sPUTSTR
+					ldx		#STR_COMMAND
+					lbsr	sPUTSTR
+					rts
+
+	;{ --------------------------------------------------- Cmd Rinbuffer ------------------------------------------
+sRbInit	
+		;---------------------------------------------------
+		; asm call init ring buffer
+		;---------------------------------------------------
+		;{
+					clr		RbHead
+					clr		RbTail
+					clr		RbDectCR
+					rts
+		;}
+
+sRbReadCmd 
+		;---------------------------------------------------
+		; asm call read a byte from ringbuffer (a 'CR' must be in the fifo to get a byte)
+		; param:	none
+		; return:	cmd value -> A. when invalid, NULL -> B
+		;---------------------------------------------------
+		;{
+					clrb						; no char by default
+					lda		RbDectCR
+					beq		_sRbRead3			; still no CR in the cmd buffer
+		
+sRbRead				ldb		RbTail
+					cmpb	RbHead
+					beq		_sRbRead11			; fifo empty when tail = head
+					pshs	x
+					ldx		#Rbuffer
+					lda		b,x
+					puls	x
+					incb						; inc tail index
+					cmpb	#RbSize
+					blo		_sRbRead1
+					clrb						; wrap RbTail
+_sRbRead1			stb		RbTail				; save updated tail index only once data extracted (critical section)
+					ldb		#1					; not null when valid
+					bra		_sRbRead2
+_sRbRead11			clr		RbDectCR			; no more CR possible
+					clrb						; no char
+_sRbRead2			andcc	#%11101111			; re-enable irq in case disabled by full fifo
+_sRbRead3			rts
+
+	;}
+
+sMonProcessCmd
+		;---------------------------------------------------
+		; asm call extract and execute the cmd
+		;---------------------------------------------------
+		;{
+					bsr		sRbReadCmd
+					tstb						; RB empty ?
+					beq		_sMonProcessCmd					
+					cmpa	#'h'
+					beq		sCMDhelp 			; help command
+					cmpa	#'r'
+					beq		sCMDrd  			; read command
+					cmpa	#'w'
+					lbeq	sCMDwr  			; write command
+					cmpa	#'e'
+					lbeq	sCMDew 				; eeprom write command
+					cmpa	#'l'
+					lbeq	sCMDld  			; load SRec command
+					cmpa	#'g'
+					lbeq	sCMDgo  			; Go command
+					cmpa	#'s'
+					lbeq	sCMDStp  			; Stop process command
+					cmpa	#'b'
+					lbeq	sCMDbp  			; breakpoint command
+					cmpa	#'q'
+					lbeq	sCMDqbp  			; stop debugging command
+					cmpa	#'B'
+					lbeq	sCMDbas  			; BASIC line entry command
+					cmpa	#'L'
+					lbeq	sCMDldbas			; load BASIC program command
+_sMonProcessCmd		rts  						; cmd no existing
+
+			;----------------------------------------------------;
+sCMDhelp 			bsr		sRbReadCmd
+					tstb
+					beq		_sCMDhelp				
+					cmpa	#CR
+					lbne	sCMDinvalid  		; not CR, invalid CMD
+					lbsr	sMONITORMENU
+_sCMDhelp			rts							; exit
+			
+			;----------------------------------------------------;
+sCMDrd
+RdAddr				equ		0					; uint RdAddr index
+RdRepeat			equ		2					; uint Count index
+					pshs	u
+					leas	-2,s				; allocate 16-bit
+					leas	-2,s				; allocate 16-bit
+					leau	,s					; use the U as pointer
+					clra
+					clrb
+					std		RdRepeat,u 			; set to 0 by default
+				
+					;------- extract the ' ' only --------------------
+					lbsr	sCMDextr
+					cmpb	#' '
+					bne		_sCMDrdinvalid	
+				
+					;------- extract 'raddr' --------------------
+					lbsr	sCMDextr
+					tstb
+					beq		_sCMDrdinvalid
+					stx		RdAddr,u 			; save read param 1
+					cmpb	#CR					; check if a repeat param follows
+					beq		_sCMDexe_rd0
+				
+					;------- extract the optional 'repeat' --------------------
+					lbsr	sCMDextr
+					stx		RdRepeat,u 			; save read param 2
+					cmpb	#CR
+					beq		_sCMDexe_rd0
+_sCMDrdinvalid		lbsr	sCMDinvalid
+					bra		_sCMDrddone
+				
+STR_CMD_rd			db		CR,"read",0
+_sCMDexe_rd0		ldx		#STR_CMD_rd
+					lbsr	sPUTSTR
+				
+_sCMDexe_rd1   		ldb		#CR
+					lbsr	sMON_PORT_WR		; CR when begin with addr
+					ldd		RdAddr,u
+					pshs	d
+					lbsr	HEXWORD2MONPORT
+					leas	2,s
+_sCMDexe_rd2		ldb		#' '
+					lbsr	sMON_PORT_WR
+					ldb		[RdAddr,u]
+					pshs	d
+					lbsr	HEXBYTE2MONPORT
+					leas	2,s
+					ldd		RdRepeat,u
+					cmpd	#0
+					beq		_sCMDrddone
+					subd	#1
+					std		RdRepeat,u
+					ldd		RdAddr,u
+					addd	#1
+					std		RdAddr,u
+					andb	#$1f
+					beq		_sCMDexe_rd1		; write addr at begin
+					bra		_sCMDexe_rd2
+_sCMDrddone			leas	2,s					; free 16-bit param 2
+					leas	2,s					; free 16-bit param 1
+					puls	u
+					rts  						; exit
+
+;----------------------------------------------------;
+sCMDwr
+WrAddr				equ		0					; uint WrAddr index
+WrData				equ		2					; uchar WrData index
+WrRepeat			equ		3					; uint repeat
+					pshs	u
+					leas	-2,s				; allocate 16-bit
+					leas	-1,s				; allocate 8-bit
+					leas	-2,s				; allocate 16-bit
+					leau	,s					; use the U as pointer
+					clra
+					clrb
+					std		WrRepeat,u 			; set to 0 by default
+					
+					;------- extract the ' ' only --------------------
+					lbsr	sCMDextr
+					cmpb	#' '
+					bne		_sCMDwrInvalid
+
+					;------- extract 'waddr' --------------------
+					lbsr	sCMDextr
+					cmpb	#CR
+					beq		_sCMDwrInvalid		; CR shall come later
+					cmpb	#' '
+					bne		_sCMDwrInvalid		
+					cmpx	#ROM_ORG			; avoid write in ROM
+					bhs		_sCMDwrInvalid
+					stx		WrAddr,u 			; save read param 1
+					
+					;------- extract 'wdata' --------------------
+					lbsr	sCMDextr
+					exg		x,d
+					stb		WrData,u 			; save read param 2
+					exg		x,d
+					cmpb	#CR					; check if param ended
+					beq		_sCMDwr1
+					cmpb	#' '				; check if a repeat param follows
+					bne		_sCMDwrInvalid				
+					
+					;------- extract the optional 'repeat' --------------------
+					lbsr	sCMDextr
+					stx		WrRepeat,u 			; save read param 3
+					cmpb	#CR
+					beq		_sCMDwr1				
+				
+_sCMDwrInvalid		lbsr	sCMDinvalid
+					lbra	_sCMDwrdone
+				
+STR_CMD_wr			db		CR,"write",0
+_sCMDwr1			ldx		#STR_CMD_wr
+					lbsr	sPUTSTR
+_sCMDexe_wr1     	ldb		#CR					; CR when begin with addr
+					lbsr	sMON_PORT_WR
+					ldd		WrAddr,u
+					pshs	d
+					lbsr	HEXWORD2MONPORT
+					leas	2,s
+_sCMDexe_wr2		ldb		#' '
+					lbsr	sMON_PORT_WR
+					ldb		WrData,u
+					pshs	d
+					lbsr	HEXBYTE2MONPORT
+					leas	2,s
+					lda		WrData,u
+					sta		[WrAddr,u]			; perform the write
+					ldd		WrRepeat,u
+					cmpd	#0
+					beq		_sCMDwrdone
+					subd	#1
+					std		WrRepeat,u
+					ldd		WrAddr,u
+					addd	#1
+					std		WrAddr,u
+					andb	#$1f
+					beq		_sCMDexe_wr1		; write addr at begin
+					bra		_sCMDexe_wr2
+	
+_sCMDwrdone			leas	2,s					; free 16-bit param 3
+					leas	1,s					; free 8-bit param 2
+					leas	2,s					; free 16-bit param 1
+					puls	u
+					rts							; exit
+
+;----------------------------------------------------;
+STR_EW1				db		CR,"copy ",0
+STR_EW2				db		" byte(s) from ",0
+STR_EW3				db		" to ",0
+STR_EW4				db		", please wait ...",0
+STR_EWdone			db		CR,"eeprom writing done, ",0
+STR_EW_CS			db		"CheckSum16: ",0
+sCMDew				pshs	u					; save register(s)
+					;------- extract ' ' --------------------
+					lbsr	sCMDextr
+					cmpb	#' '
+					bne		_sCMDewInvalid0					
+					
+					;------- extract 'src' until ' ' --------------------
+					lbsr	sCMDextr
+					pshs	x					; push WriteEEP param 1 (src)
+					cmpb	#' '
+					bne		_sCMDewInvalid1					
+					
+					;------- extract 'dst'until' ' --------------------
+					lbsr	sCMDextr
+					pshs	x 					; push WriteEEP param 2 (dst)
+					cmpb	#' '
+					bne		_sCMDewInvalid2								
+					
+					;------- extract 'len'until' ' --------------------
+					lbsr	sCMDextr
+					pshs	x 					; push WriteEEP param 3 (len)
+					ldx		#0					; no protection param by default
+					cmpb	#CR
+					beq		_sCMDew1			; no protection param
+					cmpb	#' '
+					bne		_sCMDewInvalid3					
+					
+					;------- extract 'protection'until'CR' --------------------					
+					lbsr	sCMDextr					
+					cmpb	#CR
+					beq		_sCMDew1				; branch when OK, otherwise free the saved params
+_sCMDewInvalid3		leas	2,s					; free WriteEEP param 3
+_sCMDewInvalid2		leas	2,s					; free WriteEEP param 2
+_sCMDewInvalid1		leas	2,s					; free WriteEEP param 1
+_sCMDewInvalid0		lbsr	sCMDinvalid
+					lbra	_sCMDewdone
+
+_sCMDew1			pshs	x 					; WriteEEP param 4 (protection)
+					leau	0,s					; use U as parameter pointer
+					ldx		#STR_EW1
+					lbsr	sPUTSTR
+					ldd		2,u					; print param 3 (length in byte)
+					pshs	d
+					lbsr	HEXWORD2MONPORT
+					leas	2,s
+					ldx		#STR_EW2
+					lbsr	sPUTSTR
+					ldd		6,u					; print param 2 (source)
+					pshs	d
+					lbsr	HEXWORD2MONPORT
+					leas	2,s
+					ldx		#STR_EW3
+					lbsr	sPUTSTR
+					ldd		4,u					; print param 1 (destination)
+					pshs	d
+					lbsr	HEXWORD2MONPORT
+					leas	2,s
+					ldx		#STR_EW4
+					lbsr	sPUTSTR
+					
+					lbsr	WriteEEP
+					ldx		#STR_EWdone
+					lbsr	sPUTSTR
+					
+					ldx		#STR_EW_CS
+					lbsr	sPUTSTR
+					ldd		4,u					; Checksum calculated in ROM. Take WriteEEP destination
+					pshs	d					; push as 1st arg (CheckSum16 begin addr)
+					addd	2,u					; add WriteEEP length in byte
+					pshs	d					; push as 2nd arg (CheckSum16 end addr)
+					clra						; initial CheckSum16 value shall be 0
+					clrb
+					pshs	d					; push as 3rd arg
+					lbsr	getCheckSum16
+					leas	6,s					; free the 3 args					
+					pshs	d
+					lbsr	HEXWORD2MONPORT
+					leas	2,s
+_sCMDewdone			leas	8,s					; free the WriteEEP 4 params
+					puls	u,pc  				; restore u and return				
+						
+;----------------------------------------------------;
+STR_CMD_LD			db		CR,"send now the SRec data, Offset=",0
+STR_CMD_LD2			db		" byte(s) @ addr:",0
+STR_CMD_LD3			db		"reception completed",CR,0
+STR_CMD_LD4			db		" checksum error!",0
+ByteCount			equ		0					; uchar byte count index
+SRecCheckSum		equ		1					; uchar SRecCheckSum index
+Offset				equ		2					; uint Offset index
+NewAddr				equ		4					; uint new address
+sCMDld				pshs	u
+					leas	-2,s				; allocate 16-bit Offset
+					leas	-2,s				; allocate 16-bit Offset
+					leas	-1,s				; allocate 8-bit SRecCheckSum
+					leas	-1,s				; allocate 8-bit ByteCount
+					leau	,s					; use the U as pointer
+					clra
+					clrb
+					std		Offset,u 			; set to 0 by default
+					
+					;------- extract 'CR' or optional ' ''offset' --------------------
+					lbsr	sCMDextr
+					cmpb	#CR					; no offset
+					beq		_sCMDld00
+					cmpb	#' '
+					bne		_sCMDldInvalid		; with offset data
+					
+					;------- extract optional 'offset' --------------------
+					lbsr	sCMDextr
+					cmpb	#CR
+					bne		_sCMDldInvalid					
+					
+_sCMDld00			stx		Offset,u			; save the offset data
+					ldx		#STR_CMD_LD
+					lbsr	sPUTSTR
+					ldd		Offset,u
+					pshs	d
+					lbsr	HEXWORD2MONPORT
+					leas	2,s
+					bra		_sCMDld0
+_sCMDldInvalid		lbsr	sCMDinvalid
+					lbra	_sCMDlddone
+					;------- seek for 'S1' --------------------
+_sCMDld0			lbsr	sRbRead 			; read a byte
+					tstb
+					beq		_sCMDld0
+					cmpa	#'S'
+					bne		_sCMDld0
+_sCMDld01			lbsr	sRbRead 			; read a byte
+					tstb
+					beq		_sCMDld01
+					cmpa	#'1'
+					bne		_sCMDlddone 		; the last line does not contains S1
+					clr		SRecCheckSum,u		; SRecCheckSum = 0
+					
+					lda		#2					; read byte count
+					lbsr	sExtrNByte
+					pshs	b
+					addb	SRecCheckSum,u		; SRecCheckSum +=  bytecount
+					stb		SRecCheckSum,u
+					puls	b
+					subb	#3					; 3 byte already read
+					stb		ByteCount,u
+					ldb		#CR
+					lbsr	sMON_PORT_WR
+					ldb		ByteCount,u
+					pshs	d
+					lbsr	HEXBYTE2MONPORT
+					leas	2,s
+					ldx		#STR_CMD_LD2
+					lbsr	sPUTSTR
+					
+					lda		#4  				; read addr
+					lbsr	sExtrNByte
+					std	    NewAddr,u			; save addr
+					adda	SRecCheckSum,u		; SRecCheckSum +=  addr hi
+					sta		SRecCheckSum,u
+					addb	SRecCheckSum,u		; SRecCheckSum +=  addr lo
+					stb		SRecCheckSum,u	
+					ldd	    NewAddr,u			; addr -= offset
+					subd	Offset,u
+					std	    NewAddr,u			; save new addr
+					pshs	d
+					lbsr	HEXWORD2MONPORT
+					leas	2,s
+
+_sCMDld1			lda		#2					; read data
+					lbsr	sExtrNByte
+					pshs	b
+					addb	SRecCheckSum,u		; SRecCheckSum +=  data
+					stb		SRecCheckSum,u
+					puls	b
+					ldx	    NewAddr,u			; get new addr
+					stb     ,x+ 				; write to dst addr and inc
+					stx	    NewAddr,u			; save new addr
+					dec		ByteCount,u
+					bne		_sCMDld1
+						
+					lda		#2					; read checksum
+					lbsr	sExtrNByte
+					eorb	SRecCheckSum,u 		; checksum xor with sum should give 0xff
+					cmpb	#$ff
+					beq		_sCMDld2
+					ldx		#STR_CMD_LD4
+					lbsr	sPUTSTR
+_sCMDld2			lbra	_sCMDld0
+_sCMDlddone      	ldb		#CR
+					lbsr	sMON_PORT_WR
+					ldx		#STR_CMD_LD3
+					lbsr	sPUTSTR
+					leas	1,s					; free 8-bit
+					leas	1,s					; free 8-bit
+					leas	2,s					; free 16-bit
+					leas	2,s					; free 16-bit
+					puls	u
+					rts							; exit
+
+;----------------------------------------------------;
+STR_GO				db		CR,"go address ",0
+sCMDgo				;------- extract ' ' --------------------
+					lbsr	sCMDextr
+					cmpb	#' '
+					bne		_sCMDgoInvalid
+					
+					;------- extract 'addr' with 'CR' --------------------
+					lbsr	sCMDextr
+					cmpb	#CR								
+					beq		_sCMDgo0			; missing addr param	
+_sCMDgoInvalid		lbsr	sCMDinvalid
+					bra		_sCMDgodone
+_sCMDgo0         	pshs	x					; save go addr
+					ldx		#STR_GO
+					lbsr	sPUTSTR					
+					ldd		0,s					; get go addr
+					pshs	d
+					lbsr	HEXWORD2MONPORT
+					leas	2,s
+					ldd		#$ffff
+_sCMDgo1			subd	#1
+					bne		_sCMDgo1			; wait until MONPORT output processed
+					puls	x
+					jsr     ,x      			; execute @ addr
+_sCMDgodone			rts							; exit
+
+;----------------------------------------------------;
+STR_ST				db		CR,"stop process ",0
+sCMDStp				;------- extract ' ' --------------------
+					lbsr	sCMDextr
+					cmpb	#' '
+					bne		_sCMDstpInvalid
+					
+					;------- extract 'process ID' with 'CR' --------------------
+					lbsr	sCMDextr
+					cmpb	#CR								
+					beq		_sCMDstp0			; missing ID param	
+_sCMDstpInvalid		lbsr	sCMDinvalid
+					bra		_sCMDstpdone
+_sCMDstp0         	pshs	x					; save process ID
+					ldx		#STR_ST
+					lbsr	sPUTSTR					
+					ldd		0,s					; get process ID
+					pshs	d
+					lbsr	HEXBYTE2MONPORT
+					leas	2,s
+					puls	d
+					cmpb	#BASIC_PROCESS_ID
+					bne		_sCMDstpdone
+					clr		BasicCallBack		; void the next callback address
+					clr		BasicCallBack+1
+_sCMDstpdone		rts							; exit
+
+;----------------------------------------------------;
+STR_BP				db		CR,"set breakkpoint address ",0
+STR_BP1				db		CR,"breakkpoint existing! ",0
+sCMDbp				;------- extract ' ' --------------------
+					lbsr	sCMDextr
+					cmpb	#' '
+					bne		_sCMDbpInvalid
+					
+					;------- extract addr param with 'CR ' --------------------
+					lbsr	sCMDextr
+					cmpb	#CR
+					bne		_sCMDbpInvalid
+					
+					cmpx	#RAM_ORG			; validate address within RAM
+					blo		_sCMDbpInvalid
+					cmpx	#RAM_END
+					bhi		_sCMDbpInvalid
+					
+					pshs	x 					; save bp addr
+					bra		_sCMDbp1
+_sCMDbpInvalid		lbsr	sCMDinvalid
+					bra		_sCMDbpdone
+_sCMDbp1         	ldd		BrkPtAddr			; verify if breakpoint already set
+					cmpd	#BrkPtOff
+					beq		_sCMDbp2			; breakpoint not existing
+					cmpd	#BrkPtTriggered
+					beq		_sCMDbp2			; breakpoint can be set again				
+					ldx		#STR_BP1
+					lbsr	sPUTSTR
+					bra		_sCMDbpdone
+_sCMDbp2			ldx		#STR_BP
+					lbsr	sPUTSTR
+					puls	d					; restore bp addr
+					std		BrkPtAddr			; save addr
+					pshs	d
+					lbsr	HEXWORD2MONPORT
+					leas	2,s
+					lda		[BrkPtAddr]			; save instruction
+					sta		BrkPtInst
+					lda		#$3f				;swi instruction
+					sta		[BrkPtAddr]			;replace by swi
+_sCMDbpdone			rts							; exit
+
+;----------------------------------------------------;
+STR_QBP				db		CR,"quit debugging mode",0
+STR_QBP1			db		CR,"not in debugging mode",0
+sCMDqbp	    	    ldd		BrkPtAddr			; verify if breakpoint set
+					cmpd	#BrkPtOff			; Off when not in debug mode
+					beq		_sCMDqbp1	
+					pshs	d
+					ldx		#STR_QBP
+					lbsr	sPUTSTR
+					puls	d
+					cmpd	#BrkPtTriggered		; was triggered
+					beq		_sCMDqbp0
+					lda		BrkPtInst
+					sta		[BrkPtAddr]			; replace initial instruction at breakpoint addr
+_sCMDqbp0			ldd		#BrkPtOff	
+					std		BrkPtAddr			; place in off state
+					bra		_sCMDqbpdone				
+_sCMDqbp1			ldx		#STR_QBP1
+					lbsr	sPUTSTR
+_sCMDqbpdone		rts							; exit
+
+
+;----------------------------------------------------;
+STR_CMD_LDBAS		db		CR,"send now the BAS file",CR,0
+STR_CMD_LDBASEND	db		"END",CR,0
+sCMDldbas			lbsr	sRbReadCmd
+					tstb
+					lbeq	sCMDinvalid				
+					cmpa	#CR
+					lbne	sCMDinvalid  		; not CR, invalid CMD
+					ldx		#STR_CMD_LDBAS
+					lbsr	sPUTSTR
+										
+					;------- read until 'END' --------------------
+_sCMDldbas0 		ldx		#STR_CMD_LDBASEND
+_sCMDldbas1			lbsr	sRbRead 			; read a byte					
+					tstb
+					beq		_sCMDldbas1
+					cmpa    #10
+					beq		_sCMDldbas1			; remove LF
+					pshs	a,x
+					tfr		a,b
+					lbsr	sAPL_KeyboardData
+_sCMDldbas2			lbsr	BASICprocess		; BASIC process call
+					lbsr    isKeyboardData		; check if the data is processed by BASIC
+					tstb
+					bne		_sCMDldbas2			; loop until the data is completely processed
+					puls	x,a
+					cmpa	,x+
+					bne		_sCMDldbas0
+					tfr		x,d
+					subd	#STR_CMD_LDBASEND
+					cmpd	#4
+					blo		_sCMDldbas1
+					rts
+
+;----------------------------------------------------;
+sCMDbas				;------- extract ' ' --------------------------------------
+					lbsr	sCMDextr
+					cmpb	#' '
+					bne		sCMDinvalid
+					
+					;------- extract 'BASIC code' with 'CR' --------------------
+_sCMDbas0			lbsr	sRbRead
+					tstb
+					beq		_sCMDbasdone
+					pshs    a
+					tfr		a,b
+					lbsr	sAPL_KeyboardData
+_sCMDbas1			lbsr	BASICprocess		; BASIC process call
+					lbsr    isKeyboardData		; check if the data is processed by BASIC
+					tstb
+					bne		_sCMDbas1			; loop until the data is completely processed
+					puls    a
+					cmpa    #CR					; CR ends the command
+					bne		_sCMDbas0
+_sCMDbasdone		rts	
+
+;----------------------------------------------------;
+STR_CMDinvalid		db		CR,"invalid command!!",CR,0
+sCMDinvalid			ldx		#STR_CMDinvalid
+					lbsr	sPUTSTR
+					rts
+;}
+
+;----------------------------------------------------;
+sCMDextr ;{
+;---------------------------------------------------;
+; extract text command (converted in hex) until a ' ' or 'CR'
+; param: 	none
+; return: 	cmd value -> X, end condition -> B (NULL when invalid)
+;---------------------------------------------------;
+					ldx		#0					; clear
+_sCMDextr0			lbsr	sRbReadCmd 			; read a byte
+					tstb
+					beq		_sCMDextrEnd			; RB empty, B is NULL
+					tfr		a,b					; B contains the end condition
+					cmpa	#' '				; end value?
+					beq		_sCMDextrEnd  		; return value already in B
+					cmpa	#CR					; or CR ends ?
+					beq		_sCMDextrEnd  		; not expected
+					lbsr	sTEXT2HEX			; convert
+					pshs	a					; save new value on stack
+					tfr		x,d
+					lbsr	sWLSL4bit
+					addb	,s+					; add the new value and free 8-bit stack
+					tfr		d,x
+					bra		_sCMDextr0
+_sCMDextrEnd     	rts
+;}
+;----------------------------------------------------;
+sExtrNByte ;{
+;---------------------------------------------------
+; asm call extract (text to hex) 
+; param: 	A -> n byte to extract
+; return:	out value -> D		
+;---------------------------------------------------
+					pshs	a					; contains the count
+					ldx		#0					; clear
+_sExtrNByte0		lbsr	sRbRead				; read a byte
+					tstb
+					beq     _sExtrNByte0 		; loop until RB no more empty
+					lbsr	sTEXT2HEX			; convert
+					pshs	a					; save
+					tfr		x,d
+					lbsr	sWLSL4bit
+					addb	,s+					; free 8-bit stack
+					tfr		d,x
+					dec		,s					; decrease the count					
+					bne		_sExtrNByte0
+_sExtrEnd        	leas	1,s					; puls, free end param
+					rts
+	;}
+;}
+
+;----------------------------------------------------;
+; asm call send string on debug port
+; param: 	X -> pointer
+; return:	none
+;----------------------------------------------------;
+sPUTSTR        		ldb		,x+
+					beq		_putstrDone 		; string ends with NULL
+					lbsr	sMON_PORT_WR
+					bra		sPUTSTR
+_putstrDone	  		rts
+;}
+
+
+
