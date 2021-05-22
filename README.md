@@ -8,7 +8,7 @@ COPYRIGHT (C) 2018-2021 Adrian Kundert
 
 # Introduction:
 
-The [retro 6809 SBC](src='doc/Retro_6809_SBC.pdf.pdf') is a homebrew 8-bit computer running BASIC as made in the 80's but with more modern peripherals like PS/2 keyboard and VGA output.
+The [retro 6809 SBC](doc/Retro_6809_SBC.pdf) is a homebrew 8-bit computer running BASIC as made in the 80's but with more modern peripherals like PS/2 keyboard and VGA output.
 
 # Features Overview:
 <img width='80%' src='doc/retro 6809 SBC board.png'/>
