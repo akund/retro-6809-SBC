@@ -33,6 +33,6 @@ As an exemple, the program [SOKOBAN](sokoban/sokobanC.s19) starting at adress 0x
 [<img width='50%' src='doc/sokoban_screen.png'/>](https://www.youtube.com/watch?v=ke1KYbIA_8k)
 
 ## C cross-compiler
-The PC application "mc.exe" is an ANSI C89 cross-compiler for the [sokoban](sokoban\main.c) program targeting the 6809 MPU. 
+The PC application "mc.exe" is an ANSI C89 cross-compiler for the [SOKOBAN](sokoban/main.c) program targeting the 6809 MPU. 
 
 
