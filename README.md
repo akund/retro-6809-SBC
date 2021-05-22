@@ -9,22 +9,28 @@ COPYRIGHT (C) 2018-2021 Adrian Kundert
 # Introduction:
 
 The [retro 6809 SBC](doc/Retro_6809_SBC.pdf) is a homebrew 8-bit computer running BASIC as made in the 80's but with more modern peripherals like PS/2 keyboard and VGA output.
+The system has 32 KB RAM for a MPU clocked at 8 MHz.
 
 # Features Overview:
 <img width='80%' src='doc/retro 6809 SBC board.png'/>
 
-
-
 # Demo
 
 ## BASIC commands
-
 [<img width='50%' src='doc/basic.png'/>](https://www.youtube.com/watch?v=NazOm493rk8)
+The BASIC commands can be entered with the keyboard at the prompt or from Terminal (see below)
 
 ## Monitor usage with the Terminal
+The Monitor is an assistance tool for debugging by accessign the memory and sending BASIC command (override the keyboard).
+By the Terminal command "h\r" the Help Menu is shown.
+<img width='100%' src='doc/terminal.png'/>
 
-<img width='50%' src='doc/terminal.png'/>
-
-A [BASIC file](basic/pong.bas) can be send to the retro 6809 SBC with the command "L"
+1. A [BASIC file](basic/pong.bas) can be send to the retro 6809 SBC with the command "L"
 a message "send now the BAS file" is prompt before you can send the BASIC file.
+
+2. A SREC file can be loaded in the memory with the command "l\r" and then execute "g\r".
+Important when another program is loaded, the command "S 20\r" is required to stop the BASIC process and free the RAM.
+As an exemple, the program [SOKOBAN](sokoban/sokobanC.s19) starting at adress 0x2000 is loaded ("l\r") into the RAM and executed ("g 2000\r").
+[<img width='50%' src='doc/sokoban_screen.png'/>](https://www.youtube.com/watch?v=ke1KYbIA_8k)
+
 
