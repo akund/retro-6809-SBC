@@ -14,7 +14,24 @@ The system has 32 KB RAM for a MPU clocked at 8 MHz.
 
 # Demo
 
-## BASIC commands
+## Microsoft Color Computer Basic (based on [Grant Searle](http://searle.x10host.com/6809/Simple6809.html) reworked source code.
+### Included tokens
+#### (From the Color BASIC ROM)
+
+FOR, GO, REM, ELSE, IF, DATA, PRINT, ON GOSUB, ON GOTO, INPUT, LINE INPUT, END, NEXT, DIM, READ, RUN, RESTORE, RETURN, STOP, POKE, CONT, LIST, CLEAR, SET, CLS, SOUND, NEW, EXEC, TAB, TO, SUB, THEN, NOT, STEP, +, -, *, /, ^, AND, OR, >, =, <
+
+#### (From the Extended BASIC ROM)
+
+DEL, DEF, LET, RENUM, FN, USING, &, &H, TRON, TROFF, EDIT
+
+### Secondary functions
+
+#### (From the Color BASIC ROM)
+SGN, INT, ABS, USR, RND, SIN, PEEK, LEN, STR$, VAL, ASC, CHR$, LEFT$, RIGHT$, MID$, INKEY$, MEM
+
+#### (From the Extended BASIC ROM)
+ATN, COS, TAN, EXP, FIX, LOG, SQR, HEX$, VARPTR, INSTR, STRING$, MID$ (MODIFICATION), POS
+
 [<img width='50%' src='doc/basic.png'/>](https://www.youtube.com/watch?v=NazOm493rk8)
 
 The BASIC commands can be entered with the keyboard at the prompt or from Terminal (see below)
