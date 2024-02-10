@@ -51,10 +51,12 @@ a message "send now the BAS file" is prompt before you can send the BASIC file.
 
 2. A SREC file can be loaded in the memory with the command "l\r" and then execute "g\r".
 Important when another program is loaded, the command "S 20\r" is required free the RAM occupied by the BASIC process (ID 0x20).
-As an exemple, the program [SOKOBAN](sokoban/sokobanC.s19) starting at adress 0x2000 is loaded ("l\r") into the RAM and executed ("g 2000\r").
+As an example, the program [SOKOBAN](app/sokobanC.s19) starting at adress 0x2000 is loaded ("l\r") into the RAM and executed ("g 2000\r").
 [<img width='50%' src='doc/sokoban_screen.png'/>](https://www.youtube.com/watch?v=ke1KYbIA_8k)
 
+Another example, the demo program [SD_CARD](app/demoSD_C.s19) starting at adress 0x2000 is loaded ("l\r") into the RAM and executed ("g 2000\r").
+
 ## C cross-compiler
-The PC application "mc.exe" is an ANSI C89 cross-compiler for the [SOKOBAN](sokoban/main.c) program targeting the 6809 MPU. 
+The PC application "mc.exe" is an ANSI C89 cross-compiler for the [SOKOBAN](app/sokoban.c) program targeting the 6809 MPU. 
 
 
