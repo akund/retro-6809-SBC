@@ -1,1 +1,0 @@
-as9 SBCExBas.a09 -l => SBCExBas.lst
