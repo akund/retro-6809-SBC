@@ -1,0 +1,1149 @@
+AS09 Assembler for M6809 [1.42].                                     Page    1
+-------------------------------- demoSD_C.a09 --------------------------------
+
+-------------------------------- Symbol Table --------------------------------
+
+              Symbol   Value        Decimal
+
+            APL_Outp : $eebc          61116
+    APL_OutputStream : $eebc          61116
+            BYTE2MON : $faed          64237
+            deletefi : $222a           8746
+                 dir : $201e           8222
+            FILE_Clo : $b3b7          46007
+            FILE_Del : $b3ce          46030
+            FILE_Get : $b456          46166
+            FILE_Lis : $bc56          48214
+            FILE_Ope : $af7c          44924
+            FILE_Put : $b574          46452
+            getKeybo : $ef3c          61244
+            HEXBYTE2 : $facd          64205
+            HEXWORD2 : $fa98          64152
+            initDISK : $a64e          42574
+            isKeyboa : $ef59          61273
+                main : $22a8           8872
+             msDelay : $fb26          64294
+              PUTSTR : $fa89          64137
+            print_De : $fa89          64137
+            readfile : $20ab           8363
+               START : $2000           8192
+            sendCont : $f042          61506
+            setpoint : $efc1          61377
+            setSound : $f025          61477
+             setTile : $efe5          61413
+       sMONITORSTART : $f2ed          62189
+      sMonProcessCmd : $f357          62295
+             VERSION : $2012           8210
+            writefil : $213f           8511
+            _GLOBALS : $0000              0
+            _progEnd : $24f3           9459
+              _00001 : $240f           9231
+              _00002 : $2429           9257
+              _00003 : $244e           9294
+              _00004 : $2454           9300
+              _00005 : $2471           9329
+              _00006 : $2474           9332
+              _00007 : $248a           9354
+              _00008 : $24a0           9376
+              _00009 : $24b6           9398
+              _00010 : $24d1           9425
+              _00011 : $24d8           9432
+              _00012 : $24de           9438
+              _00020 : $24cc           9420
+              _02000 : $2439           9273
+              _02001 : $2441           9281
+              _02002 : $244d           9293
+              _04000 : $2461           9313
+              _04001 : $2468           9320
+              _04002 : $2470           9328
+              _06000 : $2479           9337
+              _06001 : $2481           9345
+              _06009 : $2489           9353
+              _07000 : $248f           9359
+              _07001 : $2497           9367
+              _07009 : $249f           9375
+              _08000 : $24a5           9381
+AS09 Assembler for M6809 [1.42].                                     Page    2
+-------------------------------- demoSD_C.a09 --------------------------------
+
+              _08001 : $24ad           9389
+              _08009 : $24b5           9397
+              _09000 : $24bb           9403
+              _09001 : $24c3           9411
+              _09009 : $24cb           9419
+                 _10 : $20e8           8424
+                _10_ : $20d3           8403
+                 _11 : $213d           8509
+                 _12 : $2108           8456
+                _12_ : $20f8           8440
+                 _13 : $2134           8500
+                 _14 : $210f           8463
+                 _15 : $2127           8487
+                 _16 : $2154           8532
+                _16_ : $214b           8523
+                 _17 : $21a8           8616
+                 _18 : $2194           8596
+                _18_ : $217e           8574
+                 _19 : $2226           8742
+                  _2 : $20a7           8359
+                 _20 : $21b9           8633
+                _20_ : $21ae           8622
+                 _21 : $21f5           8693
+                 _22 : $21c4           8644
+                 _23 : $221f           8735
+                _23_ : $2212           8722
+                 _24 : $223e           8766
+                _24_ : $2234           8756
+                 _25 : $2285           8837
+                 _26 : $227b           8827
+                _26_ : $225b           8795
+                 _27 : $22a6           8870
+                 _28 : $229f           8863
+                _28_ : $228b           8843
+                 _29 : $22bc           8892
+                  _3 : $2025           8229
+                 _30 : $22d6           8918
+                _30_ : $22c2           8898
+                 _31 : $22f1           8945
+                _31_ : $22e6           8934
+                 _32 : $2310           8976
+                _32_ : $22fb           8955
+                 _33 : $2333           9011
+                _33_ : $2326           8998
+                 _34 : $235f           9055
+                _34_ : $234a           9034
+                 _35 : $2385           9093
+                _35_ : $236f           9071
+                 _36 : $23ad           9133
+                _36_ : $239b           9115
+                 _37 : $23e1           9185
+                _37_ : $23c3           9155
+                 _38 : $2404           9220
+                _38_ : $23f1           9201
+                  _4 : $203e           8254
+                 _4_ : $203c           8252
+                  _5 : $2058           8280
+                 _5_ : $2054           8276
+                  _6 : $20a4           8356
+                  _7 : $2087           8327
+                  _8 : $209d           8349
+                 _8_ : $2096           8342
+AS09 Assembler for M6809 [1.42].                                     Page    3
+-------------------------------- demoSD_C.a09 --------------------------------
+
+                  _9 : $20f2           8434
+            __6809__ : $0001              1
+
+122 labels used
+
+960 lines read, no errors in pass 1.
+AS09 Assembler for M6809 [1.42].                                     Page    4
+-------------------------------- demoSD_C.a09 --------------------------------
+
+                        ; coding convention:
+                        ; normal function paramters are passed by the stack: a
+                        ; the returned value is in D
+                        ; the registers D and X can modified in the called fun
+                        ;
+                        ; special function lead by an 's' (e.g. sFUNCTION) is 
+                        ;
+                        					
+                        ;{ ----------------------------------- Program testing
+                        					code
+2000 =                  					org     $2000
+                        
+                        ;-------------------- program start ------------------
+2000 : 8e2012           START				ldx		#VERSION							; version at run begin			
+2003 : 3410             					pshs	x
+2005 : 17da81           					lbsr	PUTSTR 					
+2008 : 3262             					leas	2,s
+                        
+200a : 108e24f3         					ldy		#_progEnd							; the current program global
+200e : 170297           					lbsr	main								; C environement recussive call	
+2011 : 39               					rts
+                        					
+2012 : 0d64656d6f2030.. VERSION     		db      13,"demo 0.1, ",0					; version
+                        		
+                        * micro-C(ver 0.4.1), 1981-1987 Masataka Ohta, Hiroshi
+                        * #define C_MaxPageSize_U16        512
+                        * #include "../disk/stdutils.h"
+                        * /***************************************************
+                        * /*                                                  
+                        * /* file:          stdutils.h		                      
+                        * /*                                                  
+                        * /* source:        2023, written by Adrian Kundert (a
+                        * /*                                                  
+                        * /* description:   read and write data from SD CARD (
+                        * /*                                                  
+                        * /* This library is free software; you can redistribu
+                        * /* GNU Lesser General Public License as published by
+                        * /* either version 2.1 of the License, or (at your op
+                        * /*                                                  
+                        * /* This library is distributed in the hope that it w
+                        * /* without even the implied warranty of MERCHANTABIL
+                        * /* See the GNU Lesser General Public License for mor
+                        * /*                                                  
+                        * /***************************************************
+                        * 
+                        * /**----------char 8-bit--------
+                        *      char (-128 to 127)
+                        *      signed char (-128 to 127)
+                        *      unsigned char (0 - 255)
+                        * 	-----------------------------*/
+                        * 
+                        * /**---------int 16-bit----------
+                        * 	 int (-32768 to 32767)
+                        * 	 signed int (-32768 to 32767)
+                        *      unsigned int (0 to 65535)
+                        * 	 -----------------------------*/
+                        * 
+                        * /***************************************************
+                        * 
+                        * 
+                        * /***************************************************
+                        *                            Port Direction configurat
+AS09 Assembler for M6809 [1.42].                                     Page    5
+-------------------------------- demoSD_C.a09 --------------------------------
+
+                        *  ***************************************************
+                        * #define LOW                0x00
+                        * #define HIGH               0x01
+                        * /***************************************************
+                        * 
+                        * /***************************************************
+                        * ****************************************************
+                        *                               Commonly used constant
+                        * ****************************************************
+                        * #define FALSE              0x00
+                        * #define TRUE               0x01
+                        * 
+                        * /***************************************************
+                        * 			32-bit variable and operation wrapper for 16-bit 
+                        * ****************************************************
+                        * typedef struct _u32_t {
+                        * 	unsigned int h;
+                        * 	unsigned int l;
+                        * }u32_t;
+                        * 
+                        * 
+                        * /*
+                        * void _u32_and(u32_t *a, u32_t *b, u32_t *out);
+                        * void _u32_div2(u32_t *a, unsigned int b, u32_t *quot
+                        * void _u32_mul(unsigned int a, u32_t *b, u32_t *prod)
+                        * void _u32_sub(u32_t *a, u32_t *b, u32_t *dif);
+                        * void _u32_dec(u32_t *a);
+                        * void _u32_add(u32_t *a, u32_t *b, u32_t *sum);
+                        * void _u32_inc(u32_t *a);
+                        * unsigned char _u32_lower(u32_t *a, u32_t *b);
+                        * unsigned char _u32_equal(u32_t *a, u32_t *b);
+                        * unsigned char _u32_higher(u32_t *a, u32_t *b); 
+                        * */
+                        * 
+                        * /***************************************************
+                        * 
+                        * 
+                        * 
+                        * 
+                        * 
+                        * 
+                        * #include "../disk/fat32.h"
+                        * /***************************************************
+                        * /*                                                  
+                        * /* file:          fat32.h			                        
+                        * /*                                                  
+                        * /* source:        2023, written by Adrian Kundert (a
+                        * /*                                                  
+                        * /* description:   read and write data from SD CARD (
+                        * /*                                                  
+                        * /* This library is free software; you can redistribu
+                        * /* GNU Lesser General Public License as published by
+                        * /* either version 2.1 of the License, or (at your op
+                        * /*                                                  
+                        * /* This library is distributed in the hope that it w
+                        * /* without even the implied warranty of MERCHANTABIL
+                        * /* See the GNU Lesser General Public License for mor
+                        * /*                                                  
+                        * /***************************************************
+                        * 
+                        * #define C_8_3_FileNameSize    11	//Root Directory En
+                        * 
+AS09 Assembler for M6809 [1.42].                                     Page    6
+-------------------------------- demoSD_C.a09 --------------------------------
+
+                        * //Structure to access Master Boot Record for getting
+                        * typedef struct {
+                        *     unsigned char	nothing[446];		//ignore, placed he
+                        *     unsigned char	partitionData[64];	//partition rec
+                        *     unsigned char	signature[2];		//0xaa55
+                        * } LE_MBRinfo_Structure;
+                        * 
+                        * 
+                        * 
+                        * //Structure to access boot sector data (Little Endia
+                        * typedef struct {
+                        *     unsigned char jumpBoot[3];			//00, default: 0x00
+                        *     unsigned char OEMName[8];			//03,
+                        *     unsigned char bytesPerSector[2];	//11, default: 
+                        *     unsigned char secPrCluster; 		//13, "sectorPerCl
+                        *     unsigned char rsvSectorCount[2];	//14, "reserved
+                        *     unsigned char nbofFATs;				//16, "numberofFATs"
+                        *     unsigned char rootEntryCount[2];	//17,
+                        *     unsigned char tSec_F16[2];			//19, "totalSectors
+                        *     unsigned char mediaType;			//21,
+                        *     unsigned char FATsz_F16[2];			//22, "FATsize_F16
+                        *     unsigned char sectorsPerTrack[2];	//24,
+                        *     unsigned char nbofHeads[2];			//26, "numberofHea
+                        *     unsigned char hiddenSectors[4];		//28, 
+                        *     unsigned char tSec_F32[4];			//32, "totalSectors
+                        *     unsigned char FATsz_F32[4];			//36, "unsigned ch
+                        *     unsigned char extFlags[2];
+                        *     unsigned char FSversion[2]; //0x0000 (defines ve
+                        *     unsigned char rootCluster[4]; //first cluster of
+                        *     unsigned char FSinfo[2]; //sector number of FSin
+                        *     unsigned char BackupBootSector[2];
+                        *     unsigned char rsved[12];//    unsigned char rese
+                        *     unsigned char driveNumber;
+                        *     unsigned char rsved1;//    unsigned char reserve
+                        *     unsigned char bootSignature;
+                        *     unsigned char volumeID[4];
+                        *     unsigned char volumeLabel[11]; //"NO NAME "
+                        *     unsigned char fileSystemType[8]; //"FAT32"
+                        *     unsigned char bootData[420];
+                        *     unsigned char bootEndSignature[2]; //0xaa55
+                        * }LE_BS_Structure;
+                        * 
+                        * 
+                        * //Structure to access FSinfo sector data (Little End
+                        * typedef struct {
+                        *     unsigned char leadSignature[4]; //0x41615252
+                        *     unsigned char rsved3[480];  //    unsigned char 
+                        *     unsigned char structureSignature[4]; //0x6141727
+                        *     unsigned char freeClusterCount[4]; //initial: 0x
+                        *     unsigned char nextFreeCluster[4]; //initial: 0xf
+                        *     unsigned char rsved4[12];  //    unsigned char r
+                        *     unsigned char trailSignature[4]; //0xaa550000
+                        * }LE_FSinfo_Structure;
+                        * 
+                        * //Structure to access Directory Entry in the FAT (Li
+                        * typedef struct{
+                        *     unsigned char name[C_8_3_FileNameSize];
+                        *     unsigned char attrib; //file attributes
+                        *     unsigned char NTreserved; //always 0
+                        *     unsigned char timeTenth; //tenths of seconds, se
+                        *     unsigned char createTime[2]; //time file was cre
+                        *     unsigned char createDate[2]; //date file was cre
+AS09 Assembler for M6809 [1.42].                                     Page    7
+-------------------------------- demoSD_C.a09 --------------------------------
+
+                        *     unsigned char lastAccessDate[2];
+                        *     unsigned char fClsterHI[2]; //higher word of the
+                        *     unsigned char writeTime[2]; //time of last write
+                        *     unsigned char writeDate[2]; //date of last write
+                        *     unsigned char fClsterLO[2]; //lower word of the 
+                        *     unsigned char fSize[4]; //size of file in bytes	
+                        * }LE_dir_Structure;
+                        * 
+                        * 
+                        * 
+                        * 
+                        * 
+                        * 
+                        * 
+                        * //Attribute definitions for file/directory
+                        * #define ATTR_READ_ONLY     0x01
+                        * #define ATTR_HIDDEN        0x02
+                        * #define ATTR_SYSTEM        0x04
+                        * #define ATTR_VOLUME_ID     0x08
+                        * #define ATTR_DIRECTORY     0x10
+                        * #define ATTR_ARCHIVE       0x20
+                        * #define ATTR_LONG_NAME     0x0f
+                        * 
+                        * 
+                        * #define END_OF_CLUSTERS    0x0fffffff
+                        * #define DIR_ENTRY_SIZE     0x32
+                        * #define EMPTY              0x00
+                        * #define DELETED            0xe5
+                        * #define GET     0
+                        * #define SET     1
+                        * 
+                        * #define READ	0
+                        * #define VERIFY  1
+                        * #define WRITE   2
+                        * #define APPEND  3
+                        * 
+                        * #define ADD		0
+                        * #define REMOVE	1
+                        * 
+                        * #define TOTAL_FREE   1
+                        * #define NEXT_FREE    2
+                        * 
+                        * #define GET_LIST     0
+                        * #define GET_FILE     1
+                        * #define DELETE		 2
+                        * 
+                        * #define EOF     26
+                        * 
+                        * #define FOPEN_SUCCESSFUL                   0 //FAT32
+                        * #define FDELETED_OR_NOT_FOUND              1 //FAT32
+                        * #define FALREADY_EXISTS                    2 //FAT32
+                        * #define VALID_FILE_NAME                    3
+                        * #define INVALID_FILE_NAME                  4
+                        * #define NO_FREE_CLUSTERS_FOUND             5
+                        * #define FILE_OPENED_CANNOT_BE_DELETED      6
+                        * #define TO_MANY_FILES_OPENED               7
+                        * #define MORE_FILES_To_READ                 8
+                        * #define END_OF_FILE_LIST                   9
+                        * 
+                        * #define CONTINUE_LOOP                   0x55
+                        * 
+                        * #define C_MaxFileNameSize     13 //(C_8_3_FileNameSi
+AS09 Assembler for M6809 [1.42].                                     Page    8
+-------------------------------- demoSD_C.a09 --------------------------------
+
+                        * 
+                        * 
+                        * typedef struct
+                        * {
+                        *     u32_t firstSector;
+                        *     u32_t cluster;
+                        *     u32_t prevCluster;
+                        *     u32_t appFSector;
+                        *     unsigned int appFLocation;
+                        *     u32_t fileSize;
+                        *     u32_t byteCounter;
+                        *     u32_t blockNumber_u32;
+                        *     u32_t appendStartCluster;
+                        *     unsigned int sectorIndex;
+                        *     unsigned int bufferIndex_u16;
+                        *     //unsigned int fClstrHigh;
+                        *     //unsigned int fClstrLow;
+                        *     unsigned char LE_fileBuffer[C_MaxPageSize_U16];
+                        *     unsigned char fileOperation_u8;
+                        *     unsigned char fileOpenedFlag;
+                        *     unsigned char fileCreatedFlag;
+                        *     unsigned char appendFileFlag;
+                        *     unsigned char sectorEndFlag;
+                        *     unsigned char endOfFileDetected;
+                        *     char fName[C_MaxFileNameSize];
+                        * }fileConfig_st;
+                        * 
+                        * typedef struct{
+                        * 	u32_t FI_Size;	unsigned char FI_Attr;	char FI_Name[
+                        * }fileInfo;
+                        * 
+                        * 
+                        * 
+                        * 
+                        * 
+                        * /* ! Micro-C compiler variable limited to 14 charact
+                        * 
+                        * //---------------------------- list the files with s
+                        * dir() { 
+                        *     fileInfo fileList;
+                        * 	while(FILE_List(&fileList) != END_OF_FILE_LIST) {
+201e :                  dir
+201e : 3440             	pshs	u
+2020 : 33e4             	leau	,s
+2022 : 32e8ee           	leas	-18,s
+2025 :                  _3
+2025 : 30c8ee           	leax	-18,u
+2028 : 3410             	pshs	x
+202a : 179c29           	lbsr	FILE_Lis
+202d : 3262             	leas	2,s
+202f : 830009           	subd	#$9
+2032 : 10270071         	lbeq	_2
+                        * 	    print_DebugMsg("\n");
+2036 : 308d0002         	leax	_4_,pc
+203a : 2002             	bra	_4
+203c :                  _4_
+203c : 0a00             	fcb	$a, $0
+203e :                  _4
+203e : 3410             	pshs	x
+2040 : 17da46           	lbsr	print_De
+2043 : 3262             	leas	2,s
+                        * 		print_DebugMsg(fileList.FI_Name); print_DebugMsg("
+AS09 Assembler for M6809 [1.42].                                     Page    9
+-------------------------------- demoSD_C.a09 --------------------------------
+
+2045 : 3053             	leax	-13,u
+2047 : 3410             	pshs	x
+2049 : 17da3d           	lbsr	print_De
+204c : 3262             	leas	2,s
+204e : 308d0002         	leax	_5_,pc
+2052 : 2004             	bra	_5
+2054 :                  _5_
+2054 : 202d2000         	fcb	$20, $2d, $20, $0
+2058 :                  _5
+2058 : 3410             	pshs	x
+205a : 17da2c           	lbsr	print_De
+205d : 3262             	leas	2,s
+                        * 		if((fileList.FI_Attr != ATTR_VOLUME_ID) && (fileLi
+205f : e652             	ldb	-14,u
+2061 : 4f               	clra
+2062 : 830008           	subd	#$8
+2065 : 1027003b         	lbeq	_6
+2069 : e652             	ldb	-14,u
+206b : 4f               	clra
+206c : 830010           	subd	#$10
+206f : 10270031         	lbeq	_6
+                        * 			if(fileList.FI_Size.h != 0) HEXWORD2(fileList.FI_
+2073 : ecc8ee           	ldd	-18,u
+2076 : 830000           	subd	#$0
+2079 : 1027000a         	lbeq	_7
+207d : ecc8ee           	ldd	-18,u
+2080 : 3406             	pshs	d
+2082 : 17da13           	lbsr	HEXWORD2
+2085 : 3262             	leas	2,s
+                        * 			HEXWORD2(fileList.FI_Size.l); print_DebugMsg(" by
+2087 :                  _7
+2087 : ec50             	ldd	-16,u
+2089 : 3406             	pshs	d
+208b : 17da0a           	lbsr	HEXWORD2
+208e : 3262             	leas	2,s
+2090 : 308d0002         	leax	_8_,pc
+2094 : 2007             	bra	_8
+2096 :                  _8_
+2096 : 20627974657300   	fcb	$20, $62, $79, $74, $65, $73, $0
+209d :                  _8
+209d : 3410             	pshs	x
+209f : 17d9e7           	lbsr	print_De
+20a2 : 3262             	leas	2,s
+                        * 		}
+                        *     }  
+20a4 :                  _6
+                        * }
+20a4 : 16ff7e           	lbra	_3
+20a7 :                  _2
+20a7 : 32c4             	leas	,u
+20a9 : 35c0             	puls	u,pc
+                        * 
+                        * //----------------------------------- read a file --
+                        * readfile(filename) char* filename;
+                        * {
+                        * 	char c;
+                        * 	fileConfig_st *srcFilePtr;
+                        * 	
+                        * 	srcFilePtr = FILE_Open(filename, READ, &c);
+20ab :                  readfile
+20ab : 3440             	pshs	u
+20ad : 33e4             	leau	,s
+AS09 Assembler for M6809 [1.42].                                     Page   10
+-------------------------------- demoSD_C.a09 --------------------------------
+
+20af : 327d             	leas	-3,s
+20b1 : 305f             	leax	-1,u
+20b3 : 3410             	pshs	x
+20b5 : 4f               	clra
+20b6 : 5f               	clrb
+20b7 : 3406             	pshs	d
+20b9 : ec44             	ldd	4,u
+20bb : 3406             	pshs	d
+20bd : 178ebc           	lbsr	FILE_Ope
+20c0 : 3266             	leas	6,s
+20c2 : ed5d             	std	-3,u
+                        * 	if(srcFilePtr == 0)	{
+20c4 : ec5d             	ldd	-3,u
+20c6 : 830000           	subd	#$0
+20c9 : 10260025         	lbne	_9
+                        * 		print_DebugMsg("\nFile Opening Failed");
+20cd : 308d0002         	leax	_10_,pc
+20d1 : 2015             	bra	_10
+20d3 :                  _10_
+20d3 : 0a46696c65204f70 	fcb	$a, $46, $69, $6c, $65, $20, $4f, $70
+20db : 656e696e67204661 	fcb	$65, $6e, $69, $6e, $67, $20, $46, $61
+20e3 : 696c656400       	fcb	$69, $6c, $65, $64, $0
+20e8 :                  _10
+20e8 : 3410             	pshs	x
+20ea : 17d99c           	lbsr	print_De
+20ed : 3262             	leas	2,s
+                        * 	}
+                        * 	else {
+20ef : 16004b           	lbra	_11
+20f2 :                  _9
+                        * 		print_DebugMsg("\nFile Content: ");
+20f2 : 308d0002         	leax	_12_,pc
+20f6 : 2010             	bra	_12
+20f8 :                  _12_
+20f8 : 0a46696c6520436f 	fcb	$a, $46, $69, $6c, $65, $20, $43, $6f
+2100 : 6e74656e743a2000 	fcb	$6e, $74, $65, $6e, $74, $3a, $20, $0
+2108 :                  _12
+2108 : 3410             	pshs	x
+210a : 17d97c           	lbsr	print_De
+210d : 3262             	leas	2,s
+                        * 		while(1) {
+210f :                  _14
+                        * 			c = FILE_GetCh(srcFilePtr);
+210f : ec5d             	ldd	-3,u
+2111 : 3406             	pshs	d
+2113 : 179340           	lbsr	FILE_Get
+2116 : 3262             	leas	2,s
+2118 : e75f             	stb	-1,u
+                        * 			if(c == EOF) break;
+211a : e65f             	ldb	-1,u
+211c : 1d               	sex
+211d : 83001a           	subd	#$1a
+2120 : 10260003         	lbne	_15
+2124 : 16000d           	lbra	_13
+                        * 			BYTE2MON(c);			
+2127 :                  _15
+2127 : e65f             	ldb	-1,u
+2129 : 1d               	sex
+212a : 3406             	pshs	d
+212c : 17d9be           	lbsr	BYTE2MON
+212f : 3262             	leas	2,s
+                        * 		}
+AS09 Assembler for M6809 [1.42].                                     Page   11
+-------------------------------- demoSD_C.a09 --------------------------------
+
+                        * 		FILE_Close(srcFilePtr);
+2131 : 16ffdb           	lbra	_14
+2134 :                  _13
+2134 : ec5d             	ldd	-3,u
+2136 : 3406             	pshs	d
+2138 : 17927c           	lbsr	FILE_Clo
+213b : 3262             	leas	2,s
+                        * 	}
+                        * }
+213d :                  _11
+213d : 35d2             	puls	a,x,u,pc
+                        * 
+                        * //-------------------------------- write into a file
+                        * writefile(filename, data) char* filename; char* data
+                        * {	
+                        * 	char c;
+                        * 	fileConfig_st *srcFilePtr;
+                        * 	unsigned int cnt;
+                        * 	
+                        * 	print_DebugMsg("\nOpening");
+213f :                  writefil
+213f : 3440             	pshs	u
+2141 : 33e4             	leau	,s
+2143 : 327b             	leas	-5,s
+2145 : 308d0002         	leax	_16_,pc
+2149 : 2009             	bra	_16
+214b :                  _16_
+214b : 0a4f70656e696e67 	fcb	$a, $4f, $70, $65, $6e, $69, $6e, $67
+2153 : 00               	fcb	$0
+2154 :                  _16
+2154 : 3410             	pshs	x
+2156 : 17d930           	lbsr	print_De
+2159 : 3262             	leas	2,s
+                        * 	srcFilePtr = FILE_Open(filename, WRITE, &c);
+215b : 305f             	leax	-1,u
+215d : 3410             	pshs	x
+215f : cc0002           	ldd	#$2
+2162 : 3406             	pshs	d
+2164 : ec44             	ldd	4,u
+2166 : 3406             	pshs	d
+2168 : 178e11           	lbsr	FILE_Ope
+216b : 3266             	leas	6,s
+216d : ed5d             	std	-3,u
+                        * 	if(srcFilePtr == 0)	{
+216f : ec5d             	ldd	-3,u
+2171 : 830000           	subd	#$0
+2174 : 10260030         	lbne	_17
+                        * 		print_DebugMsg("\nFile Opening Failed!"); HEXBYTE2
+2178 : 308d0002         	leax	_18_,pc
+217c : 2016             	bra	_18
+217e :                  _18_
+217e : 0a46696c65204f70 	fcb	$a, $46, $69, $6c, $65, $20, $4f, $70
+2186 : 656e696e67204661 	fcb	$65, $6e, $69, $6e, $67, $20, $46, $61
+218e : 696c65642100     	fcb	$69, $6c, $65, $64, $21, $0
+2194 :                  _18
+2194 : 3410             	pshs	x
+2196 : 17d8f0           	lbsr	print_De
+2199 : 3262             	leas	2,s
+219b : e65f             	ldb	-1,u
+219d : 1d               	sex
+219e : 3406             	pshs	d
+21a0 : 17d92a           	lbsr	HEXBYTE2
+AS09 Assembler for M6809 [1.42].                                     Page   12
+-------------------------------- demoSD_C.a09 --------------------------------
+
+21a3 : 3262             	leas	2,s
+                        * 	}
+                        * 	else {
+21a5 : 16007e           	lbra	_19
+21a8 :                  _17
+                        * 		print_DebugMsg("\nFile Open");
+21a8 : 308d0002         	leax	_20_,pc
+21ac : 200b             	bra	_20
+21ae :                  _20_
+21ae : 0a46696c65204f70 	fcb	$a, $46, $69, $6c, $65, $20, $4f, $70
+21b6 : 656e00           	fcb	$65, $6e, $0
+21b9 :                  _20
+21b9 : 3410             	pshs	x
+21bb : 17d8cb           	lbsr	print_De
+21be : 3262             	leas	2,s
+                        * 		cnt=0;		
+21c0 : 4f               	clra
+21c1 : 5f               	clrb
+21c2 : ed5b             	std	-5,u
+                        * 		while(data[cnt]) {
+21c4 :                  _22
+21c4 : ec5b             	ldd	-5,u
+21c6 : ae46             	ldx	6,u
+21c8 : e68b             	ldb	d,x
+21ca : 1d               	sex
+21cb : 10270026         	lbeq	_21
+                        * 			FILE_PutCh(srcFilePtr, data[cnt++]);
+21cf : ec5b             	ldd	-5,u
+21d1 : c30001           	addd	#$1
+21d4 : ed5b             	std	-5,u
+21d6 : 830001           	subd	#$1
+21d9 : ae46             	ldx	6,u
+21db : e68b             	ldb	d,x
+21dd : 1d               	sex
+21de : 3406             	pshs	d
+21e0 : ec5d             	ldd	-3,u
+21e2 : 3406             	pshs	d
+21e4 : 17938d           	lbsr	FILE_Put
+21e7 : 3264             	leas	4,s
+                        * 			HEXBYTE2(cnt);
+21e9 : ec5b             	ldd	-5,u
+21eb : 3406             	pshs	d
+21ed : 17d8dd           	lbsr	HEXBYTE2
+21f0 : 3262             	leas	2,s
+                        * 		}
+                        * 				
+                        * 		FILE_PutCh(srcFilePtr, EOF);
+21f2 : 16ffcf           	lbra	_22
+21f5 :                  _21
+21f5 : cc001a           	ldd	#$1a
+21f8 : 3406             	pshs	d
+21fa : ec5d             	ldd	-3,u
+21fc : 3406             	pshs	d
+21fe : 179373           	lbsr	FILE_Put
+2201 : 3264             	leas	4,s
+                        * 		FILE_Close(srcFilePtr); print_DebugMsg("\nFile clo
+2203 : ec5d             	ldd	-3,u
+2205 : 3406             	pshs	d
+2207 : 1791ad           	lbsr	FILE_Clo
+220a : 3262             	leas	2,s
+220c : 308d0002         	leax	_23_,pc
+2210 : 200d             	bra	_23
+AS09 Assembler for M6809 [1.42].                                     Page   13
+-------------------------------- demoSD_C.a09 --------------------------------
+
+2212 :                  _23_
+2212 : 0a46696c6520636c 	fcb	$a, $46, $69, $6c, $65, $20, $63, $6c
+221a : 6f73656400       	fcb	$6f, $73, $65, $64, $0
+221f :                  _23
+221f : 3410             	pshs	x
+2221 : 17d865           	lbsr	print_De
+2224 : 3262             	leas	2,s
+                        * 	}
+                        * }
+2226 :                  _19
+2226 : 32c4             	leas	,u
+2228 : 35c0             	puls	u,pc
+                        * 
+                        * //-------------------------------- delete a file ---
+                        * deletefile(filename) char* filename;
+                        * {	
+                        *  	print_DebugMsg("\nDeleting");	
+222a :                  deletefi
+222a : 3440             	pshs	u
+222c : 33e4             	leau	,s
+222e : 308d0002         	leax	_24_,pc
+2232 : 200a             	bra	_24
+2234 :                  _24_
+2234 : 0a44656c6574696e 	fcb	$a, $44, $65, $6c, $65, $74, $69, $6e
+223c : 6700             	fcb	$67, $0
+223e :                  _24
+223e : 3410             	pshs	x
+2240 : 17d846           	lbsr	print_De
+2243 : 3262             	leas	2,s
+                        * 	if(FILE_Delete(filename) == FILE_OPENED_CANNOT_BE_D
+2245 : ec44             	ldd	4,u
+2247 : 3406             	pshs	d
+2249 : 179182           	lbsr	FILE_Del
+224c : 3262             	leas	2,s
+224e : 830006           	subd	#$6
+2251 : 10260030         	lbne	_25
+2255 : 308d0002         	leax	_26_,pc
+2259 : 2020             	bra	_26
+225b :                  _26_
+225b : 0a46696c65206973 	fcb	$a, $46, $69, $6c, $65, $20, $69, $73
+2263 : 206f70656e206361 	fcb	$20, $6f, $70, $65, $6e, $20, $63, $61
+226b : 6e6e6f7420626520 	fcb	$6e, $6e, $6f, $74, $20, $62, $65, $20
+2273 : 64656c6574656400 	fcb	$64, $65, $6c, $65, $74, $65, $64, $0
+227b :                  _26
+227b : 3410             	pshs	x
+227d : 17d809           	lbsr	print_De
+2280 : 3262             	leas	2,s
+                        * 	else print_DebugMsg("\nDone, file deleted");
+2282 : 160021           	lbra	_27
+2285 :                  _25
+2285 : 308d0002         	leax	_28_,pc
+2289 : 2014             	bra	_28
+228b :                  _28_
+228b : 0a446f6e652c2066 	fcb	$a, $44, $6f, $6e, $65, $2c, $20, $66
+2293 : 696c652064656c65 	fcb	$69, $6c, $65, $20, $64, $65, $6c, $65
+229b : 74656400         	fcb	$74, $65, $64, $0
+229f :                  _28
+229f : 3410             	pshs	x
+22a1 : 17d7e5           	lbsr	print_De
+22a4 : 3262             	leas	2,s
+                        * }
+22a6 :                  _27
+AS09 Assembler for M6809 [1.42].                                     Page   14
+-------------------------------- demoSD_C.a09 --------------------------------
+
+22a6 : 35c0             	puls	u,pc
+                        * 
+                        * /***************************************************
+                        * /*	main program
+                        * /***************************************************
+                        * 
+                        * main() {
+                        * 	char cnt;
+                        * 	char* pData;
+                        * 	char* filename;
+                        * 
+                        * 	if(initDISK() != 0) return;
+22a8 :                  main
+22a8 : 3440             	pshs	u
+22aa : 33e4             	leau	,s
+22ac : 327b             	leas	-5,s
+22ae : 17839d           	lbsr	initDISK
+22b1 : 830000           	subd	#$0
+22b4 : 10270004         	lbeq	_29
+                        * 	
+                        * 	print_DebugMsg("\n\nListing the files");
+22b8 : 32c4             	leas	,u
+22ba : 35c0             	puls	u,pc
+22bc :                  _29
+22bc : 308d0002         	leax	_30_,pc
+22c0 : 2014             	bra	_30
+22c2 :                  _30_
+22c2 : 0a0a4c697374696e 	fcb	$a, $a, $4c, $69, $73, $74, $69, $6e
+22ca : 6720746865206669 	fcb	$67, $20, $74, $68, $65, $20, $66, $69
+22d2 : 6c657300         	fcb	$6c, $65, $73, $0
+22d6 :                  _30
+22d6 : 3410             	pshs	x
+22d8 : 17d7ae           	lbsr	print_De
+22db : 3262             	leas	2,s
+                        * 	dir();
+22dd : 17fd3e           	lbsr	dir
+                        * 	
+                        * 	filename = "FILE02.TXT";	
+22e0 : 308d0002         	leax	_31_,pc
+22e4 : 200b             	bra	_31
+22e6 :                  _31_
+22e6 : 46494c4530322e54 	fcb	$46, $49, $4c, $45, $30, $32, $2e, $54
+22ee : 585400           	fcb	$58, $54, $0
+22f1 :                  _31
+22f1 : 1f10             	tfr	x,d
+22f3 : ed5b             	std	-5,u
+                        * 	print_DebugMsg("\n\nCreating the file "); print_Deb
+22f5 : 308d0002         	leax	_32_,pc
+22f9 : 2015             	bra	_32
+22fb :                  _32_
+22fb : 0a0a437265617469 	fcb	$a, $a, $43, $72, $65, $61, $74, $69
+2303 : 6e67207468652066 	fcb	$6e, $67, $20, $74, $68, $65, $20, $66
+230b : 696c652000       	fcb	$69, $6c, $65, $20, $0
+2310 :                  _32
+2310 : 3410             	pshs	x
+2312 : 17d774           	lbsr	print_De
+2315 : 3262             	leas	2,s
+2317 : ec5b             	ldd	-5,u
+2319 : 3406             	pshs	d
+231b : 17d76b           	lbsr	print_De
+231e : 3262             	leas	2,s
+                        * 	pData = "hello SDcard";
+AS09 Assembler for M6809 [1.42].                                     Page   15
+-------------------------------- demoSD_C.a09 --------------------------------
+
+2320 : 308d0002         	leax	_33_,pc
+2324 : 200d             	bra	_33
+2326 :                  _33_
+2326 : 68656c6c6f205344 	fcb	$68, $65, $6c, $6c, $6f, $20, $53, $44
+232e : 6361726400       	fcb	$63, $61, $72, $64, $0
+2333 :                  _33
+2333 : 1f10             	tfr	x,d
+2335 : ed5d             	std	-3,u
+                        * 	writefile(filename, pData);	//append the data when 
+2337 : ec5d             	ldd	-3,u
+2339 : 3406             	pshs	d
+233b : ec5b             	ldd	-5,u
+233d : 3406             	pshs	d
+233f : 17fdfd           	lbsr	writefil
+2342 : 3264             	leas	4,s
+                        * 
+                        * 	print_DebugMsg("\n\nListing the change");
+2344 : 308d0002         	leax	_34_,pc
+2348 : 2015             	bra	_34
+234a :                  _34_
+234a : 0a0a4c697374696e 	fcb	$a, $a, $4c, $69, $73, $74, $69, $6e
+2352 : 6720746865206368 	fcb	$67, $20, $74, $68, $65, $20, $63, $68
+235a : 616e676500       	fcb	$61, $6e, $67, $65, $0
+235f :                  _34
+235f : 3410             	pshs	x
+2361 : 17d725           	lbsr	print_De
+2364 : 3262             	leas	2,s
+                        * 	dir();
+2366 : 17fcb5           	lbsr	dir
+                        * 
+                        * 	print_DebugMsg("\n\nRead again the file");
+2369 : 308d0002         	leax	_35_,pc
+236d : 2016             	bra	_35
+236f :                  _35_
+236f : 0a0a526561642061 	fcb	$a, $a, $52, $65, $61, $64, $20, $61
+2377 : 6761696e20746865 	fcb	$67, $61, $69, $6e, $20, $74, $68, $65
+237f : 2066696c6500     	fcb	$20, $66, $69, $6c, $65, $0
+2385 :                  _35
+2385 : 3410             	pshs	x
+2387 : 17d6ff           	lbsr	print_De
+238a : 3262             	leas	2,s
+                        * 	readfile(filename);
+238c : ec5b             	ldd	-5,u
+238e : 3406             	pshs	d
+2390 : 17fd18           	lbsr	readfile
+2393 : 3262             	leas	2,s
+                        * 
+                        * 	print_DebugMsg("\n\ndelete the file");
+2395 : 308d0002         	leax	_36_,pc
+2399 : 2012             	bra	_36
+239b :                  _36_
+239b : 0a0a64656c657465 	fcb	$a, $a, $64, $65, $6c, $65, $74, $65
+23a3 : 207468652066696c 	fcb	$20, $74, $68, $65, $20, $66, $69, $6c
+23ab : 6500             	fcb	$65, $0
+23ad :                  _36
+23ad : 3410             	pshs	x
+23af : 17d6d7           	lbsr	print_De
+23b2 : 3262             	leas	2,s
+                        * 	deletefile(filename);
+23b4 : ec5b             	ldd	-5,u
+23b6 : 3406             	pshs	d
+23b8 : 17fe6f           	lbsr	deletefi
+AS09 Assembler for M6809 [1.42].                                     Page   16
+-------------------------------- demoSD_C.a09 --------------------------------
+
+23bb : 3262             	leas	2,s
+                        * 	
+                        * 	print_DebugMsg("\n\nListing the remaining files");
+23bd : 308d0002         	leax	_37_,pc
+23c1 : 201e             	bra	_37
+23c3 :                  _37_
+23c3 : 0a0a4c697374696e 	fcb	$a, $a, $4c, $69, $73, $74, $69, $6e
+23cb : 6720746865207265 	fcb	$67, $20, $74, $68, $65, $20, $72, $65
+23d3 : 6d61696e696e6720 	fcb	$6d, $61, $69, $6e, $69, $6e, $67, $20
+23db : 66696c657300     	fcb	$66, $69, $6c, $65, $73, $0
+23e1 :                  _37
+23e1 : 3410             	pshs	x
+23e3 : 17d6a3           	lbsr	print_De
+23e6 : 3262             	leas	2,s
+                        * 	dir();
+23e8 : 17fc33           	lbsr	dir
+                        * 	
+                        * 	print_DebugMsg("\n\nback to prompt\n\n");
+23eb : 308d0002         	leax	_38_,pc
+23ef : 2013             	bra	_38
+23f1 :                  _38_
+23f1 : 0a0a6261636b2074 	fcb	$a, $a, $62, $61, $63, $6b, $20, $74
+23f9 : 6f2070726f6d7074 	fcb	$6f, $20, $70, $72, $6f, $6d, $70, $74
+2401 : 0a0a00           	fcb	$a, $a, $0
+2404 :                  _38
+2404 : 3410             	pshs	x
+2406 : 17d680           	lbsr	print_De
+2409 : 3262             	leas	2,s
+                        * }
+240b : 32c4             	leas	,u
+240d : 35c0             	puls	u,pc
+                        * 
+                        * // LF CR to end the file requested by the Micro-C co
+0000 =                  _GLOBALS	equ	0
+                        
+                        *
+                        * micro-c driver under flex
+                        *
+                        *	12-dec-81	m.ohta,h.tezuka
+                        *
+                        
+240f : 3436             _00001	pshs	d,x,y		;multiply	
+2411 : a6e4             		lda	,s
+2413 : e663             		ldb	3,s
+2415 : 3d               		mul
+2416 : e764             		stb	4,s		
+2418 : ec61             		ldd	1,s
+241a : 3d               		mul
+241b : e765             		stb	5,s		
+241d : a661             		lda	1,s
+241f : e663             		ldb	3,s
+2421 : 3d               		mul
+2422 : ab64             		adda	4,s
+2424 : ab65             		adda	5,s		
+2426 : 3266             		leas	6,s
+2428 : 39               		rts
+                        
+2429 : 6fe2             _00002	clr	,-s				; signed divide	
+242b : 8c0000           		cmpx	#0
+242e : 2a09             		bpl	_02000		
+2430 : 63e4             		com	,s		
+2432 : 1e01             		exg	d,x
+AS09 Assembler for M6809 [1.42].                                     Page   17
+-------------------------------- demoSD_C.a09 --------------------------------
+
+2434 : 170095           		lbsr	_00020
+2437 : 1e01             		exg	d,x
+2439 : 4d               _02000	tsta
+243a : 2a05             		bpl	_02001		
+243c : 63e4             		com	,s		
+243e : 17008b           		lbsr	_00020	
+2441 : 17008d           _02001	lbsr	_00010
+2444 : 1f10             		tfr	x,d
+2446 : 6de0             		tst	,s+
+2448 : 2a03             		bpl	_02002		
+244a : 17007f           		lbsr	_00020	
+244d : 39               _02002	rts
+                        
+244e : 170080           _00003	lbsr	_00010		; unsigned divide
+2451 : 1f10             		tfr	x,d
+2453 : 39               		rts
+                        
+2454 : 6fe2             _00004	clr	,-s				; signed modulous	
+2456 : 8c0000           		cmpx	#0
+2459 : 2a06             		bpl	_04000		
+245b : 1e01             		exg	d,x
+245d : 8d6d             		bsr	_00020
+245f : 1e01             		exg	d,x
+2461 : 4d               _04000	tsta
+2462 : 2a04             		bpl	_04001		
+2464 : 63e4             		com	,s
+2466 : 8d64             		bsr	_00020	
+2468 : 8d67             _04001	bsr	_00010	
+246a : 6de0             		tst	,s+
+246c : 2a02             		bpl	_04002		
+246e : 8d5c             		bsr	_00020	
+2470 : 39               _04002	rts
+                        
+2471 : 8d5e             _00005	bsr	_00010		; unsigned modulous
+2473 : 39               		rts
+                        
+2474 : 8c0000           _00006	cmpx	#0		; signed left shift
+2477 : 2b08             		bmi	_06001 
+2479 : 270e             _06000	beq	_06009
+247b : 58               		lslb
+247c : 49               		rola
+247d : 301f             		leax	-1,x
+247f : 20f8             		bra	_06000	
+2481 : 2706             _06001	beq	_06009
+2483 : 47               		asra
+2484 : 56               		rorb
+2485 : 3001             		leax	1,x
+2487 : 20f8             		bra	_06001	
+2489 : 39               _06009	rts
+                        
+248a : 8c0000           _00007	cmpx	#0		; unsined left shift
+248d : 2b08             		bmi	_07001	
+248f : 270e             _07000	beq	_07009
+2491 : 58               		lslb
+2492 : 49               		rola
+2493 : 301f             		leax	-1,x
+2495 : 20f8             		bra	_07000	
+2497 : 2706             _07001	beq	_07009
+2499 : 44               		lsra
+249a : 56               		rorb
+249b : 3001             		leax	1,x
+249d : 20f8             		bra	_07001	
+AS09 Assembler for M6809 [1.42].                                     Page   18
+-------------------------------- demoSD_C.a09 --------------------------------
+
+249f : 39               _07009	rts
+                        
+24a0 : 8c0000           _00008	cmpx	#0		; signed right shift
+24a3 : 2b08             		bmi	_08001	
+24a5 : 270e             _08000	beq	_08009
+24a7 : 47               		asra
+24a8 : 56               		rorb
+24a9 : 301f             		leax	-1,x
+24ab : 20f8             		bra	_08000
+                        	
+24ad : 2706             _08001	beq	_08009
+24af : 58               		lslb
+24b0 : 49               		rola
+24b1 : 3001             		leax	1,x
+24b3 : 20f8             		bra	_08001	
+24b5 : 39               _08009	rts
+                        
+24b6 : 8c0000           _00009	cmpx	#0		; unsined right shift
+24b9 : 2b08             		bmi	_09001	
+24bb : 270e             _09000	beq	_09009
+24bd : 44               		lsra
+24be : 56               		rorb
+24bf : 301f             		leax	-1,x
+24c1 : 20f8             		bra	_09000	
+24c3 : 2706             _09001	beq	_09009
+24c5 : 58               		lslb
+24c6 : 49               		rola
+24c7 : 3001             		leax	1,x
+24c9 : 20f8             		bra	_09001	
+24cb : 39               _09009	rts
+                        
+24cc : 40               _00020	nega			;negate d reg
+24cd : 50               		negb
+24ce : 8200             		sbca	#0
+24d0 : 39               		rts
+                        
+24d1 : 3416             _00010	pshs	d,x		;divide subroutine	
+24d3 : 4f               		clra
+24d4 : 5f               		clrb	
+24d5 : 8e0011           		ldx	#17
+                        	
+24d8 : a362             _00011	subd	2,s
+24da : 2402             		bcc	_00012	
+24dc : e362             		addd	2,s
+                        	
+24de : 6961             _00012	rol	1,s
+24e0 : 69e4             		rol	,s
+24e2 : 59               		rolb
+24e3 : 49               		rola	
+24e4 : 301f             		leax	-1,x
+24e6 : 26f0             		bne	_00011	
+24e8 : 46               		rora
+24e9 : 56               		rorb	
+24ea : 6361             		com	1,s
+24ec : 63e4             		com	,s
+24ee : 3510             		puls	x	
+24f0 : 3262             		leas	2,s
+24f2 : 39               		rts
+                        
+                        
+24f3 : 12               _progEnd			nop		; label to init to GV stack C code
+                        
+AS09 Assembler for M6809 [1.42].                                     Page   19
+-------------------------------- demoSD_C.a09 --------------------------------
+
+                        ;----------------- asm resources ROM 2.1.0.3 ---------
+eebc =                  APL_OutputStream	equ		$eebc
+eebc =                  APL_Outp			equ		APL_OutputStream
+f2ed =                  sMONITORSTART 		equ 	$f2ed
+f357 =                  sMonProcessCmd 		equ		$f357
+                        
+fa89 =                  PUTSTR				equ		$fa89
+fa89 =                  print_De 			equ		PUTSTR
+facd =                  HEXBYTE2			equ		$facd
+fa98 =                  HEXWORD2			equ		$fa98
+faed =                  BYTE2MON			equ		$faed
+fb26 =                  msDelay				equ		$fb26
+                        
+efc1 =                  setpoint			equ		$efc1
+efe5 =                  setTile				equ		$efe5
+f025 =                  setSound			equ		$f025
+ef59 =                  isKeyboa			equ		$ef59
+ef3c =                  getKeybo			equ		$ef3c
+f042 =                  sendCont 			equ 	$f042
+                        
+a64e =                  initDISK			equ		$a64e
+b3b7 =                  FILE_Clo 			equ 	$b3b7
+b3ce =                  FILE_Del 			equ 	$b3ce
+b456 =                  FILE_Get 			equ 	$b456
+bc56 =                  FILE_Lis 			equ 	$bc56
+af7c =                  FILE_Ope 			equ 	$af7c
+b574 =                  FILE_Put 			equ 	$b574
+                        
+                        ;-----------------------------------------------------
+                        
+                        					end
+No errors in pass 2.

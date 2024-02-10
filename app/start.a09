@@ -1,0 +1,24 @@
+; coding convention:
+; normal function paramters are passed by the stack: arg 1 is "2,s", arg 2 is "4,s", ...
+; the returned value is in D
+; the registers D and X can modified in the called function. Y is used as GV pointer. U is preserved.
+;
+; special function lead by an 's' (e.g. sFUNCTION) is a low level fast assembler execution. The parameters are passed by the registers.
+;
+					
+;{ ----------------------------------- Program testing (download in RAM with MON)-----------------------------------------
+					code
+					org     $2000
+
+;-------------------- program start ----------------------------					
+START				ldx		#VERSION							; version at run begin					
+					pshs	x
+					lbsr	PUTSTR 					
+					leas	2,s
+
+					ldy		#_progEnd							; the current program global variables allocation					
+					lbsr	main								; C environement recussive call					
+					rts
+					
+VERSION     		db      13,"demo 0.1, ",0					; version
+		

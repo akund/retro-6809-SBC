@@ -1,0 +1,3225 @@
+AS09 Assembler for M6809 [1.42].                                     Page    1
+-------------------------------- sokobanC.a09 --------------------------------
+
+-------------------------------- Symbol Table --------------------------------
+
+              Symbol   Value        Decimal
+
+            APL_Outp : $eebc          61116
+    APL_OutputStream : $eebc          61116
+            BYTE2MON : $faed          64237
+            FILE_Clo : $b3b7          46007
+            FILE_Del : $b3ce          46030
+            FILE_Get : $b456          46166
+            FILE_Lis : $bc56          48214
+            FILE_Ope : $af7c          44924
+            FILE_Put : $b574          46452
+            getKeybo : $ef3c          61244
+            getMapTi : $23be           9150
+            HEXBYTE2 : $facd          64205
+            HEXWORD2 : $fa98          64152
+            initDISK : $a64e          42574
+            isKeyboa : $ef59          61273
+                main : $2541           9537
+             msDelay : $fb26          64294
+              PUTSTR : $fa89          64137
+            printSco : $2435           9269
+            print_De : $fa89          64137
+               START : $2000           8192
+            sendCont : $f042          61506
+            sendStri : $23dd           9181
+            sendstep : $235b           9051
+            setpoint : $efc1          61377
+            setSound : $f025          61477
+             setTile : $efe5          61413
+       sMONITORSTART : $f2ed          62189
+      sMonProcessCmd : $f357          62295
+            updateMa : $237e           9086
+            updateRA : $201e           8222
+             VERSION : $2012           8210
+            _GLOBALS : $0000              0
+            _progEnd : $3644          13892
+              _00001 : $3560          13664
+              _00002 : $357a          13690
+              _00003 : $359f          13727
+              _00004 : $35a5          13733
+              _00005 : $35c2          13762
+              _00006 : $35c5          13765
+              _00007 : $35db          13787
+              _00008 : $35f1          13809
+              _00009 : $3607          13831
+              _00010 : $3622          13858
+              _00011 : $3629          13865
+              _00012 : $362f          13871
+              _00020 : $361d          13853
+              _02000 : $358a          13706
+              _02001 : $3592          13714
+              _02002 : $359e          13726
+              _04000 : $35b2          13746
+              _04001 : $35b9          13753
+              _04002 : $35c1          13761
+              _06000 : $35ca          13770
+              _06001 : $35d2          13778
+              _06009 : $35da          13786
+              _07000 : $35e0          13792
+              _07001 : $35e8          13800
+AS09 Assembler for M6809 [1.42].                                     Page    2
+-------------------------------- sokobanC.a09 --------------------------------
+
+              _07009 : $35f0          13808
+              _08000 : $35f6          13814
+              _08001 : $35fe          13822
+              _08009 : $3606          13830
+              _09000 : $360c          13836
+              _09001 : $3614          13844
+              _09009 : $361c          13852
+                 _10 : $233d           9021
+                _100 : $2fc3          12227
+                _101 : $2ff0          12272
+                _102 : $3559          13657
+                _103 : $2ffd          12285
+                _104 : $30c9          12489
+                _105 : $30c0          12480
+                _106 : $308b          12427
+                _107 : $3073          12403
+                _108 : $308b          12427
+                _109 : $30c6          12486
+                 _11 : $232f           9007
+                _110 : $30d1          12497
+                _111 : $3353          13139
+                _112 : $312f          12591
+                _113 : $327d          12925
+                _114 : $3147          12615
+                _115 : $3248          12872
+                _116 : $317c          12668
+                _117 : $31da          12762
+                _118 : $31f7          12791
+                _119 : $327d          12925
+                 _12 : $233d           9021
+                _120 : $3340          13120
+                _121 : $3295          12949
+                _122 : $32f3          13043
+                _123 : $3310          13072
+                _124 : $335b          13147
+                _125 : $33f1          13297
+                _126 : $338f          13199
+                _127 : $33c4          13252
+                _128 : $33f9          13305
+                _129 : $3559          13657
+                 _13 : $236a           9066
+                _130 : $342d          13357
+                _131 : $3462          13410
+                _132 : $3504          13572
+                _133 : $34e0          13536
+                _134 : $34b2          13490
+                _135 : $3501          13569
+                _136 : $3501          13569
+                _137 : $34fe          13566
+                _138 : $3522          13602
+                _13_ : $2367           9063
+                 _14 : $2433           9267
+                 _15 : $23f6           9206
+                 _16 : $240d           9229
+                 _17 : $241f           9247
+                 _18 : $247d           9341
+                 _19 : $243f           9279
+                  _2 : $220c           8716
+                 _20 : $2473           9331
+                 _21 : $2473           9331
+                 _22 : $24bd           9405
+                 _23 : $2481           9345
+AS09 Assembler for M6809 [1.42].                                     Page    3
+-------------------------------- sokobanC.a09 --------------------------------
+
+                 _24 : $24b3           9395
+                 _25 : $24ff           9471
+                 _26 : $24c1           9409
+                 _27 : $24f5           9461
+                 _28 : $24f5           9461
+                 _29 : $253f           9535
+                 _2_ : $202c           8236
+                  _3 : $2348           9032
+                 _30 : $2503           9475
+                 _31 : $2535           9525
+                 _32 : $2565           9573
+                _32_ : $254f           9551
+                 _33 : $2585           9605
+                _33_ : $256f           9583
+                 _34 : $259a           9626
+                _34_ : $258f           9615
+                 _35 : $2770          10096
+                _35_ : $25cc           9676
+                 _36 : $27a5          10149
+                 _37 : $277a          10106
+                 _38 : $2799          10137
+                 _39 : $2821          10273
+                  _4 : $2216           8726
+                 _40 : $27ab          10155
+                 _41 : $2815          10261
+                 _42 : $2815          10261
+                 _43 : $27bd          10173
+                 _44 : $2809          10249
+                 _45 : $28a1          10401
+                 _46 : $2868          10344
+                 _47 : $2895          10389
+                 _48 : $355c          13660
+                 _49 : $28b2          10418
+                  _5 : $233d           9021
+                 _50 : $2f05          12037
+                 _51 : $28f6          10486
+                 _52 : $2e80          11904
+                 _53 : $290e          10510
+                 _54 : $2e7a          11898
+                 _55 : $2933          10547
+                 _56 : $2a7e          10878
+                 _57 : $29df          10719
+                 _58 : $29a2          10658
+                 _59 : $29d8          10712
+                  _6 : $22c3           8899
+                 _60 : $29df          10719
+                 _61 : $2a52          10834
+                 _62 : $2a72          10866
+                 _63 : $2a86          10886
+                 _64 : $2bd1          11217
+                 _65 : $2b32          11058
+                 _66 : $2af5          10997
+                 _67 : $2b2b          11051
+                 _68 : $2b32          11058
+                 _69 : $2ba5          11173
+                  _7 : $223f           8767
+                 _70 : $2bc5          11205
+                 _71 : $2bd9          11225
+                 _72 : $2d27          11559
+                 _73 : $2c85          11397
+                 _74 : $2c48          11336
+                 _75 : $2c7e          11390
+AS09 Assembler for M6809 [1.42].                                     Page    4
+-------------------------------- sokobanC.a09 --------------------------------
+
+                 _76 : $2c85          11397
+                 _77 : $2cf8          11512
+                 _78 : $2d18          11544
+                 _79 : $2d2f          11567
+                  _8 : $22b2           8882
+                 _80 : $2e7a          11898
+                 _81 : $2ddb          11739
+                 _82 : $2d9e          11678
+                 _83 : $2dd4          11732
+                 _84 : $2ddb          11739
+                 _85 : $2e4e          11854
+                 _86 : $2e6e          11886
+                 _87 : $2eb9          11961
+                 _88 : $2f05          12037
+                 _89 : $2f05          12037
+                  _9 : $22c0           8896
+                 _90 : $2f05          12037
+                 _91 : $2eda          11994
+                 _92 : $2ef9          12025
+                 _93 : $2ff0          12272
+                 _94 : $2f24          12068
+                 _95 : $2f51          12113
+                 _96 : $2f59          12121
+                 _97 : $2f86          12166
+                 _98 : $2f8e          12174
+                 _99 : $2fbb          12219
+            __6809__ : $0001              1
+
+209 labels used
+
+2853 lines read, no errors in pass 1.
+AS09 Assembler for M6809 [1.42].                                     Page    5
+-------------------------------- sokobanC.a09 --------------------------------
+
+                        ; coding convention:
+                        ; normal function paramters are passed by the stack: a
+                        ; the returned value is in D
+                        ; the registers D and X can modified in the called fun
+                        ;
+                        ; special function lead by an 's' (e.g. sFUNCTION) is 
+                        ;
+                        					
+                        ;{ ----------------------------------- Program testing
+                        					code
+2000 =                  					org     $2000
+                        
+                        ;-------------------- program start ------------------
+2000 : 8e2012           START				ldx		#VERSION							; version at run begin			
+2003 : 3410             					pshs	x
+2005 : 17da81           					lbsr	PUTSTR 					
+2008 : 3262             					leas	2,s
+                        
+200a : 108e3644         					ldy		#_progEnd							; the current program global
+200e : 170530           					lbsr	main								; C environement recussive call	
+2011 : 39               					rts
+                        					
+2012 : 0d64656d6f2030.. VERSION     		db      13,"demo 0.1, ",0					; version
+                        		
+                        * micro-C(ver 0.4.1), 1981-1987 Masataka Ohta, Hiroshi
+                        * /***************************************************
+                        * /*                                                  
+                        * /* file:           main.c			                        
+                        * /*                                                  
+                        * /* source:        2021, written by Adrian Kundert (a
+                        * /*                                                  
+                        * /* description:   Sokoban game (C application for mi
+                        * /*                                                  
+                        * /* This library is free software; you can redistribu
+                        * /* GNU Lesser General Public License as published by
+                        * /* either version 2.1 of the License, or (at your op
+                        * /*                                                  
+                        * /* This library is distributed in the hope that it w
+                        * /* without even the implied warranty of MERCHANTABIL
+                        * /* See the GNU Lesser General Public License for mor
+                        * /*                                                  
+                        * /***************************************************
+                        * 
+                        * // ! Micro-C variable max 14 characters, only the fi
+                        * #define true 			1
+                        * #define false 			0
+                        * 
+                        * #define TileMemSize 	32
+                        * #define RAMcontCnt 		10
+                        * 
+                        * // APL PS2 keyboard
+                        * #define UPARROW			0x5e
+                        * #define LEFTARROW		0x09
+                        * #define DOWNARROW		0x12
+                        * #define RIGHTARROW		0x11
+                        * 
+                        * #define SCREEN_ROW		20
+                        * #define SCREEN_COL		21
+                        * #define MAP_SIZE		420 //SCREEN_ROW * SCREEN_COL
+                        * 
+                        * #define iEMPTY		0
+                        * #define iWALL		1
+AS09 Assembler for M6809 [1.42].                                     Page    6
+-------------------------------- sokobanC.a09 --------------------------------
+
+                        * #define iSTORAGE	2
+                        * #define iBOX		3
+                        * #define iSTO_BOX	4
+                        * #define iMAN_STD	5
+                        * #define iPU1		6
+                        * #define iPU2_MAN	7
+                        * #define iPU2_MHB	8
+                        * #define iPU2_HB		9
+                        * 
+                        * #define offset_D  5
+                        * 
+                        * #define iSOUND 		5 // re-use iMAN_STD
+                        * 
+                        * #define PACE		35
+                        *  
+                        * updateRAMTile(heading, tileIndex) unsigned char head
+                        * {
+                        * 	unsigned char value;	
+                        * 	unsigned char RAM_Container_tmp[TileMemSize];
+                        * 	unsigned char n;
+                        * 	unsigned char* SOKOtile;
+                        * 	SOKOtile = {
+201e :                  updateRA
+201e : 3440             	pshs	u
+2020 : 33e4             	leau	,s
+2022 : 32e8dc           	leas	-36,s
+                        * 	
+                        * 	// EMPTY
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 
+                        * 	// WALL,
+                        * 	0x14, 0xB4, 0x14, 0xB4,
+                        * 	0x14, 0xB4, 0x14, 0xB4,
+                        * 	0x0, 0x0, 0x0, 0x0,
+                        * 	0xB4, 0xA0, 0xB4, 0xA0,
+                        * 	0xB4, 0xA0, 0xB4, 0xA0,
+                        * 	0x0, 0x0, 0x0, 0x0,
+                        * 	0x14, 0xB4, 0x14, 0xB4,
+                        * 	0x14, 0xB4, 0x14, 0xB4,
+                        * 
+                        * 	// STORAGE
+                        * 	0x6C, 0x60, 0xC, 0x6C,
+                        * 	0x6C, 0xC, 0x60, 0x6C,
+                        * 	0x60, 0x6C, 0x6C, 0xC,
+                        * 	0xC, 0x6C, 0x6C, 0x60,
+                        * 	0xC, 0x6C, 0x6C, 0x60,
+                        * 	0x60, 0x6C, 0x6C, 0xC,
+                        * 	0x6C, 0xC, 0x60, 0x6C,
+                        * 	0x6C, 0x60, 0xC, 0x6C,
+                        * 
+                        * 	// BOX
+                        * 	0x0, 0x0, 0x0, 0x0,
+                        * 	0x18, 0xD8, 0xD8, 0xC0,
+                        * 	0x18, 0xD8, 0xD8, 0xC0,
+                        * 	0x18, 0xD8, 0xD8, 0xC0,
+AS09 Assembler for M6809 [1.42].                                     Page    7
+-------------------------------- sokobanC.a09 --------------------------------
+
+                        * 	0x18, 0xD8, 0xD8, 0xC0,
+                        * 	0x18, 0xD8, 0xD8, 0xC0,
+                        * 	0x18, 0xD8, 0xD8, 0xC0,
+                        * 	0x0, 0x0, 0x0, 0x0,
+                        * 
+                        * 	// STORED_BOX
+                        * 	0xFC, 0xFC, 0xFC, 0xFC,
+                        * 	0xF8, 0xD8, 0xD8, 0xDC,
+                        * 	0xF8, 0xD8, 0xD8, 0xDC,
+                        * 	0xF8, 0xD8, 0xD8, 0xDC,
+                        * 	0xF8, 0xD8, 0xD8, 0xDC,
+                        * 	0xF8, 0xD8, 0xD8, 0xDC,
+                        * 	0xF8, 0xD8, 0xD8, 0xDC,
+                        * 	0xFC, 0xFC, 0xFC, 0xFC,
+                        * 
+                        * 	// MAN_STANDING_RIGHT
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0xCC, 0x6C,
+                        * 	0x6C, 0x74, 0xAC, 0x6C,
+                        * 	0x6C, 0x70, 0x8C, 0x6C,
+                        * 	0x6C, 0x70, 0x90, 0x6C,
+                        * 	0x6C, 0x70, 0x8C, 0x6C,
+                        * 	0x6C, 0x74, 0xAC, 0x6C,
+                        * 	0x6C, 0x6C, 0xCC, 0x6C,
+                        * 
+                        * 	// PUSHINGtwo_RIGHT
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x74, 0xB8,
+                        * 	0x6C, 0x6C, 0x74, 0x6C,
+                        * 	0x6C, 0x60, 0xB0, 0x8C,
+                        * 	0x6C, 0x6C, 0xB0, 0x90,
+                        * 	0x6C, 0x6C, 0xB0, 0x80,
+                        * 	0x6C, 0x6C, 0x74, 0x6C,
+                        * 	0x6C, 0x6C, 0x74, 0xB8,
+                        * 
+                        * 	// PUSHINGtwo_MAN_ONLY_RIGHT
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0xB4, 0xCC, 0x6C,
+                        * 	0x6C, 0xAC, 0x6C, 0x6C,
+                        * 	0x74, 0x90, 0x0C, 0x6C,
+                        * 	0x74, 0x90, 0x8C, 0x6C,
+                        * 	0x14, 0x90, 0x6C, 0x6C,
+                        * 	0x6C, 0xAC, 0x6C, 0x6C,
+                        * 	0x6C, 0xB4, 0xCC, 0x6C,
+                        * 
+                        * 	// PUSHINGtwo_MAN_BOX_RIGHT
+                        * 	0x6C, 0x6C, 0x60, 0x0, 	// pushing half box
+                        * 	0x6C, 0xB4, 0xC0, 0xD8,
+                        * 	0x6C, 0xAC, 0x60, 0xD8,
+                        * 	0x74, 0x90, 0x00, 0xD8,
+                        * 	0x74, 0x90, 0x80, 0xD8,
+                        * 	0x14, 0x90, 0x60, 0xD8,
+                        * 	0x6C, 0xAC, 0x60, 0xD8,
+                        * 	0x6C, 0xB4, 0xC0, 0x0,
+                        * 
+                        * 	// PUSHINGtwo_HALF_BOX_RIGHT
+                        * 	0x00, 0x00, 0xC, 0x6C,	// next tile second half box
+                        * 	0xD8, 0xD8, 0xC, 0x6C,
+                        * 	0xD8, 0xD8, 0xC, 0x6C,
+                        * 	0xD8, 0xD8, 0xC, 0x6C,
+                        * 	0xD8, 0xD8, 0xC, 0x6C,
+                        * 	0xD8, 0xD8, 0xC, 0x6C,
+AS09 Assembler for M6809 [1.42].                                     Page    8
+-------------------------------- sokobanC.a09 --------------------------------
+
+                        * 	0xD8, 0xD8, 0xC, 0x6C,
+                        * 	0x00, 0x00, 0xC, 0x6C,
+                        * 
+                        * 	//-------- rotated ----------//
+                        * 	// iMAN_STANDING_Down
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0xB0, 0x90, 0xAC,
+                        * 	0x78, 0xB0, 0x90, 0xB8,
+                        * 	0x6C, 0x6C, 0x8C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	0x6C, 0x6C, 0x6C, 0x6C,
+                        * 
+                        * 	// iPUSHINGone_Down
+                        *     0x6C, 0x6C, 0x6C, 0x6C,
+                        *     0x6C, 0x6C, 0x6C, 0x6C,
+                        *     0x6C, 0x6C, 0x6C, 0x6C,
+                        *     0x6C, 0x60, 0x6C, 0x6C,
+                        *     0x6C, 0x74, 0xB4, 0x6C,
+                        *     0x74, 0xB0, 0x90, 0xB4,
+                        *     0x74, 0x70, 0x90, 0x74,
+                        *     0x78, 0x6C, 0x80, 0x78,
+                        * 	
+                        * 	// iPUSHINGtwo_MAN_ONLY_Down
+                        *     0x6C, 0x6C, 0x60, 0x6C,
+                        *     0x6C, 0x74, 0xB4, 0x6C,
+                        *     0x74, 0xB0, 0x90, 0xB4,
+                        *     0x74, 0x70, 0x90, 0x74,
+                        *     0x78, 0x60, 0x8C, 0x78,
+                        *     0x6C, 0x6C, 0x6C, 0x6C,
+                        *     0x6C, 0x6C, 0x6C, 0x6C,
+                        *     0x6C, 0x6C, 0x6C, 0x6C,
+                        * 	
+                        * 	// iPUSHINGtwo_MAN_BOX_Down
+                        *     0x6C, 0x6C, 0x60, 0x6C,
+                        *     0x6C, 0x74, 0xB4, 0x6C,
+                        *     0x74, 0xB0, 0x90, 0xB4,
+                        *     0x74, 0x70, 0x90, 0x74,
+                        *     0x78, 0x60, 0x8C, 0x78,
+                        *     0x00, 0x00, 0x00, 0x00,
+                        *     0x18, 0xD8, 0xD8, 0xC0,
+                        *     0x18, 0xD8, 0xD8, 0xC0,
+                        * 	
+                        * 	// iPUSHINGtwo_HALF_BOX_Down
+                        *     0x18, 0xD8, 0xD8, 0xC0,
+                        *     0x18, 0xD8, 0xD8, 0xC0,
+                        *     0x18, 0xD8, 0xD8, 0xC0,
+                        *     0x18, 0xD8, 0xD8, 0xC0,
+                        *     0x00, 0x00, 0x00, 0x00,
+                        *     0x6C, 0x6C, 0x6C, 0x6C,
+                        *     0x6C, 0x6C, 0x6C, 0x6C,
+                        *     0x6C, 0x6C, 0x6C, 0x6C
+                        * 	};  //  end of tile
+2025 : 308d0003         	leax	_2_,pc
+2029 : 1601e0           	lbra	_2
+202c :                  _2_
+202c : 6c6c6c6c6c6c6c6c 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $6c, $6c
+2034 : 6c6c6c6c6c6c6c6c 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $6c, $6c
+203c : 6c6c6c6c6c6c6c6c 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $6c, $6c
+2044 : 6c6c6c6c6c6c6c6c 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $6c, $6c
+204c : 14b414b414b414b4 	fcb	$14, $ffffffb4, $14, $ffffffb4, $14, $ffffffb4, $
+AS09 Assembler for M6809 [1.42].                                     Page    9
+-------------------------------- sokobanC.a09 --------------------------------
+
+2054 : 00000000b4a0b4a0 	fcb	$0, $0, $0, $0, $ffffffb4, $ffffffa0, $ffffffb4, 
+205c : b4a0b4a000000000 	fcb	$ffffffb4, $ffffffa0, $ffffffb4, $ffffffa0, $0, $
+2064 : 14b414b414b414b4 	fcb	$14, $ffffffb4, $14, $ffffffb4, $14, $ffffffb4, $
+206c : 6c600c6c6c0c606c 	fcb	$6c, $60, $c, $6c, $6c, $c, $60, $6c
+2074 : 606c6c0c0c6c6c60 	fcb	$60, $6c, $6c, $c, $c, $6c, $6c, $60
+207c : 0c6c6c60606c6c0c 	fcb	$c, $6c, $6c, $60, $60, $6c, $6c, $c
+2084 : 6c0c606c6c600c6c 	fcb	$6c, $c, $60, $6c, $6c, $60, $c, $6c
+208c : 0000000018d8d8c0 	fcb	$0, $0, $0, $0, $18, $ffffffd8, $ffffffd8, $fffff
+2094 : 18d8d8c018d8d8c0 	fcb	$18, $ffffffd8, $ffffffd8, $ffffffc0, $18, $fffff
+209c : 18d8d8c018d8d8c0 	fcb	$18, $ffffffd8, $ffffffd8, $ffffffc0, $18, $fffff
+20a4 : 18d8d8c000000000 	fcb	$18, $ffffffd8, $ffffffd8, $ffffffc0, $0, $0, $0,
+20ac : fcfcfcfcf8d8d8dc 	fcb	$fffffffc, $fffffffc, $fffffffc, $fffffffc, $ffff
+20b4 : f8d8d8dcf8d8d8dc 	fcb	$fffffff8, $ffffffd8, $ffffffd8, $ffffffdc, $ffff
+20bc : f8d8d8dcf8d8d8dc 	fcb	$fffffff8, $ffffffd8, $ffffffd8, $ffffffdc, $ffff
+20c4 : f8d8d8dcfcfcfcfc 	fcb	$fffffff8, $ffffffd8, $ffffffd8, $ffffffdc, $ffff
+20cc : 6c6c6c6c6c6ccc6c 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $ffffffcc, $6c
+20d4 : 6c74ac6c6c708c6c 	fcb	$6c, $74, $ffffffac, $6c, $6c, $70, $ffffff8c, $6
+20dc : 6c70906c6c708c6c 	fcb	$6c, $70, $ffffff90, $6c, $6c, $70, $ffffff8c, $6
+20e4 : 6c74ac6c6c6ccc6c 	fcb	$6c, $74, $ffffffac, $6c, $6c, $6c, $ffffffcc, $6
+20ec : 6c6c6c6c6c6c74b8 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $74, $ffffffb8
+20f4 : 6c6c746c6c60b08c 	fcb	$6c, $6c, $74, $6c, $6c, $60, $ffffffb0, $ffffff8
+20fc : 6c6cb0906c6cb080 	fcb	$6c, $6c, $ffffffb0, $ffffff90, $6c, $6c, $ffffff
+2104 : 6c6c746c6c6c74b8 	fcb	$6c, $6c, $74, $6c, $6c, $6c, $74, $ffffffb8
+210c : 6c6c6c6c6cb4cc6c 	fcb	$6c, $6c, $6c, $6c, $6c, $ffffffb4, $ffffffcc, $6
+2114 : 6cac6c6c74900c6c 	fcb	$6c, $ffffffac, $6c, $6c, $74, $ffffff90, $c, $6c
+211c : 74908c6c14906c6c 	fcb	$74, $ffffff90, $ffffff8c, $6c, $14, $ffffff90, $
+2124 : 6cac6c6c6cb4cc6c 	fcb	$6c, $ffffffac, $6c, $6c, $6c, $ffffffb4, $ffffff
+212c : 6c6c60006cb4c0d8 	fcb	$6c, $6c, $60, $0, $6c, $ffffffb4, $ffffffc0, $ff
+2134 : 6cac60d8749000d8 	fcb	$6c, $ffffffac, $60, $ffffffd8, $74, $ffffff90, $
+213c : 749080d8149060d8 	fcb	$74, $ffffff90, $ffffff80, $ffffffd8, $14, $fffff
+2144 : 6cac60d86cb4c000 	fcb	$6c, $ffffffac, $60, $ffffffd8, $6c, $ffffffb4, $
+214c : 00000c6cd8d80c6c 	fcb	$0, $0, $c, $6c, $ffffffd8, $ffffffd8, $c, $6c
+2154 : d8d80c6cd8d80c6c 	fcb	$ffffffd8, $ffffffd8, $c, $6c, $ffffffd8, $ffffff
+215c : d8d80c6cd8d80c6c 	fcb	$ffffffd8, $ffffffd8, $c, $6c, $ffffffd8, $ffffff
+2164 : d8d80c6c00000c6c 	fcb	$ffffffd8, $ffffffd8, $c, $6c, $0, $0, $c, $6c
+216c : 6c6c6c6c6c6c6c6c 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $6c, $6c
+2174 : 6c6c6c6c6cb090ac 	fcb	$6c, $6c, $6c, $6c, $6c, $ffffffb0, $ffffff90, $f
+217c : 78b090b86c6c8c6c 	fcb	$78, $ffffffb0, $ffffff90, $ffffffb8, $6c, $6c, $
+2184 : 6c6c6c6c6c6c6c6c 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $6c, $6c
+218c : 6c6c6c6c6c6c6c6c 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $6c, $6c
+2194 : 6c6c6c6c6c606c6c 	fcb	$6c, $6c, $6c, $6c, $6c, $60, $6c, $6c
+219c : 6c74b46c74b090b4 	fcb	$6c, $74, $ffffffb4, $6c, $74, $ffffffb0, $ffffff
+21a4 : 74709074786c8078 	fcb	$74, $70, $ffffff90, $74, $78, $6c, $ffffff80, $7
+21ac : 6c6c606c6c74b46c 	fcb	$6c, $6c, $60, $6c, $6c, $74, $ffffffb4, $6c
+21b4 : 74b090b474709074 	fcb	$74, $ffffffb0, $ffffff90, $ffffffb4, $74, $70, $
+21bc : 78608c786c6c6c6c 	fcb	$78, $60, $ffffff8c, $78, $6c, $6c, $6c, $6c
+21c4 : 6c6c6c6c6c6c6c6c 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $6c, $6c
+21cc : 6c6c606c6c74b46c 	fcb	$6c, $6c, $60, $6c, $6c, $74, $ffffffb4, $6c
+21d4 : 74b090b474709074 	fcb	$74, $ffffffb0, $ffffff90, $ffffffb4, $74, $70, $
+21dc : 78608c7800000000 	fcb	$78, $60, $ffffff8c, $78, $0, $0, $0, $0
+21e4 : 18d8d8c018d8d8c0 	fcb	$18, $ffffffd8, $ffffffd8, $ffffffc0, $18, $fffff
+21ec : 18d8d8c018d8d8c0 	fcb	$18, $ffffffd8, $ffffffd8, $ffffffc0, $18, $fffff
+21f4 : 18d8d8c018d8d8c0 	fcb	$18, $ffffffd8, $ffffffd8, $ffffffc0, $18, $fffff
+21fc : 000000006c6c6c6c 	fcb	$0, $0, $0, $0, $6c, $6c, $6c, $6c
+2204 : 6c6c6c6c6c6c6c6c 	fcb	$6c, $6c, $6c, $6c, $6c, $6c, $6c, $6c
+220c :                  _2
+220c : 1f10             	tfr	x,d
+220e : edc8dc           	std	-36,u
+                        * 		
+                        * 	for (n = 0; n < TileMemSize; n++) {			
+2211 : 4f               	clra
+2212 : 5f               	clrb
+AS09 Assembler for M6809 [1.42].                                     Page   10
+-------------------------------- sokobanC.a09 --------------------------------
+
+2213 : e7c8de           	stb	-34,u
+2216 :                  _4
+2216 : e6c8de           	ldb	-34,u
+2219 : 4f               	clra
+221a : 830020           	subd	#$20
+221d : 10240127         	lbhs	_3
+                        * 		if ((heading == RIGHTARROW) || (heading == LEFTARR
+2221 : e645             	ldb	5,u
+2223 : 4f               	clra
+2224 : 830011           	subd	#$11
+2227 : 10270014         	lbeq	_7
+222b : e645             	ldb	5,u
+222d : 4f               	clra
+222e : 830009           	subd	#$9
+2231 : 1027000a         	lbeq	_7
+2235 : e647             	ldb	7,u
+2237 : 4f               	clra
+2238 : 830004           	subd	#$4
+223b : 10220084         	lbhi	_6
+223f :                  _7
+                        * 			// default tile (right heading)
+                        * 				value = SOKOtile[TileMemSize * tileIndex + n];
+223f : e6c8de           	ldb	-34,u
+2242 : 4f               	clra
+2243 : 3406             	pshs	d
+2245 : cc0020           	ldd	#$20
+2248 : 3406             	pshs	d
+224a : e647             	ldb	7,u
+224c : 4f               	clra
+224d : 3510             	puls	x
+224f : 17130e           	lbsr	_00001
+2252 : e3e1             	addd	,s++
+2254 : aec8dc           	ldx	-36,u
+2257 : e68b             	ldb	d,x
+2259 : 4f               	clra
+225a : e75f             	stb	-1,u
+                        * 			if ((heading == LEFTARROW) && (tileIndex > iSTO_B
+225c : e645             	ldb	5,u
+225e : 4f               	clra
+225f : 830009           	subd	#$9
+2262 : 1026004c         	lbne	_8
+2266 : e647             	ldb	7,u
+2268 : 4f               	clra
+2269 : 830004           	subd	#$4
+226c : 10230042         	lbls	_8
+                        * 				// invert the tile
+                        * 				value = ((value << 3) & 0xe0) | ((value >> 3) & 
+2270 : cc0003           	ldd	#$3
+2273 : 3406             	pshs	d
+2275 : e65f             	ldb	-1,u
+2277 : 4f               	clra
+2278 : 3510             	puls	x
+227a : 17138a           	lbsr	_00009
+227d : 8400             	anda	#$0
+227f : c41c             	andb	#$1c
+2281 : 3406             	pshs	d
+2283 : cc0003           	ldd	#$3
+2286 : 3406             	pshs	d
+2288 : e65f             	ldb	-1,u
+228a : 4f               	clra
+228b : 3510             	puls	x
+228d : 17134b           	lbsr	_00007
+AS09 Assembler for M6809 [1.42].                                     Page   11
+-------------------------------- sokobanC.a09 --------------------------------
+
+2290 : 8400             	anda	#$0
+2292 : c4e0             	andb	#$e0
+2294 : aae0             	ora	,s+
+2296 : eae0             	orb	,s+
+2298 : e75f             	stb	-1,u
+                        * 				RAM_Container_tmp[TileMemSize-1 - n] = value;
+229a : e6c8de           	ldb	-34,u
+229d : 4f               	clra
+229e : 3406             	pshs	d
+22a0 : cc001f           	ldd	#$1f
+22a3 : a3e1             	subd	,s++
+22a5 : 30c8df           	leax	-33,u
+22a8 : 308b             	leax	d,x
+22aa : e65f             	ldb	-1,u
+22ac : 4f               	clra
+22ad : e700             	stb	0,x
+                        * 			}
+                        * 			else
+22af : 16000e           	lbra	_9
+22b2 :                  _8
+                        * 				RAM_Container_tmp[n] = value;				
+22b2 : e6c8de           	ldb	-34,u
+22b5 : 4f               	clra
+22b6 : 30c8df           	leax	-33,u
+22b9 : 308b             	leax	d,x
+22bb : e65f             	ldb	-1,u
+22bd : 4f               	clra
+22be : e700             	stb	0,x
+                        * 		}
+22c0 :                  _9
+                        * 		else {
+22c0 : 16007a           	lbra	_10
+22c3 :                  _6
+                        * 			// 90° rotated tile (down heading)
+                        * 				value = SOKOtile[TileMemSize * (tileIndex + offs
+22c3 : e6c8de           	ldb	-34,u
+22c6 : 4f               	clra
+22c7 : 3406             	pshs	d
+22c9 : cc0020           	ldd	#$20
+22cc : 3406             	pshs	d
+22ce : e647             	ldb	7,u
+22d0 : 4f               	clra
+22d1 : c30005           	addd	#$5
+22d4 : 3510             	puls	x
+22d6 : 171287           	lbsr	_00001
+22d9 : e3e1             	addd	,s++
+22db : aec8dc           	ldx	-36,u
+22de : e68b             	ldb	d,x
+22e0 : 4f               	clra
+22e1 : e75f             	stb	-1,u
+                        * 			if (heading == UPARROW) {
+22e3 : e645             	ldb	5,u
+22e5 : 4f               	clra
+22e6 : 83005e           	subd	#$5e
+22e9 : 10260042         	lbne	_11
+                        * 				// invert the tile
+                        * 				value = ((value << 3) & 0xe0) | ((value >> 3) & 
+22ed : cc0003           	ldd	#$3
+22f0 : 3406             	pshs	d
+22f2 : e65f             	ldb	-1,u
+22f4 : 4f               	clra
+22f5 : 3510             	puls	x
+AS09 Assembler for M6809 [1.42].                                     Page   12
+-------------------------------- sokobanC.a09 --------------------------------
+
+22f7 : 17130d           	lbsr	_00009
+22fa : 8400             	anda	#$0
+22fc : c41c             	andb	#$1c
+22fe : 3406             	pshs	d
+2300 : cc0003           	ldd	#$3
+2303 : 3406             	pshs	d
+2305 : e65f             	ldb	-1,u
+2307 : 4f               	clra
+2308 : 3510             	puls	x
+230a : 1712ce           	lbsr	_00007
+230d : 8400             	anda	#$0
+230f : c4e0             	andb	#$e0
+2311 : aae0             	ora	,s+
+2313 : eae0             	orb	,s+
+2315 : e75f             	stb	-1,u
+                        * 				RAM_Container_tmp[TileMemSize-1 - n] = value;
+2317 : e6c8de           	ldb	-34,u
+231a : 4f               	clra
+231b : 3406             	pshs	d
+231d : cc001f           	ldd	#$1f
+2320 : a3e1             	subd	,s++
+2322 : 30c8df           	leax	-33,u
+2325 : 308b             	leax	d,x
+2327 : e65f             	ldb	-1,u
+2329 : 4f               	clra
+232a : e700             	stb	0,x
+                        * 			}
+                        * 			else
+232c : 16000e           	lbra	_12
+232f :                  _11
+                        * 				RAM_Container_tmp[n] = value;
+232f : e6c8de           	ldb	-34,u
+2332 : 4f               	clra
+2333 : 30c8df           	leax	-33,u
+2336 : 308b             	leax	d,x
+2338 : e65f             	ldb	-1,u
+233a : 4f               	clra
+233b : e700             	stb	0,x
+                        * 		}			
+233d :                  _12
+                        * 	}
+233d :                  _10
+                        * 	sendContainerData(tileIndex, RAM_Container_tmp);
+233d :                  _5
+233d : 30c8de           	leax	-34,u
+2340 : e684             	ldb	,x
+2342 : 6c84             	inc	,x
+2344 : 4f               	clra
+2345 : 16fece           	lbra	_4
+2348 :                  _3
+2348 : 30c8df           	leax	-33,u
+234b : 3410             	pshs	x
+234d : e647             	ldb	7,u
+234f : 1d               	sex
+2350 : 3406             	pshs	d
+2352 : 17cced           	lbsr	sendCont
+2355 : 3264             	leas	4,s
+                        * }
+2357 : 32c4             	leas	,u
+2359 : 35c0             	puls	u,pc
+                        * 
+                        * sendstepSound() {
+AS09 Assembler for M6809 [1.42].                                     Page   13
+-------------------------------- sokobanC.a09 --------------------------------
+
+                        * 		
+                        * 	// re-use the standing data container for the sound
+                        * 	unsigned char* step_sound;
+                        * 	step_sound = {1, 200, 0};
+235b :                  sendstep
+235b : 3440             	pshs	u
+235d : 33e4             	leau	,s
+235f : 327e             	leas	-2,s
+2361 : 308d0002         	leax	_13_,pc
+2365 : 2003             	bra	_13
+2367 :                  _13_
+2367 : 01c800           	fcb	$1, $ffffffc8, $0
+236a :                  _13
+236a : 1f10             	tfr	x,d
+236c : ed5e             	std	-2,u
+                        * 	sendContainerData(iSOUND, step_sound);	
+236e : ec5e             	ldd	-2,u
+2370 : 3406             	pshs	d
+2372 : cc0005           	ldd	#$5
+2375 : 3406             	pshs	d
+2377 : 17ccc8           	lbsr	sendCont
+237a : 3264             	leas	4,s
+                        * }
+237c : 35c6             	puls	d,u,pc
+                        * 
+                        * updateMap(pMap, x, y, tileIndex) unsigned char* pMap
+                        * {
+                        * 	
+                        * 	pMap[y*SCREEN_COL + x] = tileIndex;
+237e :                  updateMa
+237e : 3440             	pshs	u
+2380 : 33e4             	leau	,s
+2382 : e647             	ldb	7,u
+2384 : 4f               	clra
+2385 : 3406             	pshs	d
+2387 : cc0015           	ldd	#$15
+238a : 3406             	pshs	d
+238c : e649             	ldb	9,u
+238e : 4f               	clra
+238f : 3510             	puls	x
+2391 : 1711cc           	lbsr	_00001
+2394 : e3e1             	addd	,s++
+2396 : ae44             	ldx	4,u
+2398 : 308b             	leax	d,x
+239a : e64b             	ldb	11,u
+239c : 4f               	clra
+239d : e700             	stb	0,x
+                        * 	
+                        * 	setpointXY(x, y); setTile(tileIndex | 0x80); // ram
+239f : e649             	ldb	9,u
+23a1 : 4f               	clra
+23a2 : 3406             	pshs	d
+23a4 : e647             	ldb	7,u
+23a6 : 4f               	clra
+23a7 : 3406             	pshs	d
+23a9 : 17cc15           	lbsr	setpoint
+23ac : 3264             	leas	4,s
+23ae : e64b             	ldb	11,u
+23b0 : 4f               	clra
+23b1 : 8a00             	ora	#$0
+23b3 : ca80             	orb	#$80
+23b5 : 3406             	pshs	d
+AS09 Assembler for M6809 [1.42].                                     Page   14
+-------------------------------- sokobanC.a09 --------------------------------
+
+23b7 : 17cc2b           	lbsr	setTile
+23ba : 3262             	leas	2,s
+                        * }
+23bc : 35c0             	puls	u,pc
+                        * 
+                        * getMapTileIndex(pMap, x, y) unsigned char* pMap; uns
+                        * {	
+                        * 	return pMap[y*SCREEN_COL + x];
+23be :                  getMapTi
+23be : 3440             	pshs	u
+23c0 : 33e4             	leau	,s
+23c2 : e647             	ldb	7,u
+23c4 : 4f               	clra
+23c5 : 3406             	pshs	d
+23c7 : cc0015           	ldd	#$15
+23ca : 3406             	pshs	d
+23cc : e649             	ldb	9,u
+23ce : 4f               	clra
+23cf : 3510             	puls	x
+23d1 : 17118c           	lbsr	_00001
+23d4 : e3e1             	addd	,s++
+23d6 : ae44             	ldx	4,u
+23d8 : e68b             	ldb	d,x
+23da : 4f               	clra
+                        * }
+23db : 35c0             	puls	u,pc
+                        * 
+                        * sendString(x, y, str) unsigned char x; unsigned char
+                        * {
+                        * 	unsigned char n,c;
+                        * 	n = 0;
+23dd :                  sendStri
+23dd : 3440             	pshs	u
+23df : 33e4             	leau	,s
+23e1 : 327e             	leas	-2,s
+23e3 : 4f               	clra
+23e4 : 5f               	clrb
+23e5 : e75f             	stb	-1,u
+                        * 	setpointXY(x, y); 
+23e7 : e647             	ldb	7,u
+23e9 : 4f               	clra
+23ea : 3406             	pshs	d
+23ec : e645             	ldb	5,u
+23ee : 4f               	clra
+23ef : 3406             	pshs	d
+23f1 : 17cbcd           	lbsr	setpoint
+23f4 : 3264             	leas	4,s
+                        * 	while(1) {
+23f6 :                  _15
+                        * 		c = str[n];
+23f6 : e65f             	ldb	-1,u
+23f8 : 4f               	clra
+23f9 : ae48             	ldx	8,u
+23fb : e68b             	ldb	d,x
+23fd : 4f               	clra
+23fe : e75e             	stb	-2,u
+                        * 		if (c == 0) break;
+2400 : e65e             	ldb	-2,u
+2402 : 4f               	clra
+2403 : 830000           	subd	#$0
+2406 : 10260003         	lbne	_16
+240a : 160026           	lbra	_14
+AS09 Assembler for M6809 [1.42].                                     Page   15
+-------------------------------- sokobanC.a09 --------------------------------
+
+                        * 		if (c >= 'A') c -= '@';	// re-mapping
+240d :                  _16
+240d : e65e             	ldb	-2,u
+240f : 4f               	clra
+2410 : 830041           	subd	#$41
+2413 : 10250008         	lblo	_17
+2417 : e65e             	ldb	-2,u
+2419 : 4f               	clra
+241a : 830040           	subd	#$40
+241d : e75e             	stb	-2,u
+                        * 		setTile(c);
+241f :                  _17
+241f : e65e             	ldb	-2,u
+2421 : 4f               	clra
+2422 : 3406             	pshs	d
+2424 : 17cbbe           	lbsr	setTile
+2427 : 3262             	leas	2,s
+                        * 		n++;
+2429 : 305f             	leax	-1,u
+242b : e684             	ldb	,x
+242d : 6c84             	inc	,x
+242f : 4f               	clra
+                        * 	}
+                        * }
+2430 : 16ffc3           	lbra	_15
+2433 :                  _14
+2433 : 35c6             	puls	d,u,pc
+                        * 
+                        * #define stringSize 	4
+                        * printScoreboard(moveStr, pushStr) unsigned char* mov
+                        * {
+                        * 	unsigned char n;
+                        * 	for (n = 0; n < stringSize-1; n++) {
+2435 :                  printSco
+2435 : 3440             	pshs	u
+2437 : 33e4             	leau	,s
+2439 : 327f             	leas	-1,s
+243b : 4f               	clra
+243c : 5f               	clrb
+243d : e75f             	stb	-1,u
+243f :                  _19
+243f : e65f             	ldb	-1,u
+2441 : 4f               	clra
+2442 : 830003           	subd	#$3
+2445 : 10240034         	lbhs	_18
+                        * 		if (moveStr[n] > '9') {
+2449 : e65f             	ldb	-1,u
+244b : 4f               	clra
+244c : ae44             	ldx	4,u
+244e : e68b             	ldb	d,x
+2450 : 4f               	clra
+2451 : 830039           	subd	#$39
+2454 : 1023001b         	lbls	_21
+                        * 			moveStr[n] = '0';
+2458 : e65f             	ldb	-1,u
+245a : 4f               	clra
+245b : ae44             	ldx	4,u
+245d : 308b             	leax	d,x
+245f : cc0030           	ldd	#$30
+2462 : e700             	stb	0,x
+                        * 			moveStr[n+1]++;
+2464 : e65f             	ldb	-1,u
+AS09 Assembler for M6809 [1.42].                                     Page   16
+-------------------------------- sokobanC.a09 --------------------------------
+
+2466 : 4f               	clra
+2467 : c30001           	addd	#$1
+246a : ae44             	ldx	4,u
+246c : 308b             	leax	d,x
+246e : e684             	ldb	,x
+2470 : 6c84             	inc	,x
+2472 : 4f               	clra
+                        * 		}
+                        * 	}	
+2473 :                  _21
+                        * 	for (n = 0; n < stringSize; n++) {
+2473 :                  _20
+2473 : 305f             	leax	-1,u
+2475 : e684             	ldb	,x
+2477 : 6c84             	inc	,x
+2479 : 4f               	clra
+247a : 16ffc2           	lbra	_19
+247d :                  _18
+247d : 4f               	clra
+247e : 5f               	clrb
+247f : e75f             	stb	-1,u
+2481 :                  _23
+2481 : e65f             	ldb	-1,u
+2483 : 4f               	clra
+2484 : 830004           	subd	#$4
+2487 : 10240032         	lbhs	_22
+                        * 		setpointXY(n+5, 19); setTile(moveStr[stringSize-1-
+248b : cc0013           	ldd	#$13
+248e : 3406             	pshs	d
+2490 : e65f             	ldb	-1,u
+2492 : 4f               	clra
+2493 : c30005           	addd	#$5
+2496 : 3406             	pshs	d
+2498 : 17cb26           	lbsr	setpoint
+249b : 3264             	leas	4,s
+249d : e65f             	ldb	-1,u
+249f : 4f               	clra
+24a0 : 3406             	pshs	d
+24a2 : cc0003           	ldd	#$3
+24a5 : a3e1             	subd	,s++
+24a7 : ae44             	ldx	4,u
+24a9 : e68b             	ldb	d,x
+24ab : 4f               	clra
+24ac : 3406             	pshs	d
+24ae : 17cb34           	lbsr	setTile
+24b1 : 3262             	leas	2,s
+                        * 	}
+                        * 
+                        * 
+                        * 	for (n = 0; n < stringSize-1; n++) {
+24b3 :                  _24
+24b3 : 305f             	leax	-1,u
+24b5 : e684             	ldb	,x
+24b7 : 6c84             	inc	,x
+24b9 : 4f               	clra
+24ba : 16ffc4           	lbra	_23
+24bd :                  _22
+24bd : 4f               	clra
+24be : 5f               	clrb
+24bf : e75f             	stb	-1,u
+24c1 :                  _26
+24c1 : e65f             	ldb	-1,u
+AS09 Assembler for M6809 [1.42].                                     Page   17
+-------------------------------- sokobanC.a09 --------------------------------
+
+24c3 : 4f               	clra
+24c4 : 830003           	subd	#$3
+24c7 : 10240034         	lbhs	_25
+                        * 		if (pushStr[n] > '9') {
+24cb : e65f             	ldb	-1,u
+24cd : 4f               	clra
+24ce : ae46             	ldx	6,u
+24d0 : e68b             	ldb	d,x
+24d2 : 4f               	clra
+24d3 : 830039           	subd	#$39
+24d6 : 1023001b         	lbls	_28
+                        * 			pushStr[n] = '0';
+24da : e65f             	ldb	-1,u
+24dc : 4f               	clra
+24dd : ae46             	ldx	6,u
+24df : 308b             	leax	d,x
+24e1 : cc0030           	ldd	#$30
+24e4 : e700             	stb	0,x
+                        * 			pushStr[n+1]++;
+24e6 : e65f             	ldb	-1,u
+24e8 : 4f               	clra
+24e9 : c30001           	addd	#$1
+24ec : ae46             	ldx	6,u
+24ee : 308b             	leax	d,x
+24f0 : e684             	ldb	,x
+24f2 : 6c84             	inc	,x
+24f4 : 4f               	clra
+                        * 		}
+                        * 	}
+24f5 :                  _28
+                        * 	for (n = 0; n < stringSize; n++) {
+24f5 :                  _27
+24f5 : 305f             	leax	-1,u
+24f7 : e684             	ldb	,x
+24f9 : 6c84             	inc	,x
+24fb : 4f               	clra
+24fc : 16ffc2           	lbra	_26
+24ff :                  _25
+24ff : 4f               	clra
+2500 : 5f               	clrb
+2501 : e75f             	stb	-1,u
+2503 :                  _30
+2503 : e65f             	ldb	-1,u
+2505 : 4f               	clra
+2506 : 830004           	subd	#$4
+2509 : 10240032         	lbhs	_29
+                        * 		setpointXY(n+15, 19); setTile(pushStr[stringSize-1
+250d : cc0013           	ldd	#$13
+2510 : 3406             	pshs	d
+2512 : e65f             	ldb	-1,u
+2514 : 4f               	clra
+2515 : c3000f           	addd	#$f
+2518 : 3406             	pshs	d
+251a : 17caa4           	lbsr	setpoint
+251d : 3264             	leas	4,s
+251f : e65f             	ldb	-1,u
+2521 : 4f               	clra
+2522 : 3406             	pshs	d
+2524 : cc0003           	ldd	#$3
+2527 : a3e1             	subd	,s++
+2529 : ae46             	ldx	6,u
+252b : e68b             	ldb	d,x
+AS09 Assembler for M6809 [1.42].                                     Page   18
+-------------------------------- sokobanC.a09 --------------------------------
+
+252d : 4f               	clra
+252e : 3406             	pshs	d
+2530 : 17cab2           	lbsr	setTile
+2533 : 3262             	leas	2,s
+                        * 	}	
+                        * }		
+2535 :                  _31
+2535 : 305f             	leax	-1,u
+2537 : e684             	ldb	,x
+2539 : 6c84             	inc	,x
+253b : 4f               	clra
+253c : 16ffc4           	lbra	_30
+253f :                  _29
+253f : 35c2             	puls	a,u,pc
+                        * 
+                        * /***************************************************
+                        * /*	main program
+                        * /***************************************************
+                        * 
+                        * // states definition
+                        * #define standing 	0
+                        * #define push1 		1
+                        * #define push2_empty 2
+                        * #define push2_box 	3
+                        * main() {
+                        * 	char* gameLevel;					//-2,u
+                        * 	char* scoreBoard;					//-4,u
+                        * 	char* gameEnded;					//-6,u
+                        * 	unsigned char* SOKOmap_L1;			//-8,u
+                        * 	unsigned char map[MAP_SIZE]; 		//-428,u
+                        * 	unsigned char state;				//-429,u
+                        * 	unsigned char xPos, yPos, heading;	//-430,u ...
+                        * 	unsigned char key;					//-433,u
+                        * 	unsigned char undo;					//-434,u
+                        * 	unsigned char pushStr[stringSize]; 	//-435,u
+                        * 	unsigned char moveStr[stringSize]; 	//-436,u
+                        * 	
+                        * 	// inner loops variables
+                        * 	unsigned int i;						//-438,u
+                        * 	unsigned char y, x;					//-439,u ...
+                        * 	unsigned char tile;					//-441,u
+                        * 	unsigned char nextxPos, nextyPos, next2xPos, next2y
+                        * 	unsigned char nextTile, next2Tile;	//-446,u   -447,
+                        * 	
+                        * 	gameLevel  = "LEVEL 01             ";
+2541 :                  main
+2541 : 3440             	pshs	u
+2543 : 33e4             	leau	,s
+2545 : 32e9fe3b         	leas	-453,s
+2549 : 308d0002         	leax	_32_,pc
+254d : 2016             	bra	_32
+254f :                  _32_
+254f : 4c4556454c203031 	fcb	$4c, $45, $56, $45, $4c, $20, $30, $31
+2557 : 2020202020202020 	fcb	$20, $20, $20, $20, $20, $20, $20, $20
+255f : 202020202000     	fcb	$20, $20, $20, $20, $20, $0
+2565 :                  _32
+2565 : 1f10             	tfr	x,d
+2567 : ed5e             	std	-2,u
+                        * 	scoreBoard = "MOVE:0000 PUSH:0000  ";
+2569 : 308d0002         	leax	_33_,pc
+256d : 2016             	bra	_33
+256f :                  _33_
+AS09 Assembler for M6809 [1.42].                                     Page   19
+-------------------------------- sokobanC.a09 --------------------------------
+
+256f : 4d4f56453a303030 	fcb	$4d, $4f, $56, $45, $3a, $30, $30, $30
+2577 : 3020505553483a30 	fcb	$30, $20, $50, $55, $53, $48, $3a, $30
+257f : 303030202000     	fcb	$30, $30, $30, $20, $20, $0
+2585 :                  _33
+2585 : 1f10             	tfr	x,d
+2587 : ed5c             	std	-4,u
+                        * 	gameEnded = "WELL DONE!";
+2589 : 308d0002         	leax	_34_,pc
+258d : 200b             	bra	_34
+258f :                  _34_
+258f : 57454c4c20444f4e 	fcb	$57, $45, $4c, $4c, $20, $44, $4f, $4e
+2597 : 452100           	fcb	$45, $21, $0
+259a :                  _34
+259a : 1f10             	tfr	x,d
+259c : ed5a             	std	-6,u
+                        * 	state = standing;
+259e : 4f               	clra
+259f : 5f               	clrb
+25a0 : e7c9fe53         	stb	-429,u
+                        * 	undo = false;	
+25a4 : 4f               	clra
+25a5 : 5f               	clrb
+25a6 : e7c9fe4e         	stb	-434,u
+                        * 
+                        * 	key = 0;
+25aa : 4f               	clra
+25ab : 5f               	clrb
+25ac : e7c9fe4f         	stb	-433,u
+                        * 	xPos=12; yPos=11; heading = RIGHTARROW;
+25b0 : cc000c           	ldd	#$c
+25b3 : e7c9fe52         	stb	-430,u
+25b7 : cc000b           	ldd	#$b
+25ba : e7c9fe51         	stb	-431,u
+25be : cc0011           	ldd	#$11
+25c1 : e7c9fe50         	stb	-432,u
+                        * 		
+                        * 	// map (width 21, height 20) populated with tile in
+                        * 	SOKOmap_L1 = {
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x1, 0x1, 0x1, 0x1, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x1, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x3, 0x0, 0x0, 0x1, 0
+                        * 	0x0, 0x0, 0x0, 0x1, 0x1, 0x1, 0x0, 0x0, 0x3, 0x1, 0
+                        * 	0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x3, 0x0, 0x3, 0x0, 0
+                        * 	0x0, 0x1, 0x1, 0x1, 0x0, 0x1, 0x0, 0x1, 0x1, 0x0, 0
+                        * 	0x0, 0x1, 0x0, 0x0, 0x0, 0x1, 0x0, 0x1, 0x1, 0x0, 0
+                        * 	0x0, 0x1, 0x0, 0x3, 0x0, 0x0, 0x3, 0x0, 0x0, 0x0, 0
+                        * 	0x0, 0x1, 0x1, 0x1, 0x1, 0x1, 0x0, 0x1, 0x1, 0x1, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x1, 0x1, 0x1, 0x1, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0
+                        * 	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0
+                        * 	};  //  end of map
+25c5 : 308d0003         	leax	_35_,pc
+25c9 : 1601a4           	lbra	_35
+25cc :                  _35_
+AS09 Assembler for M6809 [1.42].                                     Page   20
+-------------------------------- sokobanC.a09 --------------------------------
+
+25cc : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+25d4 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+25dc : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+25e4 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+25ec : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+25f4 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+25fc : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2604 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+260c : 0000000001010101 	fcb	$0, $0, $0, $0, $1, $1, $1, $1
+2614 : 0100000000000000 	fcb	$1, $0, $0, $0, $0, $0, $0, $0
+261c : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2624 : 0001000000010000 	fcb	$0, $1, $0, $0, $0, $1, $0, $0
+262c : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2634 : 0000000000000103 	fcb	$0, $0, $0, $0, $0, $0, $1, $3
+263c : 0000010000000000 	fcb	$0, $0, $1, $0, $0, $0, $0, $0
+2644 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+264c : 0001010100000301 	fcb	$0, $1, $1, $1, $0, $0, $3, $1
+2654 : 0100000000000000 	fcb	$1, $0, $0, $0, $0, $0, $0, $0
+265c : 0000000000000100 	fcb	$0, $0, $0, $0, $0, $0, $1, $0
+2664 : 0003000300010000 	fcb	$0, $3, $0, $3, $0, $1, $0, $0
+266c : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2674 : 0001010100010001 	fcb	$0, $1, $1, $1, $0, $1, $0, $1
+267c : 0100010000000101 	fcb	$1, $0, $1, $0, $0, $0, $1, $1
+2684 : 0101010100000100 	fcb	$1, $1, $1, $1, $0, $0, $1, $0
+268c : 0000010001010001 	fcb	$0, $0, $1, $0, $1, $1, $0, $1
+2694 : 0101010100000202 	fcb	$1, $1, $1, $1, $0, $0, $2, $2
+269c : 0100000100030000 	fcb	$1, $0, $0, $1, $0, $3, $0, $0
+26a4 : 0300000000000000 	fcb	$3, $0, $0, $0, $0, $0, $0, $0
+26ac : 0000000202010000 	fcb	$0, $0, $0, $2, $2, $1, $0, $0
+26b4 : 0101010101000101 	fcb	$1, $1, $1, $1, $1, $0, $1, $1
+26bc : 0100010001010000 	fcb	$1, $0, $1, $0, $1, $1, $0, $0
+26c4 : 0202010000000000 	fcb	$2, $2, $1, $0, $0, $0, $0, $0
+26cc : 0001000000000001 	fcb	$0, $1, $0, $0, $0, $0, $0, $1
+26d4 : 0101010101010101 	fcb	$1, $1, $1, $1, $1, $1, $1, $1
+26dc : 0000000000000101 	fcb	$0, $0, $0, $0, $0, $0, $1, $1
+26e4 : 0101010101000000 	fcb	$1, $1, $1, $1, $1, $0, $0, $0
+26ec : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+26f4 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+26fc : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2704 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+270c : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2714 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+271c : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2724 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+272c : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2734 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+273c : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2744 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+274c : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2754 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+275c : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+2764 : 0000000000000000 	fcb	$0, $0, $0, $0, $0, $0, $0, $0
+276c : 00000000         	fcb	$0, $0, $0, $0
+2770 :                  _35
+2770 : 1f10             	tfr	x,d
+2772 : ed58             	std	-8,u
+                        * 	
+                        * 	// init the RAM Tiles
+                        * 	for (x = 0; x < RAMcontCnt; x++) {
+2774 : 4f               	clra
+2775 : 5f               	clrb
+2776 : e7c9fe42         	stb	-446,u
+AS09 Assembler for M6809 [1.42].                                     Page   21
+-------------------------------- sokobanC.a09 --------------------------------
+
+277a :                  _37
+277a : e6c9fe42         	ldb	-446,u
+277e : 4f               	clra
+277f : 83000a           	subd	#$a
+2782 : 1024001f         	lbhs	_36
+                        * 		updateRAMTile(heading, x);
+2786 : e6c9fe42         	ldb	-446,u
+278a : 4f               	clra
+278b : 3406             	pshs	d
+278d : e6c9fe50         	ldb	-432,u
+2791 : 4f               	clra
+2792 : 3406             	pshs	d
+2794 : 17f887           	lbsr	updateRA
+2797 : 3264             	leas	4,s
+                        * 	}
+                        * 
+                        * 	// get the the ROM map
+                        * 	for (y=0; y<SCREEN_ROW; y++) {
+2799 :                  _38
+2799 : 30c9fe42         	leax	-446,u
+279d : e684             	ldb	,x
+279f : 6c84             	inc	,x
+27a1 : 4f               	clra
+27a2 : 16ffd5           	lbra	_37
+27a5 :                  _36
+27a5 : 4f               	clra
+27a6 : 5f               	clrb
+27a7 : e7c9fe43         	stb	-445,u
+27ab :                  _40
+27ab : e6c9fe43         	ldb	-445,u
+27af : 4f               	clra
+27b0 : 830014           	subd	#$14
+27b3 : 1024006a         	lbhs	_39
+                        * 		for (x=0; x<SCREEN_COL; x++) {
+27b7 : 4f               	clra
+27b8 : 5f               	clrb
+27b9 : e7c9fe42         	stb	-446,u
+27bd :                  _43
+27bd : e6c9fe42         	ldb	-446,u
+27c1 : 4f               	clra
+27c2 : 830015           	subd	#$15
+27c5 : 1024004c         	lbhs	_42
+                        * 			i = y*SCREEN_COL + x;
+27c9 : e6c9fe42         	ldb	-446,u
+27cd : 4f               	clra
+27ce : 3406             	pshs	d
+27d0 : cc0015           	ldd	#$15
+27d3 : 3406             	pshs	d
+27d5 : e6c9fe43         	ldb	-445,u
+27d9 : 4f               	clra
+27da : 3510             	puls	x
+27dc : 170d81           	lbsr	_00001
+27df : e3e1             	addd	,s++
+27e1 : edc9fe44         	std	-444,u
+                        * 			updateMap(map, x, y, SOKOmap_L1[i]);
+27e5 : ecc9fe44         	ldd	-444,u
+27e9 : ae58             	ldx	-8,u
+27eb : e68b             	ldb	d,x
+27ed : 4f               	clra
+27ee : 3406             	pshs	d
+27f0 : e6c9fe43         	ldb	-445,u
+27f4 : 4f               	clra
+AS09 Assembler for M6809 [1.42].                                     Page   22
+-------------------------------- sokobanC.a09 --------------------------------
+
+27f5 : 3406             	pshs	d
+27f7 : e6c9fe42         	ldb	-446,u
+27fb : 4f               	clra
+27fc : 3406             	pshs	d
+27fe : 30c9fe54         	leax	-428,u
+2802 : 3410             	pshs	x
+2804 : 17fb77           	lbsr	updateMa
+2807 : 3268             	leas	8,s
+                        * 		}
+                        * 	}
+2809 :                  _44
+2809 : 30c9fe42         	leax	-446,u
+280d : e684             	ldb	,x
+280f : 6c84             	inc	,x
+2811 : 4f               	clra
+2812 : 16ffa8           	lbra	_43
+2815 :                  _42
+                        * 	
+                        * 	// add the man
+                        * 	updateMap(map, xPos, yPos, iMAN_STD);
+2815 :                  _41
+2815 : 30c9fe43         	leax	-445,u
+2819 : e684             	ldb	,x
+281b : 6c84             	inc	,x
+281d : 4f               	clra
+281e : 16ff8a           	lbra	_40
+2821 :                  _39
+2821 : cc0005           	ldd	#$5
+2824 : 3406             	pshs	d
+2826 : e6c9fe51         	ldb	-431,u
+282a : 4f               	clra
+282b : 3406             	pshs	d
+282d : e6c9fe52         	ldb	-430,u
+2831 : 4f               	clra
+2832 : 3406             	pshs	d
+2834 : 30c9fe54         	leax	-428,u
+2838 : 3410             	pshs	x
+283a : 17fb41           	lbsr	updateMa
+283d : 3268             	leas	8,s
+                        * 		
+                        * 	// init score board
+                        * 	sendString(0, 0, gameLevel);
+283f : ec5e             	ldd	-2,u
+2841 : 3406             	pshs	d
+2843 : 4f               	clra
+2844 : 5f               	clrb
+2845 : 3406             	pshs	d
+2847 : 4f               	clra
+2848 : 5f               	clrb
+2849 : 3406             	pshs	d
+284b : 17fb8f           	lbsr	sendStri
+284e : 3266             	leas	6,s
+                        * 	sendString(0, 19, scoreBoard);
+2850 : ec5c             	ldd	-4,u
+2852 : 3406             	pshs	d
+2854 : cc0013           	ldd	#$13
+2857 : 3406             	pshs	d
+2859 : 4f               	clra
+285a : 5f               	clrb
+285b : 3406             	pshs	d
+285d : 17fb7d           	lbsr	sendStri
+2860 : 3266             	leas	6,s
+AS09 Assembler for M6809 [1.42].                                     Page   23
+-------------------------------- sokobanC.a09 --------------------------------
+
+                        * 	for (x = 0; x < stringSize; x++) {
+2862 : 4f               	clra
+2863 : 5f               	clrb
+2864 : e7c9fe42         	stb	-446,u
+2868 :                  _46
+2868 : e6c9fe42         	ldb	-446,u
+286c : 4f               	clra
+286d : 830004           	subd	#$4
+2870 : 1024002d         	lbhs	_45
+                        * 		pushStr[x] = moveStr[x] = '0';
+2874 : e6c9fe42         	ldb	-446,u
+2878 : 4f               	clra
+2879 : 30c9fe46         	leax	-442,u
+287d : 308b             	leax	d,x
+287f : cc0030           	ldd	#$30
+2882 : e700             	stb	0,x
+2884 : 3406             	pshs	d
+2886 : e6c9fe42         	ldb	-446,u
+288a : 4f               	clra
+288b : 30c9fe4a         	leax	-438,u
+288f : 308b             	leax	d,x
+2891 : 3506             	puls	d
+2893 : e700             	stb	0,x
+                        * 	}
+                        * 	printScoreboard(moveStr, pushStr);
+2895 :                  _47
+2895 : 30c9fe42         	leax	-446,u
+2899 : e684             	ldb	,x
+289b : 6c84             	inc	,x
+289d : 4f               	clra
+289e : 16ffc7           	lbra	_46
+28a1 :                  _45
+28a1 : 30c9fe4a         	leax	-438,u
+28a5 : 3410             	pshs	x
+28a7 : 30c9fe46         	leax	-442,u
+28ab : 3410             	pshs	x
+28ad : 17fb85           	lbsr	printSco
+28b0 : 3264             	leas	4,s
+                        * 	
+                        * 	while(1) {			
+28b2 :                  _49
+                        * 		// keyboard handling		
+                        * 		APL_OutputStream();
+28b2 : 17c607           	lbsr	APL_Outp
+                        * 		if((key == 0) && (isKeyboardData() != 0)){
+28b5 : e6c9fe4f         	ldb	-433,u
+28b9 : 1d               	sex
+28ba : 830000           	subd	#$0
+28bd : 10260644         	lbne	_50
+28c1 : 17c695           	lbsr	isKeyboa
+28c4 : 830000           	subd	#$0
+28c7 : 1027063a         	lbeq	_50
+                        * 			key = getKeyboard();
+28cb : 17c66e           	lbsr	getKeybo
+28ce : e7c9fe4f         	stb	-433,u
+                        * 			
+                        * 			if ((state != standing) && (key != heading)) key 
+28d2 : e6c9fe53         	ldb	-429,u
+28d6 : 4f               	clra
+28d7 : 830000           	subd	#$0
+28da : 10270018         	lbeq	_51
+28de : e6c9fe50         	ldb	-432,u
+AS09 Assembler for M6809 [1.42].                                     Page   24
+-------------------------------- sokobanC.a09 --------------------------------
+
+28e2 : 4f               	clra
+28e3 : 3406             	pshs	d
+28e5 : e6c9fe4f         	ldb	-433,u
+28e9 : 4f               	clra
+28ea : a3e1             	subd	,s++
+28ec : 10270006         	lbeq	_51
+28f0 : 4f               	clra
+28f1 : 5f               	clrb
+28f2 : e7c9fe4f         	stb	-433,u
+                        * 			
+                        * 			// undo command
+                        * 			if(((key == 'u') || (key == 'U')) && (undo == tru
+28f6 :                  _51
+28f6 : e6c9fe4f         	ldb	-433,u
+28fa : 4f               	clra
+28fb : 830075           	subd	#$75
+28fe : 1027000c         	lbeq	_53
+2902 : e6c9fe4f         	ldb	-433,u
+2906 : 4f               	clra
+2907 : 830055           	subd	#$55
+290a : 10260572         	lbne	_52
+290e :                  _53
+290e : e6c9fe4e         	ldb	-434,u
+2912 : 4f               	clra
+2913 : 830001           	subd	#$1
+2916 : 10260566         	lbne	_52
+                        * 				i=0;
+291a : 4f               	clra
+291b : 5f               	clrb
+291c : edc9fe44         	std	-444,u
+                        * 				tile=0;
+2920 : 4f               	clra
+2921 : 5f               	clrb
+2922 : e7c9fe41         	stb	-447,u
+                        * 				switch(heading) {
+2926 : e6c9fe50         	ldb	-432,u
+292a : 4f               	clra
+                        * 					case LEFTARROW :
+                        * 						updateMap(map, xPos+1, yPos, getMapTileIndex(m
+292b : 10830009         	cmpd	#$9
+292f : 1026014b         	lbne	_56
+2933 :                  _55
+2933 : e6c9fe51         	ldb	-431,u
+2937 : 4f               	clra
+2938 : 3406             	pshs	d
+293a : e6c9fe52         	ldb	-430,u
+293e : 4f               	clra
+293f : 3406             	pshs	d
+2941 : 30c9fe54         	leax	-428,u
+2945 : 3410             	pshs	x
+2947 : 17fa74           	lbsr	getMapTi
+294a : 3266             	leas	6,s
+294c : 3406             	pshs	d
+294e : e6c9fe51         	ldb	-431,u
+2952 : 4f               	clra
+2953 : 3406             	pshs	d
+2955 : e6c9fe52         	ldb	-430,u
+2959 : 4f               	clra
+295a : c30001           	addd	#$1
+295d : 3406             	pshs	d
+295f : 30c9fe54         	leax	-428,u
+2963 : 3410             	pshs	x
+AS09 Assembler for M6809 [1.42].                                     Page   25
+-------------------------------- sokobanC.a09 --------------------------------
+
+2965 : 17fa16           	lbsr	updateMa
+2968 : 3268             	leas	8,s
+                        * 						tile = getMapTileIndex(map, xPos-1, yPos); // 
+296a : e6c9fe51         	ldb	-431,u
+296e : 4f               	clra
+296f : 3406             	pshs	d
+2971 : e6c9fe52         	ldb	-430,u
+2975 : 4f               	clra
+2976 : 830001           	subd	#$1
+2979 : 3406             	pshs	d
+297b : 30c9fe54         	leax	-428,u
+297f : 3410             	pshs	x
+2981 : 17fa3a           	lbsr	getMapTi
+2984 : 3266             	leas	6,s
+2986 : e7c9fe41         	stb	-447,u
+                        * 						if ((tile == iBOX) || (tile == iSTO_BOX)) {
+298a : e6c9fe41         	ldb	-447,u
+298e : 4f               	clra
+298f : 830003           	subd	#$3
+2992 : 1027000c         	lbeq	_58
+2996 : e6c9fe41         	ldb	-447,u
+299a : 4f               	clra
+299b : 830004           	subd	#$4
+299e : 1026003d         	lbne	_57
+29a2 :                  _58
+                        * 							i = yPos*SCREEN_COL + (xPos);
+29a2 : e6c9fe52         	ldb	-430,u
+29a6 : 4f               	clra
+29a7 : 3406             	pshs	d
+29a9 : cc0015           	ldd	#$15
+29ac : 3406             	pshs	d
+29ae : e6c9fe51         	ldb	-431,u
+29b2 : 4f               	clra
+29b3 : 3510             	puls	x
+29b5 : 170ba8           	lbsr	_00001
+29b8 : e3e1             	addd	,s++
+29ba : edc9fe44         	std	-444,u
+                        * 							if (SOKOmap_L1[i] == iSTORAGE) tile = iSTO_BO
+29be : ecc9fe44         	ldd	-444,u
+29c2 : ae58             	ldx	-8,u
+29c4 : e68b             	ldb	d,x
+29c6 : 4f               	clra
+29c7 : 830002           	subd	#$2
+29ca : 1026000a         	lbne	_59
+29ce : cc0004           	ldd	#$4
+29d1 : e7c9fe41         	stb	-447,u
+                        * 							else tile = iBOX;
+29d5 : 160007           	lbra	_60
+29d8 :                  _59
+29d8 : cc0003           	ldd	#$3
+29db : e7c9fe41         	stb	-447,u
+                        * 						}
+29df :                  _60
+                        * 						updateMap(map, xPos, yPos, tile);
+29df :                  _57
+29df : e6c9fe41         	ldb	-447,u
+29e3 : 4f               	clra
+29e4 : 3406             	pshs	d
+29e6 : e6c9fe51         	ldb	-431,u
+29ea : 4f               	clra
+29eb : 3406             	pshs	d
+29ed : e6c9fe52         	ldb	-430,u
+AS09 Assembler for M6809 [1.42].                                     Page   26
+-------------------------------- sokobanC.a09 --------------------------------
+
+29f1 : 4f               	clra
+29f2 : 3406             	pshs	d
+29f4 : 30c9fe54         	leax	-428,u
+29f8 : 3410             	pshs	x
+29fa : 17f981           	lbsr	updateMa
+29fd : 3268             	leas	8,s
+                        * 						i = yPos*SCREEN_COL + (xPos-1);
+29ff : e6c9fe52         	ldb	-430,u
+2a03 : 4f               	clra
+2a04 : 830001           	subd	#$1
+2a07 : 3406             	pshs	d
+2a09 : cc0015           	ldd	#$15
+2a0c : 3406             	pshs	d
+2a0e : e6c9fe51         	ldb	-431,u
+2a12 : 4f               	clra
+2a13 : 3510             	puls	x
+2a15 : 170b48           	lbsr	_00001
+2a18 : e3e1             	addd	,s++
+2a1a : edc9fe44         	std	-444,u
+                        * 						if (SOKOmap_L1[i] == iSTORAGE) updateMap(map, 
+2a1e : ecc9fe44         	ldd	-444,u
+2a22 : ae58             	ldx	-8,u
+2a24 : e68b             	ldb	d,x
+2a26 : 4f               	clra
+2a27 : 830002           	subd	#$2
+2a2a : 10260024         	lbne	_61
+2a2e : cc0002           	ldd	#$2
+2a31 : 3406             	pshs	d
+2a33 : e6c9fe51         	ldb	-431,u
+2a37 : 4f               	clra
+2a38 : 3406             	pshs	d
+2a3a : e6c9fe52         	ldb	-430,u
+2a3e : 4f               	clra
+2a3f : 830001           	subd	#$1
+2a42 : 3406             	pshs	d
+2a44 : 30c9fe54         	leax	-428,u
+2a48 : 3410             	pshs	x
+2a4a : 17f931           	lbsr	updateMa
+2a4d : 3268             	leas	8,s
+                        * 						else updateMap(map, xPos-1, yPos, iEMPTY);
+2a4f : 160020           	lbra	_62
+2a52 :                  _61
+2a52 : 4f               	clra
+2a53 : 5f               	clrb
+2a54 : 3406             	pshs	d
+2a56 : e6c9fe51         	ldb	-431,u
+2a5a : 4f               	clra
+2a5b : 3406             	pshs	d
+2a5d : e6c9fe52         	ldb	-430,u
+2a61 : 4f               	clra
+2a62 : 830001           	subd	#$1
+2a65 : 3406             	pshs	d
+2a67 : 30c9fe54         	leax	-428,u
+2a6b : 3410             	pshs	x
+2a6d : 17f90e           	lbsr	updateMa
+2a70 : 3268             	leas	8,s
+                        * 						xPos++;		
+2a72 :                  _62
+2a72 : 30c9fe52         	leax	-430,u
+2a76 : e684             	ldb	,x
+2a78 : 6c84             	inc	,x
+2a7a : 4f               	clra
+AS09 Assembler for M6809 [1.42].                                     Page   27
+-------------------------------- sokobanC.a09 --------------------------------
+
+                        * 						break;					
+2a7b : 1603fc           	lbra	_54
+                        * 					case RIGHTARROW :
+                        * 						updateMap(map, xPos-1, yPos, getMapTileIndex(m
+2a7e :                  _56
+2a7e : 10830011         	cmpd	#$11
+2a82 : 1026014b         	lbne	_64
+2a86 :                  _63
+2a86 : e6c9fe51         	ldb	-431,u
+2a8a : 4f               	clra
+2a8b : 3406             	pshs	d
+2a8d : e6c9fe52         	ldb	-430,u
+2a91 : 4f               	clra
+2a92 : 3406             	pshs	d
+2a94 : 30c9fe54         	leax	-428,u
+2a98 : 3410             	pshs	x
+2a9a : 17f921           	lbsr	getMapTi
+2a9d : 3266             	leas	6,s
+2a9f : 3406             	pshs	d
+2aa1 : e6c9fe51         	ldb	-431,u
+2aa5 : 4f               	clra
+2aa6 : 3406             	pshs	d
+2aa8 : e6c9fe52         	ldb	-430,u
+2aac : 4f               	clra
+2aad : 830001           	subd	#$1
+2ab0 : 3406             	pshs	d
+2ab2 : 30c9fe54         	leax	-428,u
+2ab6 : 3410             	pshs	x
+2ab8 : 17f8c3           	lbsr	updateMa
+2abb : 3268             	leas	8,s
+                        * 						tile = getMapTileIndex(map, xPos+1, yPos); // 
+2abd : e6c9fe51         	ldb	-431,u
+2ac1 : 4f               	clra
+2ac2 : 3406             	pshs	d
+2ac4 : e6c9fe52         	ldb	-430,u
+2ac8 : 4f               	clra
+2ac9 : c30001           	addd	#$1
+2acc : 3406             	pshs	d
+2ace : 30c9fe54         	leax	-428,u
+2ad2 : 3410             	pshs	x
+2ad4 : 17f8e7           	lbsr	getMapTi
+2ad7 : 3266             	leas	6,s
+2ad9 : e7c9fe41         	stb	-447,u
+                        * 						if ((tile == iBOX) || (tile == iSTO_BOX)) {
+2add : e6c9fe41         	ldb	-447,u
+2ae1 : 4f               	clra
+2ae2 : 830003           	subd	#$3
+2ae5 : 1027000c         	lbeq	_66
+2ae9 : e6c9fe41         	ldb	-447,u
+2aed : 4f               	clra
+2aee : 830004           	subd	#$4
+2af1 : 1026003d         	lbne	_65
+2af5 :                  _66
+                        * 							i = yPos*SCREEN_COL + (xPos);
+2af5 : e6c9fe52         	ldb	-430,u
+2af9 : 4f               	clra
+2afa : 3406             	pshs	d
+2afc : cc0015           	ldd	#$15
+2aff : 3406             	pshs	d
+2b01 : e6c9fe51         	ldb	-431,u
+2b05 : 4f               	clra
+2b06 : 3510             	puls	x
+AS09 Assembler for M6809 [1.42].                                     Page   28
+-------------------------------- sokobanC.a09 --------------------------------
+
+2b08 : 170a55           	lbsr	_00001
+2b0b : e3e1             	addd	,s++
+2b0d : edc9fe44         	std	-444,u
+                        * 							if (SOKOmap_L1[i] == iSTORAGE) tile = iSTO_BO
+2b11 : ecc9fe44         	ldd	-444,u
+2b15 : ae58             	ldx	-8,u
+2b17 : e68b             	ldb	d,x
+2b19 : 4f               	clra
+2b1a : 830002           	subd	#$2
+2b1d : 1026000a         	lbne	_67
+2b21 : cc0004           	ldd	#$4
+2b24 : e7c9fe41         	stb	-447,u
+                        * 							else tile = iBOX;
+2b28 : 160007           	lbra	_68
+2b2b :                  _67
+2b2b : cc0003           	ldd	#$3
+2b2e : e7c9fe41         	stb	-447,u
+                        * 						}						
+2b32 :                  _68
+                        * 						updateMap(map, xPos, yPos, tile);
+2b32 :                  _65
+2b32 : e6c9fe41         	ldb	-447,u
+2b36 : 4f               	clra
+2b37 : 3406             	pshs	d
+2b39 : e6c9fe51         	ldb	-431,u
+2b3d : 4f               	clra
+2b3e : 3406             	pshs	d
+2b40 : e6c9fe52         	ldb	-430,u
+2b44 : 4f               	clra
+2b45 : 3406             	pshs	d
+2b47 : 30c9fe54         	leax	-428,u
+2b4b : 3410             	pshs	x
+2b4d : 17f82e           	lbsr	updateMa
+2b50 : 3268             	leas	8,s
+                        * 						i = yPos*SCREEN_COL + (xPos+1);
+2b52 : e6c9fe52         	ldb	-430,u
+2b56 : 4f               	clra
+2b57 : c30001           	addd	#$1
+2b5a : 3406             	pshs	d
+2b5c : cc0015           	ldd	#$15
+2b5f : 3406             	pshs	d
+2b61 : e6c9fe51         	ldb	-431,u
+2b65 : 4f               	clra
+2b66 : 3510             	puls	x
+2b68 : 1709f5           	lbsr	_00001
+2b6b : e3e1             	addd	,s++
+2b6d : edc9fe44         	std	-444,u
+                        * 						if (SOKOmap_L1[i] == iSTORAGE) updateMap(map, 
+2b71 : ecc9fe44         	ldd	-444,u
+2b75 : ae58             	ldx	-8,u
+2b77 : e68b             	ldb	d,x
+2b79 : 4f               	clra
+2b7a : 830002           	subd	#$2
+2b7d : 10260024         	lbne	_69
+2b81 : cc0002           	ldd	#$2
+2b84 : 3406             	pshs	d
+2b86 : e6c9fe51         	ldb	-431,u
+2b8a : 4f               	clra
+2b8b : 3406             	pshs	d
+2b8d : e6c9fe52         	ldb	-430,u
+2b91 : 4f               	clra
+2b92 : c30001           	addd	#$1
+AS09 Assembler for M6809 [1.42].                                     Page   29
+-------------------------------- sokobanC.a09 --------------------------------
+
+2b95 : 3406             	pshs	d
+2b97 : 30c9fe54         	leax	-428,u
+2b9b : 3410             	pshs	x
+2b9d : 17f7de           	lbsr	updateMa
+2ba0 : 3268             	leas	8,s
+                        * 						else updateMap(map, xPos+1, yPos, iEMPTY);
+2ba2 : 160020           	lbra	_70
+2ba5 :                  _69
+2ba5 : 4f               	clra
+2ba6 : 5f               	clrb
+2ba7 : 3406             	pshs	d
+2ba9 : e6c9fe51         	ldb	-431,u
+2bad : 4f               	clra
+2bae : 3406             	pshs	d
+2bb0 : e6c9fe52         	ldb	-430,u
+2bb4 : 4f               	clra
+2bb5 : c30001           	addd	#$1
+2bb8 : 3406             	pshs	d
+2bba : 30c9fe54         	leax	-428,u
+2bbe : 3410             	pshs	x
+2bc0 : 17f7bb           	lbsr	updateMa
+2bc3 : 3268             	leas	8,s
+                        * 						xPos--;
+2bc5 :                  _70
+2bc5 : 30c9fe52         	leax	-430,u
+2bc9 : e684             	ldb	,x
+2bcb : 6a84             	dec	,x
+2bcd : 4f               	clra
+                        * 						break;
+2bce : 1602a9           	lbra	_54
+                        * 					case UPARROW :
+                        * 						updateMap(map, xPos, yPos+1, getMapTileIndex(m
+2bd1 :                  _64
+2bd1 : 1083005e         	cmpd	#$5e
+2bd5 : 1026014e         	lbne	_72
+2bd9 :                  _71
+2bd9 : e6c9fe51         	ldb	-431,u
+2bdd : 4f               	clra
+2bde : 3406             	pshs	d
+2be0 : e6c9fe52         	ldb	-430,u
+2be4 : 4f               	clra
+2be5 : 3406             	pshs	d
+2be7 : 30c9fe54         	leax	-428,u
+2beb : 3410             	pshs	x
+2bed : 17f7ce           	lbsr	getMapTi
+2bf0 : 3266             	leas	6,s
+2bf2 : 3406             	pshs	d
+2bf4 : e6c9fe51         	ldb	-431,u
+2bf8 : 4f               	clra
+2bf9 : c30001           	addd	#$1
+2bfc : 3406             	pshs	d
+2bfe : e6c9fe52         	ldb	-430,u
+2c02 : 4f               	clra
+2c03 : 3406             	pshs	d
+2c05 : 30c9fe54         	leax	-428,u
+2c09 : 3410             	pshs	x
+2c0b : 17f770           	lbsr	updateMa
+2c0e : 3268             	leas	8,s
+                        * 						tile = getMapTileIndex(map, xPos, yPos-1); // 
+2c10 : e6c9fe51         	ldb	-431,u
+2c14 : 4f               	clra
+2c15 : 830001           	subd	#$1
+AS09 Assembler for M6809 [1.42].                                     Page   30
+-------------------------------- sokobanC.a09 --------------------------------
+
+2c18 : 3406             	pshs	d
+2c1a : e6c9fe52         	ldb	-430,u
+2c1e : 4f               	clra
+2c1f : 3406             	pshs	d
+2c21 : 30c9fe54         	leax	-428,u
+2c25 : 3410             	pshs	x
+2c27 : 17f794           	lbsr	getMapTi
+2c2a : 3266             	leas	6,s
+2c2c : e7c9fe41         	stb	-447,u
+                        * 						if ((tile == iBOX) || (tile == iSTO_BOX)) {
+2c30 : e6c9fe41         	ldb	-447,u
+2c34 : 4f               	clra
+2c35 : 830003           	subd	#$3
+2c38 : 1027000c         	lbeq	_74
+2c3c : e6c9fe41         	ldb	-447,u
+2c40 : 4f               	clra
+2c41 : 830004           	subd	#$4
+2c44 : 1026003d         	lbne	_73
+2c48 :                  _74
+                        * 							i = yPos*SCREEN_COL + (xPos);
+2c48 : e6c9fe52         	ldb	-430,u
+2c4c : 4f               	clra
+2c4d : 3406             	pshs	d
+2c4f : cc0015           	ldd	#$15
+2c52 : 3406             	pshs	d
+2c54 : e6c9fe51         	ldb	-431,u
+2c58 : 4f               	clra
+2c59 : 3510             	puls	x
+2c5b : 170902           	lbsr	_00001
+2c5e : e3e1             	addd	,s++
+2c60 : edc9fe44         	std	-444,u
+                        * 							if (SOKOmap_L1[i] == iSTORAGE) tile = iSTO_BO
+2c64 : ecc9fe44         	ldd	-444,u
+2c68 : ae58             	ldx	-8,u
+2c6a : e68b             	ldb	d,x
+2c6c : 4f               	clra
+2c6d : 830002           	subd	#$2
+2c70 : 1026000a         	lbne	_75
+2c74 : cc0004           	ldd	#$4
+2c77 : e7c9fe41         	stb	-447,u
+                        * 							else tile = iBOX;
+2c7b : 160007           	lbra	_76
+2c7e :                  _75
+2c7e : cc0003           	ldd	#$3
+2c81 : e7c9fe41         	stb	-447,u
+                        * 						}
+2c85 :                  _76
+                        * 						updateMap(map, xPos, yPos, tile);						
+2c85 :                  _73
+2c85 : e6c9fe41         	ldb	-447,u
+2c89 : 4f               	clra
+2c8a : 3406             	pshs	d
+2c8c : e6c9fe51         	ldb	-431,u
+2c90 : 4f               	clra
+2c91 : 3406             	pshs	d
+2c93 : e6c9fe52         	ldb	-430,u
+2c97 : 4f               	clra
+2c98 : 3406             	pshs	d
+2c9a : 30c9fe54         	leax	-428,u
+2c9e : 3410             	pshs	x
+2ca0 : 17f6db           	lbsr	updateMa
+2ca3 : 3268             	leas	8,s
+AS09 Assembler for M6809 [1.42].                                     Page   31
+-------------------------------- sokobanC.a09 --------------------------------
+
+                        * 						i = (yPos-1)*SCREEN_COL + xPos;
+2ca5 : e6c9fe52         	ldb	-430,u
+2ca9 : 4f               	clra
+2caa : 3406             	pshs	d
+2cac : cc0015           	ldd	#$15
+2caf : 3406             	pshs	d
+2cb1 : e6c9fe51         	ldb	-431,u
+2cb5 : 4f               	clra
+2cb6 : 830001           	subd	#$1
+2cb9 : 3510             	puls	x
+2cbb : 1708a2           	lbsr	_00001
+2cbe : e3e1             	addd	,s++
+2cc0 : edc9fe44         	std	-444,u
+                        * 						if (SOKOmap_L1[i] == iSTORAGE) updateMap(map, 
+2cc4 : ecc9fe44         	ldd	-444,u
+2cc8 : ae58             	ldx	-8,u
+2cca : e68b             	ldb	d,x
+2ccc : 4f               	clra
+2ccd : 830002           	subd	#$2
+2cd0 : 10260024         	lbne	_77
+2cd4 : cc0002           	ldd	#$2
+2cd7 : 3406             	pshs	d
+2cd9 : e6c9fe51         	ldb	-431,u
+2cdd : 4f               	clra
+2cde : 830001           	subd	#$1
+2ce1 : 3406             	pshs	d
+2ce3 : e6c9fe52         	ldb	-430,u
+2ce7 : 4f               	clra
+2ce8 : 3406             	pshs	d
+2cea : 30c9fe54         	leax	-428,u
+2cee : 3410             	pshs	x
+2cf0 : 17f68b           	lbsr	updateMa
+2cf3 : 3268             	leas	8,s
+                        * 						else updateMap(map, xPos, yPos-1, iEMPTY);
+2cf5 : 160020           	lbra	_78
+2cf8 :                  _77
+2cf8 : 4f               	clra
+2cf9 : 5f               	clrb
+2cfa : 3406             	pshs	d
+2cfc : e6c9fe51         	ldb	-431,u
+2d00 : 4f               	clra
+2d01 : 830001           	subd	#$1
+2d04 : 3406             	pshs	d
+2d06 : e6c9fe52         	ldb	-430,u
+2d0a : 4f               	clra
+2d0b : 3406             	pshs	d
+2d0d : 30c9fe54         	leax	-428,u
+2d11 : 3410             	pshs	x
+2d13 : 17f668           	lbsr	updateMa
+2d16 : 3268             	leas	8,s
+                        * 						yPos++;
+2d18 :                  _78
+2d18 : 30c9fe51         	leax	-431,u
+2d1c : e684             	ldb	,x
+2d1e : 6c84             	inc	,x
+2d20 : 4f               	clra
+                        * 						break;
+2d21 : 160156           	lbra	_54
+                        * 					break;
+2d24 : 160153           	lbra	_54
+                        * 					case DOWNARROW :
+                        * 						updateMap(map, xPos, yPos-1, getMapTileIndex(m
+AS09 Assembler for M6809 [1.42].                                     Page   32
+-------------------------------- sokobanC.a09 --------------------------------
+
+2d27 :                  _72
+2d27 : 10830012         	cmpd	#$12
+2d2b : 1026014b         	lbne	_80
+2d2f :                  _79
+2d2f : e6c9fe51         	ldb	-431,u
+2d33 : 4f               	clra
+2d34 : 3406             	pshs	d
+2d36 : e6c9fe52         	ldb	-430,u
+2d3a : 4f               	clra
+2d3b : 3406             	pshs	d
+2d3d : 30c9fe54         	leax	-428,u
+2d41 : 3410             	pshs	x
+2d43 : 17f678           	lbsr	getMapTi
+2d46 : 3266             	leas	6,s
+2d48 : 3406             	pshs	d
+2d4a : e6c9fe51         	ldb	-431,u
+2d4e : 4f               	clra
+2d4f : 830001           	subd	#$1
+2d52 : 3406             	pshs	d
+2d54 : e6c9fe52         	ldb	-430,u
+2d58 : 4f               	clra
+2d59 : 3406             	pshs	d
+2d5b : 30c9fe54         	leax	-428,u
+2d5f : 3410             	pshs	x
+2d61 : 17f61a           	lbsr	updateMa
+2d64 : 3268             	leas	8,s
+                        * 						tile = getMapTileIndex(map, xPos, yPos+1); // 
+2d66 : e6c9fe51         	ldb	-431,u
+2d6a : 4f               	clra
+2d6b : c30001           	addd	#$1
+2d6e : 3406             	pshs	d
+2d70 : e6c9fe52         	ldb	-430,u
+2d74 : 4f               	clra
+2d75 : 3406             	pshs	d
+2d77 : 30c9fe54         	leax	-428,u
+2d7b : 3410             	pshs	x
+2d7d : 17f63e           	lbsr	getMapTi
+2d80 : 3266             	leas	6,s
+2d82 : e7c9fe41         	stb	-447,u
+                        * 						if ((tile == iBOX) || (tile == iSTO_BOX)) {
+2d86 : e6c9fe41         	ldb	-447,u
+2d8a : 4f               	clra
+2d8b : 830003           	subd	#$3
+2d8e : 1027000c         	lbeq	_82
+2d92 : e6c9fe41         	ldb	-447,u
+2d96 : 4f               	clra
+2d97 : 830004           	subd	#$4
+2d9a : 1026003d         	lbne	_81
+2d9e :                  _82
+                        * 							i = yPos*SCREEN_COL + (xPos);
+2d9e : e6c9fe52         	ldb	-430,u
+2da2 : 4f               	clra
+2da3 : 3406             	pshs	d
+2da5 : cc0015           	ldd	#$15
+2da8 : 3406             	pshs	d
+2daa : e6c9fe51         	ldb	-431,u
+2dae : 4f               	clra
+2daf : 3510             	puls	x
+2db1 : 1707ac           	lbsr	_00001
+2db4 : e3e1             	addd	,s++
+2db6 : edc9fe44         	std	-444,u
+                        * 							if (SOKOmap_L1[i] == iSTORAGE) tile = iSTO_BO
+AS09 Assembler for M6809 [1.42].                                     Page   33
+-------------------------------- sokobanC.a09 --------------------------------
+
+2dba : ecc9fe44         	ldd	-444,u
+2dbe : ae58             	ldx	-8,u
+2dc0 : e68b             	ldb	d,x
+2dc2 : 4f               	clra
+2dc3 : 830002           	subd	#$2
+2dc6 : 1026000a         	lbne	_83
+2dca : cc0004           	ldd	#$4
+2dcd : e7c9fe41         	stb	-447,u
+                        * 							else tile = iBOX;
+2dd1 : 160007           	lbra	_84
+2dd4 :                  _83
+2dd4 : cc0003           	ldd	#$3
+2dd7 : e7c9fe41         	stb	-447,u
+                        * 						}
+2ddb :                  _84
+                        * 						updateMap(map, xPos, yPos, tile);
+2ddb :                  _81
+2ddb : e6c9fe41         	ldb	-447,u
+2ddf : 4f               	clra
+2de0 : 3406             	pshs	d
+2de2 : e6c9fe51         	ldb	-431,u
+2de6 : 4f               	clra
+2de7 : 3406             	pshs	d
+2de9 : e6c9fe52         	ldb	-430,u
+2ded : 4f               	clra
+2dee : 3406             	pshs	d
+2df0 : 30c9fe54         	leax	-428,u
+2df4 : 3410             	pshs	x
+2df6 : 17f585           	lbsr	updateMa
+2df9 : 3268             	leas	8,s
+                        * 						i = (yPos+1)*SCREEN_COL + xPos;
+2dfb : e6c9fe52         	ldb	-430,u
+2dff : 4f               	clra
+2e00 : 3406             	pshs	d
+2e02 : cc0015           	ldd	#$15
+2e05 : 3406             	pshs	d
+2e07 : e6c9fe51         	ldb	-431,u
+2e0b : 4f               	clra
+2e0c : c30001           	addd	#$1
+2e0f : 3510             	puls	x
+2e11 : 17074c           	lbsr	_00001
+2e14 : e3e1             	addd	,s++
+2e16 : edc9fe44         	std	-444,u
+                        * 						if (SOKOmap_L1[i] == iSTORAGE) updateMap(map, 
+2e1a : ecc9fe44         	ldd	-444,u
+2e1e : ae58             	ldx	-8,u
+2e20 : e68b             	ldb	d,x
+2e22 : 4f               	clra
+2e23 : 830002           	subd	#$2
+2e26 : 10260024         	lbne	_85
+2e2a : cc0002           	ldd	#$2
+2e2d : 3406             	pshs	d
+2e2f : e6c9fe51         	ldb	-431,u
+2e33 : 4f               	clra
+2e34 : c30001           	addd	#$1
+2e37 : 3406             	pshs	d
+2e39 : e6c9fe52         	ldb	-430,u
+2e3d : 4f               	clra
+2e3e : 3406             	pshs	d
+2e40 : 30c9fe54         	leax	-428,u
+2e44 : 3410             	pshs	x
+2e46 : 17f535           	lbsr	updateMa
+AS09 Assembler for M6809 [1.42].                                     Page   34
+-------------------------------- sokobanC.a09 --------------------------------
+
+2e49 : 3268             	leas	8,s
+                        * 						else updateMap(map, xPos, yPos+1, iEMPTY);
+2e4b : 160020           	lbra	_86
+2e4e :                  _85
+2e4e : 4f               	clra
+2e4f : 5f               	clrb
+2e50 : 3406             	pshs	d
+2e52 : e6c9fe51         	ldb	-431,u
+2e56 : 4f               	clra
+2e57 : c30001           	addd	#$1
+2e5a : 3406             	pshs	d
+2e5c : e6c9fe52         	ldb	-430,u
+2e60 : 4f               	clra
+2e61 : 3406             	pshs	d
+2e63 : 30c9fe54         	leax	-428,u
+2e67 : 3410             	pshs	x
+2e69 : 17f512           	lbsr	updateMa
+2e6c : 3268             	leas	8,s
+                        * 						yPos--;
+2e6e :                  _86
+2e6e : 30c9fe51         	leax	-431,u
+2e72 : e684             	ldb	,x
+2e74 : 6a84             	dec	,x
+2e76 : 4f               	clra
+                        * 						break;
+2e77 : 160000           	lbra	_54
+                        * 				}
+                        * 				undo = false;
+2e7a :                  _80
+2e7a :                  _54
+2e7a : 4f               	clra
+2e7b : 5f               	clrb
+2e7c : e7c9fe4e         	stb	-434,u
+                        * 			}
+                        * 			
+                        * 			if((key != LEFTARROW) && (key != UPARROW) && (key
+2e80 :                  _52
+2e80 : e6c9fe4f         	ldb	-433,u
+2e84 : 4f               	clra
+2e85 : 830009           	subd	#$9
+2e88 : 1027002d         	lbeq	_87
+2e8c : e6c9fe4f         	ldb	-433,u
+2e90 : 4f               	clra
+2e91 : 83005e           	subd	#$5e
+2e94 : 10270021         	lbeq	_87
+2e98 : e6c9fe4f         	ldb	-433,u
+2e9c : 4f               	clra
+2e9d : 830012           	subd	#$12
+2ea0 : 10270015         	lbeq	_87
+2ea4 : e6c9fe4f         	ldb	-433,u
+2ea8 : 4f               	clra
+2ea9 : 830011           	subd	#$11
+2eac : 10270009         	lbeq	_87
+2eb0 : 4f               	clra
+2eb1 : 5f               	clrb
+2eb2 : e7c9fe4f         	stb	-433,u
+                        * 			else {
+2eb6 : 16004c           	lbra	_88
+2eb9 :                  _87
+                        * 				if (key != heading) { // change direction when p
+2eb9 : e6c9fe50         	ldb	-432,u
+2ebd : 4f               	clra
+AS09 Assembler for M6809 [1.42].                                     Page   35
+-------------------------------- sokobanC.a09 --------------------------------
+
+2ebe : 3406             	pshs	d
+2ec0 : e6c9fe4f         	ldb	-433,u
+2ec4 : 4f               	clra
+2ec5 : a3e1             	subd	,s++
+2ec7 : 1027003a         	lbeq	_89
+                        * 					heading = key;	// new direction
+2ecb : e6c9fe4f         	ldb	-433,u
+2ecf : 4f               	clra
+2ed0 : e7c9fe50         	stb	-432,u
+                        * 					for (x = 0; x < RAMcontCnt; x++) {
+2ed4 : 4f               	clra
+2ed5 : 5f               	clrb
+2ed6 : e7c9fe42         	stb	-446,u
+2eda :                  _91
+2eda : e6c9fe42         	ldb	-446,u
+2ede : 4f               	clra
+2edf : 83000a           	subd	#$a
+2ee2 : 1024001f         	lbhs	_90
+                        * 						updateRAMTile(heading, x);
+2ee6 : e6c9fe42         	ldb	-446,u
+2eea : 4f               	clra
+2eeb : 3406             	pshs	d
+2eed : e6c9fe50         	ldb	-432,u
+2ef1 : 4f               	clra
+2ef2 : 3406             	pshs	d
+2ef4 : 17f127           	lbsr	updateRA
+2ef7 : 3264             	leas	4,s
+                        * 					}
+                        * 				}
+2ef9 :                  _92
+2ef9 : 30c9fe42         	leax	-446,u
+2efd : e684             	ldb	,x
+2eff : 6c84             	inc	,x
+2f01 : 4f               	clra
+2f02 : 16ffd5           	lbra	_91
+2f05 :                  _90
+                        * 			}
+2f05 :                  _89
+                        * 		}		
+2f05 :                  _88
+                        * 		
+                        * 		nextxPos = nextyPos = next2xPos = next2yPos = 0;
+2f05 :                  _50
+2f05 : 4f               	clra
+2f06 : 5f               	clrb
+2f07 : e7c9fe3d         	stb	-451,u
+2f0b : e7c9fe3e         	stb	-450,u
+2f0f : e7c9fe3f         	stb	-449,u
+2f13 : e7c9fe40         	stb	-448,u
+                        * 		switch(heading) {
+2f17 : e6c9fe50         	ldb	-432,u
+2f1b : 4f               	clra
+                        * 		case LEFTARROW : 
+                        * 			nextxPos = xPos-1; nextyPos = yPos;
+2f1c : 10830009         	cmpd	#$9
+2f20 : 1026002d         	lbne	_95
+2f24 :                  _94
+2f24 : e6c9fe52         	ldb	-430,u
+2f28 : 4f               	clra
+2f29 : 830001           	subd	#$1
+2f2c : e7c9fe40         	stb	-448,u
+2f30 : e6c9fe51         	ldb	-431,u
+AS09 Assembler for M6809 [1.42].                                     Page   36
+-------------------------------- sokobanC.a09 --------------------------------
+
+2f34 : 4f               	clra
+2f35 : e7c9fe3f         	stb	-449,u
+                        * 			next2xPos = xPos-2; next2yPos = yPos;
+2f39 : e6c9fe52         	ldb	-430,u
+2f3d : 4f               	clra
+2f3e : 830002           	subd	#$2
+2f41 : e7c9fe3e         	stb	-450,u
+2f45 : e6c9fe51         	ldb	-431,u
+2f49 : 4f               	clra
+2f4a : e7c9fe3d         	stb	-451,u
+                        * 			break;
+2f4e : 16009f           	lbra	_93
+                        * 		case RIGHTARROW :
+                        * 			nextxPos = xPos+1; nextyPos = yPos;
+2f51 :                  _95
+2f51 : 10830011         	cmpd	#$11
+2f55 : 1026002d         	lbne	_97
+2f59 :                  _96
+2f59 : e6c9fe52         	ldb	-430,u
+2f5d : 4f               	clra
+2f5e : c30001           	addd	#$1
+2f61 : e7c9fe40         	stb	-448,u
+2f65 : e6c9fe51         	ldb	-431,u
+2f69 : 4f               	clra
+2f6a : e7c9fe3f         	stb	-449,u
+                        * 			next2xPos = xPos+2; next2yPos = yPos;
+2f6e : e6c9fe52         	ldb	-430,u
+2f72 : 4f               	clra
+2f73 : c30002           	addd	#$2
+2f76 : e7c9fe3e         	stb	-450,u
+2f7a : e6c9fe51         	ldb	-431,u
+2f7e : 4f               	clra
+2f7f : e7c9fe3d         	stb	-451,u
+                        * 			break;
+2f83 : 16006a           	lbra	_93
+                        * 		case UPARROW :
+                        * 			nextxPos = xPos; nextyPos = yPos-1;
+2f86 :                  _97
+2f86 : 1083005e         	cmpd	#$5e
+2f8a : 1026002d         	lbne	_99
+2f8e :                  _98
+2f8e : e6c9fe52         	ldb	-430,u
+2f92 : 4f               	clra
+2f93 : e7c9fe40         	stb	-448,u
+2f97 : e6c9fe51         	ldb	-431,u
+2f9b : 4f               	clra
+2f9c : 830001           	subd	#$1
+2f9f : e7c9fe3f         	stb	-449,u
+                        * 			next2xPos = xPos; next2yPos = yPos-2;
+2fa3 : e6c9fe52         	ldb	-430,u
+2fa7 : 4f               	clra
+2fa8 : e7c9fe3e         	stb	-450,u
+2fac : e6c9fe51         	ldb	-431,u
+2fb0 : 4f               	clra
+2fb1 : 830002           	subd	#$2
+2fb4 : e7c9fe3d         	stb	-451,u
+                        * 			break;
+2fb8 : 160035           	lbra	_93
+                        * 		case DOWNARROW :
+                        * 			nextxPos = xPos; nextyPos = yPos+1;
+2fbb :                  _99
+2fbb : 10830012         	cmpd	#$12
+AS09 Assembler for M6809 [1.42].                                     Page   37
+-------------------------------- sokobanC.a09 --------------------------------
+
+2fbf : 1026002d         	lbne	_101
+2fc3 :                  _100
+2fc3 : e6c9fe52         	ldb	-430,u
+2fc7 : 4f               	clra
+2fc8 : e7c9fe40         	stb	-448,u
+2fcc : e6c9fe51         	ldb	-431,u
+2fd0 : 4f               	clra
+2fd1 : c30001           	addd	#$1
+2fd4 : e7c9fe3f         	stb	-449,u
+                        * 			next2xPos = xPos; next2yPos = yPos+2;
+2fd8 : e6c9fe52         	ldb	-430,u
+2fdc : 4f               	clra
+2fdd : e7c9fe3e         	stb	-450,u
+2fe1 : e6c9fe51         	ldb	-431,u
+2fe5 : 4f               	clra
+2fe6 : c30002           	addd	#$2
+2fe9 : e7c9fe3d         	stb	-451,u
+                        * 			break;
+2fed : 160000           	lbra	_93
+                        * 		}
+                        * 
+                        * 		switch(state) {
+2ff0 :                  _101
+2ff0 :                  _93
+2ff0 : e6c9fe53         	ldb	-429,u
+2ff4 : 4f               	clra
+                        * 		case standing:
+                        * 			{
+2ff5 : 10830000         	cmpd	#$0
+2ff9 : 102600cc         	lbne	_104
+2ffd :                  _103
+                        * 				nextTile = getMapTileIndex(map, nextxPos, nextyP
+2ffd : e6c9fe3f         	ldb	-449,u
+3001 : 4f               	clra
+3002 : 3406             	pshs	d
+3004 : e6c9fe40         	ldb	-448,u
+3008 : 4f               	clra
+3009 : 3406             	pshs	d
+300b : 30c9fe54         	leax	-428,u
+300f : 3410             	pshs	x
+3011 : 17f3aa           	lbsr	getMapTi
+3014 : 3266             	leas	6,s
+3016 : e7c9fe3c         	stb	-452,u
+                        * 				next2Tile = getMapTileIndex(map, next2xPos, next
+301a : e6c9fe3d         	ldb	-451,u
+301e : 4f               	clra
+301f : 3406             	pshs	d
+3021 : e6c9fe3e         	ldb	-450,u
+3025 : 4f               	clra
+3026 : 3406             	pshs	d
+3028 : 30c9fe54         	leax	-428,u
+302c : 3410             	pshs	x
+302e : 17f38d           	lbsr	getMapTi
+3031 : 3266             	leas	6,s
+3033 : e7c9fe3b         	stb	-453,u
+                        * 				if ((key != 0) && ((nextTile == iEMPTY) || (next
+3037 : e6c9fe4f         	ldb	-433,u
+303b : 4f               	clra
+303c : 830000           	subd	#$0
+303f : 1027007d         	lbeq	_105
+3043 : e6c9fe3c         	ldb	-452,u
+3047 : 4f               	clra
+AS09 Assembler for M6809 [1.42].                                     Page   38
+-------------------------------- sokobanC.a09 --------------------------------
+
+3048 : 830000           	subd	#$0
+304b : 1027003c         	lbeq	_106
+304f : e6c9fe3c         	ldb	-452,u
+3053 : 4f               	clra
+3054 : 830002           	subd	#$2
+3057 : 10270030         	lbeq	_106
+305b : e6c9fe3c         	ldb	-452,u
+305f : 4f               	clra
+3060 : 830003           	subd	#$3
+3063 : 1027000c         	lbeq	_107
+3067 : e6c9fe3c         	ldb	-452,u
+306b : 4f               	clra
+306c : 830004           	subd	#$4
+306f : 1026004d         	lbne	_105
+3073 :                  _107
+3073 : e6c9fe3b         	ldb	-453,u
+3077 : 4f               	clra
+3078 : 830002           	subd	#$2
+307b : 1027000c         	lbeq	_108
+307f : e6c9fe3b         	ldb	-453,u
+3083 : 4f               	clra
+3084 : 830000           	subd	#$0
+3087 : 10260035         	lbne	_105
+308b :                  _108
+308b :                  _106
+                        * 					state = push1;		// begin to move				
+308b : cc0001           	ldd	#$1
+308e : e7c9fe53         	stb	-429,u
+                        * 					updateMap(map, xPos, yPos, iPU1);
+3092 : cc0006           	ldd	#$6
+3095 : 3406             	pshs	d
+3097 : e6c9fe51         	ldb	-431,u
+309b : 4f               	clra
+309c : 3406             	pshs	d
+309e : e6c9fe52         	ldb	-430,u
+30a2 : 4f               	clra
+30a3 : 3406             	pshs	d
+30a5 : 30c9fe54         	leax	-428,u
+30a9 : 3410             	pshs	x
+30ab : 17f2d0           	lbsr	updateMa
+30ae : 3268             	leas	8,s
+                        * 					sendstepSound();	// update the data container
+30b0 : 17f2a8           	lbsr	sendstep
+                        * 					msDelay(PACE);	// execution sync
+30b3 : cc0023           	ldd	#$23
+30b6 : 3406             	pshs	d
+30b8 : 17ca6b           	lbsr	msDelay
+30bb : 3262             	leas	2,s
+                        * 				}
+                        * 				else key = 0;
+30bd : 160006           	lbra	_109
+30c0 :                  _105
+30c0 : 4f               	clra
+30c1 : 5f               	clrb
+30c2 : e7c9fe4f         	stb	-433,u
+                        * 			}			
+30c6 :                  _109
+                        * 			break;
+30c6 : 160490           	lbra	_102
+                        * 		case push1:
+                        * 			{
+30c9 :                  _104
+AS09 Assembler for M6809 [1.42].                                     Page   39
+-------------------------------- sokobanC.a09 --------------------------------
+
+30c9 : 10830001         	cmpd	#$1
+30cd : 10260282         	lbne	_111
+30d1 :                  _110
+                        * 				nextTile = getMapTileIndex(map, nextxPos, nextyP
+30d1 : e6c9fe3f         	ldb	-449,u
+30d5 : 4f               	clra
+30d6 : 3406             	pshs	d
+30d8 : e6c9fe40         	ldb	-448,u
+30dc : 4f               	clra
+30dd : 3406             	pshs	d
+30df : 30c9fe54         	leax	-428,u
+30e3 : 3410             	pshs	x
+30e5 : 17f2d6           	lbsr	getMapTi
+30e8 : 3266             	leas	6,s
+30ea : e7c9fe3c         	stb	-452,u
+                        * 				if(nextTile == iWALL) {
+30ee : e6c9fe3c         	ldb	-452,u
+30f2 : 4f               	clra
+30f3 : 830001           	subd	#$1
+30f6 : 10260035         	lbne	_112
+                        * 					state = standing;					// stop pushing
+30fa : 4f               	clra
+30fb : 5f               	clrb
+30fc : e7c9fe53         	stb	-429,u
+                        * 					updateRAMTile(heading, iMAN_STD);	// data conta
+3100 : cc0005           	ldd	#$5
+3103 : 3406             	pshs	d
+3105 : e6c9fe50         	ldb	-432,u
+3109 : 4f               	clra
+310a : 3406             	pshs	d
+310c : 17ef0f           	lbsr	updateRA
+310f : 3264             	leas	4,s
+                        * 					updateMap(map, xPos, yPos, iMAN_STD);
+3111 : cc0005           	ldd	#$5
+3114 : 3406             	pshs	d
+3116 : e6c9fe51         	ldb	-431,u
+311a : 4f               	clra
+311b : 3406             	pshs	d
+311d : e6c9fe52         	ldb	-430,u
+3121 : 4f               	clra
+3122 : 3406             	pshs	d
+3124 : 30c9fe54         	leax	-428,u
+3128 : 3410             	pshs	x
+312a : 17f251           	lbsr	updateMa
+312d : 3268             	leas	8,s
+                        * 				}			
+                        * 				if((nextTile == iBOX) || (nextTile == iSTO_BOX))
+312f :                  _112
+312f : e6c9fe3c         	ldb	-452,u
+3133 : 4f               	clra
+3134 : 830003           	subd	#$3
+3137 : 1027000c         	lbeq	_114
+313b : e6c9fe3c         	ldb	-452,u
+313f : 4f               	clra
+3140 : 830004           	subd	#$4
+3143 : 10260136         	lbne	_113
+3147 :                  _114
+                        * 					next2Tile = getMapTileIndex(map, next2xPos, nex
+3147 : e6c9fe3d         	ldb	-451,u
+314b : 4f               	clra
+314c : 3406             	pshs	d
+314e : e6c9fe3e         	ldb	-450,u
+AS09 Assembler for M6809 [1.42].                                     Page   40
+-------------------------------- sokobanC.a09 --------------------------------
+
+3152 : 4f               	clra
+3153 : 3406             	pshs	d
+3155 : 30c9fe54         	leax	-428,u
+3159 : 3410             	pshs	x
+315b : 17f260           	lbsr	getMapTi
+315e : 3266             	leas	6,s
+3160 : e7c9fe3b         	stb	-453,u
+                        * 					if((next2Tile == iEMPTY) || (next2Tile == iSTOR
+3164 : e6c9fe3b         	ldb	-453,u
+3168 : 4f               	clra
+3169 : 830000           	subd	#$0
+316c : 1027000c         	lbeq	_116
+3170 : e6c9fe3b         	ldb	-453,u
+3174 : 4f               	clra
+3175 : 830002           	subd	#$2
+3178 : 102600cc         	lbne	_115
+317c :                  _116
+                        * 						state = push2_box;	// push the box
+317c : cc0003           	ldd	#$3
+317f : e7c9fe53         	stb	-429,u
+                        * 						setSound(iSOUND);
+3183 : cc0005           	ldd	#$5
+3186 : 3406             	pshs	d
+3188 : 17be9a           	lbsr	setSound
+318b : 3262             	leas	2,s
+                        * 						i = yPos*SCREEN_COL + xPos;
+318d : e6c9fe52         	ldb	-430,u
+3191 : 4f               	clra
+3192 : 3406             	pshs	d
+3194 : cc0015           	ldd	#$15
+3197 : 3406             	pshs	d
+3199 : e6c9fe51         	ldb	-431,u
+319d : 4f               	clra
+319e : 3510             	puls	x
+31a0 : 1703bd           	lbsr	_00001
+31a3 : e3e1             	addd	,s++
+31a5 : edc9fe44         	std	-444,u
+                        * 						if (SOKOmap_L1[i] == iSTORAGE) updateMap(map, 
+31a9 : ecc9fe44         	ldd	-444,u
+31ad : ae58             	ldx	-8,u
+31af : e68b             	ldb	d,x
+31b1 : 4f               	clra
+31b2 : 830002           	subd	#$2
+31b5 : 10260021         	lbne	_117
+31b9 : cc0002           	ldd	#$2
+31bc : 3406             	pshs	d
+31be : e6c9fe51         	ldb	-431,u
+31c2 : 4f               	clra
+31c3 : 3406             	pshs	d
+31c5 : e6c9fe52         	ldb	-430,u
+31c9 : 4f               	clra
+31ca : 3406             	pshs	d
+31cc : 30c9fe54         	leax	-428,u
+31d0 : 3410             	pshs	x
+31d2 : 17f1a9           	lbsr	updateMa
+31d5 : 3268             	leas	8,s
+                        * 						else updateMap(map, xPos, yPos, iEMPTY);						
+31d7 : 16001d           	lbra	_118
+31da :                  _117
+31da : 4f               	clra
+31db : 5f               	clrb
+31dc : 3406             	pshs	d
+AS09 Assembler for M6809 [1.42].                                     Page   41
+-------------------------------- sokobanC.a09 --------------------------------
+
+31de : e6c9fe51         	ldb	-431,u
+31e2 : 4f               	clra
+31e3 : 3406             	pshs	d
+31e5 : e6c9fe52         	ldb	-430,u
+31e9 : 4f               	clra
+31ea : 3406             	pshs	d
+31ec : 30c9fe54         	leax	-428,u
+31f0 : 3410             	pshs	x
+31f2 : 17f189           	lbsr	updateMa
+31f5 : 3268             	leas	8,s
+                        * 						xPos = nextxPos; yPos = nextyPos; // move to n
+31f7 :                  _118
+31f7 : e6c9fe40         	ldb	-448,u
+31fb : 4f               	clra
+31fc : e7c9fe52         	stb	-430,u
+3200 : e6c9fe3f         	ldb	-449,u
+3204 : 4f               	clra
+3205 : e7c9fe51         	stb	-431,u
+                        * 						updateMap(map, xPos, yPos, iPU2_MHB);
+3209 : cc0008           	ldd	#$8
+320c : 3406             	pshs	d
+320e : e6c9fe51         	ldb	-431,u
+3212 : 4f               	clra
+3213 : 3406             	pshs	d
+3215 : e6c9fe52         	ldb	-430,u
+3219 : 4f               	clra
+321a : 3406             	pshs	d
+321c : 30c9fe54         	leax	-428,u
+3220 : 3410             	pshs	x
+3222 : 17f159           	lbsr	updateMa
+3225 : 3268             	leas	8,s
+                        * 						updateMap(map, next2xPos, next2yPos, iPU2_HB);
+3227 : cc0009           	ldd	#$9
+322a : 3406             	pshs	d
+322c : e6c9fe3d         	ldb	-451,u
+3230 : 4f               	clra
+3231 : 3406             	pshs	d
+3233 : e6c9fe3e         	ldb	-450,u
+3237 : 4f               	clra
+3238 : 3406             	pshs	d
+323a : 30c9fe54         	leax	-428,u
+323e : 3410             	pshs	x
+3240 : 17f13b           	lbsr	updateMa
+3243 : 3268             	leas	8,s
+                        * 					}
+                        * 					else {
+3245 : 160035           	lbra	_119
+3248 :                  _115
+                        * 						state = standing;					// cannot push anymore
+3248 : 4f               	clra
+3249 : 5f               	clrb
+324a : e7c9fe53         	stb	-429,u
+                        * 						updateRAMTile(heading, iMAN_STD);	// data cont
+324e : cc0005           	ldd	#$5
+3251 : 3406             	pshs	d
+3253 : e6c9fe50         	ldb	-432,u
+3257 : 4f               	clra
+3258 : 3406             	pshs	d
+325a : 17edc1           	lbsr	updateRA
+325d : 3264             	leas	4,s
+                        * 						updateMap(map, xPos, yPos, iMAN_STD);
+325f : cc0005           	ldd	#$5
+AS09 Assembler for M6809 [1.42].                                     Page   42
+-------------------------------- sokobanC.a09 --------------------------------
+
+3262 : 3406             	pshs	d
+3264 : e6c9fe51         	ldb	-431,u
+3268 : 4f               	clra
+3269 : 3406             	pshs	d
+326b : e6c9fe52         	ldb	-430,u
+326f : 4f               	clra
+3270 : 3406             	pshs	d
+3272 : 30c9fe54         	leax	-428,u
+3276 : 3410             	pshs	x
+3278 : 17f103           	lbsr	updateMa
+327b : 3268             	leas	8,s
+                        * 					}
+                        * 				}
+327d :                  _119
+                        * 				if((nextTile == iEMPTY) || (nextTile == iSTORAGE
+327d :                  _113
+327d : e6c9fe3c         	ldb	-452,u
+3281 : 4f               	clra
+3282 : 830000           	subd	#$0
+3285 : 1027000c         	lbeq	_121
+3289 : e6c9fe3c         	ldb	-452,u
+328d : 4f               	clra
+328e : 830002           	subd	#$2
+3291 : 102600ab         	lbne	_120
+3295 :                  _121
+                        * 					state = push2_empty;	// push the box
+3295 : cc0002           	ldd	#$2
+3298 : e7c9fe53         	stb	-429,u
+                        * 					setSound(iSOUND);
+329c : cc0005           	ldd	#$5
+329f : 3406             	pshs	d
+32a1 : 17bd81           	lbsr	setSound
+32a4 : 3262             	leas	2,s
+                        * 					i = yPos*SCREEN_COL + xPos;
+32a6 : e6c9fe52         	ldb	-430,u
+32aa : 4f               	clra
+32ab : 3406             	pshs	d
+32ad : cc0015           	ldd	#$15
+32b0 : 3406             	pshs	d
+32b2 : e6c9fe51         	ldb	-431,u
+32b6 : 4f               	clra
+32b7 : 3510             	puls	x
+32b9 : 1702a4           	lbsr	_00001
+32bc : e3e1             	addd	,s++
+32be : edc9fe44         	std	-444,u
+                        * 					if (SOKOmap_L1[i] == iSTORAGE) updateMap(map, x
+32c2 : ecc9fe44         	ldd	-444,u
+32c6 : ae58             	ldx	-8,u
+32c8 : e68b             	ldb	d,x
+32ca : 4f               	clra
+32cb : 830002           	subd	#$2
+32ce : 10260021         	lbne	_122
+32d2 : cc0002           	ldd	#$2
+32d5 : 3406             	pshs	d
+32d7 : e6c9fe51         	ldb	-431,u
+32db : 4f               	clra
+32dc : 3406             	pshs	d
+32de : e6c9fe52         	ldb	-430,u
+32e2 : 4f               	clra
+32e3 : 3406             	pshs	d
+32e5 : 30c9fe54         	leax	-428,u
+32e9 : 3410             	pshs	x
+AS09 Assembler for M6809 [1.42].                                     Page   43
+-------------------------------- sokobanC.a09 --------------------------------
+
+32eb : 17f090           	lbsr	updateMa
+32ee : 3268             	leas	8,s
+                        * 					else updateMap(map, xPos, yPos, iEMPTY);
+32f0 : 16001d           	lbra	_123
+32f3 :                  _122
+32f3 : 4f               	clra
+32f4 : 5f               	clrb
+32f5 : 3406             	pshs	d
+32f7 : e6c9fe51         	ldb	-431,u
+32fb : 4f               	clra
+32fc : 3406             	pshs	d
+32fe : e6c9fe52         	ldb	-430,u
+3302 : 4f               	clra
+3303 : 3406             	pshs	d
+3305 : 30c9fe54         	leax	-428,u
+3309 : 3410             	pshs	x
+330b : 17f070           	lbsr	updateMa
+330e : 3268             	leas	8,s
+                        * 					xPos = nextxPos; yPos = nextyPos; // move to ne
+3310 :                  _123
+3310 : e6c9fe40         	ldb	-448,u
+3314 : 4f               	clra
+3315 : e7c9fe52         	stb	-430,u
+3319 : e6c9fe3f         	ldb	-449,u
+331d : 4f               	clra
+331e : e7c9fe51         	stb	-431,u
+                        * 					updateMap(map, xPos, yPos, iPU2_MAN);				
+3322 : cc0007           	ldd	#$7
+3325 : 3406             	pshs	d
+3327 : e6c9fe51         	ldb	-431,u
+332b : 4f               	clra
+332c : 3406             	pshs	d
+332e : e6c9fe52         	ldb	-430,u
+3332 : 4f               	clra
+3333 : 3406             	pshs	d
+3335 : 30c9fe54         	leax	-428,u
+3339 : 3410             	pshs	x
+333b : 17f040           	lbsr	updateMa
+333e : 3268             	leas	8,s
+                        * 				}				
+                        * 				key = 0;	// move lock end				
+3340 :                  _120
+3340 : 4f               	clra
+3341 : 5f               	clrb
+3342 : e7c9fe4f         	stb	-433,u
+                        * 				msDelay(PACE);	// execution sync
+3346 : cc0023           	ldd	#$23
+3349 : 3406             	pshs	d
+334b : 17c7d8           	lbsr	msDelay
+334e : 3262             	leas	2,s
+                        * 				break;
+3350 : 160206           	lbra	_102
+                        * 			}
+                        * 		case push2_empty:
+                        * 			if (key != 0) {
+3353 :                  _111
+3353 : 10830002         	cmpd	#$2
+3357 : 10260096         	lbne	_125
+335b :                  _124
+335b : e6c9fe4f         	ldb	-433,u
+335f : 4f               	clra
+3360 : 830000           	subd	#$0
+AS09 Assembler for M6809 [1.42].                                     Page   44
+-------------------------------- sokobanC.a09 --------------------------------
+
+3363 : 10270028         	lbeq	_126
+                        * 				state = push1;	// prepare to move to the next fi
+3367 : cc0001           	ldd	#$1
+336a : e7c9fe53         	stb	-429,u
+                        * 				updateMap(map, xPos, yPos, iPU1);				
+336e : cc0006           	ldd	#$6
+3371 : 3406             	pshs	d
+3373 : e6c9fe51         	ldb	-431,u
+3377 : 4f               	clra
+3378 : 3406             	pshs	d
+337a : e6c9fe52         	ldb	-430,u
+337e : 4f               	clra
+337f : 3406             	pshs	d
+3381 : 30c9fe54         	leax	-428,u
+3385 : 3410             	pshs	x
+3387 : 17eff4           	lbsr	updateMa
+338a : 3268             	leas	8,s
+                        * 			}
+                        * 			else {
+338c : 160035           	lbra	_127
+338f :                  _126
+                        * 				state = standing;	// stop moving
+338f : 4f               	clra
+3390 : 5f               	clrb
+3391 : e7c9fe53         	stb	-429,u
+                        * 				updateRAMTile(heading, iMAN_STD);	// data contai
+3395 : cc0005           	ldd	#$5
+3398 : 3406             	pshs	d
+339a : e6c9fe50         	ldb	-432,u
+339e : 4f               	clra
+339f : 3406             	pshs	d
+33a1 : 17ec7a           	lbsr	updateRA
+33a4 : 3264             	leas	4,s
+                        * 				updateMap(map, xPos, yPos, iMAN_STD);
+33a6 : cc0005           	ldd	#$5
+33a9 : 3406             	pshs	d
+33ab : e6c9fe51         	ldb	-431,u
+33af : 4f               	clra
+33b0 : 3406             	pshs	d
+33b2 : e6c9fe52         	ldb	-430,u
+33b6 : 4f               	clra
+33b7 : 3406             	pshs	d
+33b9 : 30c9fe54         	leax	-428,u
+33bd : 3410             	pshs	x
+33bf : 17efbc           	lbsr	updateMa
+33c2 : 3268             	leas	8,s
+                        * 			}
+                        * 			moveStr[0]++; printScoreboard(moveStr, pushStr);
+33c4 :                  _127
+33c4 : 30c9fe46         	leax	-442,u
+33c8 : e684             	ldb	,x
+33ca : 6c84             	inc	,x
+33cc : 4f               	clra
+33cd : 30c9fe4a         	leax	-438,u
+33d1 : 3410             	pshs	x
+33d3 : 30c9fe46         	leax	-442,u
+33d7 : 3410             	pshs	x
+33d9 : 17f059           	lbsr	printSco
+33dc : 3264             	leas	4,s
+                        * 			undo = false;
+33de : 4f               	clra
+33df : 5f               	clrb
+AS09 Assembler for M6809 [1.42].                                     Page   45
+-------------------------------- sokobanC.a09 --------------------------------
+
+33e0 : e7c9fe4e         	stb	-434,u
+                        * 			msDelay(PACE);	// execution sync			
+33e4 : cc0023           	ldd	#$23
+33e7 : 3406             	pshs	d
+33e9 : 17c73a           	lbsr	msDelay
+33ec : 3262             	leas	2,s
+                        * 			break;
+33ee : 160168           	lbra	_102
+                        * 		case push2_box:
+                        * 			if (key != 0) {
+33f1 :                  _125
+33f1 : 10830003         	cmpd	#$3
+33f5 : 10260160         	lbne	_129
+33f9 :                  _128
+33f9 : e6c9fe4f         	ldb	-433,u
+33fd : 4f               	clra
+33fe : 830000           	subd	#$0
+3401 : 10270028         	lbeq	_130
+                        * 				state = push1;	// keep pushing box through next 
+3405 : cc0001           	ldd	#$1
+3408 : e7c9fe53         	stb	-429,u
+                        * 				updateMap(map, xPos, yPos, iPU1);
+340c : cc0006           	ldd	#$6
+340f : 3406             	pshs	d
+3411 : e6c9fe51         	ldb	-431,u
+3415 : 4f               	clra
+3416 : 3406             	pshs	d
+3418 : e6c9fe52         	ldb	-430,u
+341c : 4f               	clra
+341d : 3406             	pshs	d
+341f : 30c9fe54         	leax	-428,u
+3423 : 3410             	pshs	x
+3425 : 17ef56           	lbsr	updateMa
+3428 : 3268             	leas	8,s
+                        * 			}
+                        * 			else {
+342a : 160035           	lbra	_131
+342d :                  _130
+                        * 				updateRAMTile(heading, iMAN_STD);	// data contai
+342d : cc0005           	ldd	#$5
+3430 : 3406             	pshs	d
+3432 : e6c9fe50         	ldb	-432,u
+3436 : 4f               	clra
+3437 : 3406             	pshs	d
+3439 : 17ebe2           	lbsr	updateRA
+343c : 3264             	leas	4,s
+                        * 				state = standing;
+343e : 4f               	clra
+343f : 5f               	clrb
+3440 : e7c9fe53         	stb	-429,u
+                        * 				updateMap(map, xPos, yPos, iMAN_STD);
+3444 : cc0005           	ldd	#$5
+3447 : 3406             	pshs	d
+3449 : e6c9fe51         	ldb	-431,u
+344d : 4f               	clra
+344e : 3406             	pshs	d
+3450 : e6c9fe52         	ldb	-430,u
+3454 : 4f               	clra
+3455 : 3406             	pshs	d
+3457 : 30c9fe54         	leax	-428,u
+345b : 3410             	pshs	x
+345d : 17ef1e           	lbsr	updateMa
+AS09 Assembler for M6809 [1.42].                                     Page   46
+-------------------------------- sokobanC.a09 --------------------------------
+
+3460 : 3268             	leas	8,s
+                        * 			}
+                        * 			i = nextyPos*SCREEN_COL + nextxPos;
+3462 :                  _131
+3462 : e6c9fe40         	ldb	-448,u
+3466 : 4f               	clra
+3467 : 3406             	pshs	d
+3469 : cc0015           	ldd	#$15
+346c : 3406             	pshs	d
+346e : e6c9fe3f         	ldb	-449,u
+3472 : 4f               	clra
+3473 : 3510             	puls	x
+3475 : 1700e8           	lbsr	_00001
+3478 : e3e1             	addd	,s++
+347a : edc9fe44         	std	-444,u
+                        * 			if (SOKOmap_L1[i] == iSTORAGE) {
+347e : ecc9fe44         	ldd	-444,u
+3482 : ae58             	ldx	-8,u
+3484 : e68b             	ldb	d,x
+3486 : 4f               	clra
+3487 : 830002           	subd	#$2
+348a : 10260076         	lbne	_132
+                        * 				updateMap(map, nextxPos, nextyPos, iSTO_BOX); //
+348e : cc0004           	ldd	#$4
+3491 : 3406             	pshs	d
+3493 : e6c9fe3f         	ldb	-449,u
+3497 : 4f               	clra
+3498 : 3406             	pshs	d
+349a : e6c9fe40         	ldb	-448,u
+349e : 4f               	clra
+349f : 3406             	pshs	d
+34a1 : 30c9fe54         	leax	-428,u
+34a5 : 3410             	pshs	x
+34a7 : 17eed4           	lbsr	updateMa
+34aa : 3268             	leas	8,s
+                        * 				// check if all boxes are stored
+                        * 				i = 0;
+34ac : 4f               	clra
+34ad : 5f               	clrb
+34ae : edc9fe44         	std	-444,u
+                        * 				while ((i < MAP_SIZE) && (map[i] != iBOX)) { i++
+34b2 :                  _134
+34b2 : ecc9fe44         	ldd	-444,u
+34b6 : 8301a4           	subd	#$1a4
+34b9 : 10240023         	lbhs	_133
+34bd : ecc9fe44         	ldd	-444,u
+34c1 : 30c9fe54         	leax	-428,u
+34c5 : e68b             	ldb	d,x
+34c7 : 4f               	clra
+34c8 : 830003           	subd	#$3
+34cb : 10270011         	lbeq	_133
+34cf : ecc9fe44         	ldd	-444,u
+34d3 : c30001           	addd	#$1
+34d6 : edc9fe44         	std	-444,u
+34da : 830001           	subd	#$1
+34dd : 16ffd2           	lbra	_134
+34e0 :                  _133
+                        * 				if (i == MAP_SIZE) {
+34e0 : ecc9fe44         	ldd	-444,u
+34e4 : 8301a4           	subd	#$1a4
+34e7 : 10260016         	lbne	_135
+                        * 					sendString(6, 10, gameEnded);
+AS09 Assembler for M6809 [1.42].                                     Page   47
+-------------------------------- sokobanC.a09 --------------------------------
+
+34eb : ec5a             	ldd	-6,u
+34ed : 3406             	pshs	d
+34ef : cc000a           	ldd	#$a
+34f2 : 3406             	pshs	d
+34f4 : cc0006           	ldd	#$6
+34f7 : 3406             	pshs	d
+34f9 : 17eee1           	lbsr	sendStri
+34fc : 3266             	leas	6,s
+                        * 					while(1); // stop here
+34fe :                  _137
+34fe : 16fffd           	lbra	_137
+                        * 				}
+3501 :                  _136
+                        * 			}
+3501 :                  _135
+                        * 			else updateMap(map, nextxPos, nextyPos, iBOX);
+3501 : 16001e           	lbra	_138
+3504 :                  _132
+3504 : cc0003           	ldd	#$3
+3507 : 3406             	pshs	d
+3509 : e6c9fe3f         	ldb	-449,u
+350d : 4f               	clra
+350e : 3406             	pshs	d
+3510 : e6c9fe40         	ldb	-448,u
+3514 : 4f               	clra
+3515 : 3406             	pshs	d
+3517 : 30c9fe54         	leax	-428,u
+351b : 3410             	pshs	x
+351d : 17ee5e           	lbsr	updateMa
+3520 : 3268             	leas	8,s
+                        * 			moveStr[0]++; pushStr[0]++; printScoreboard(moveS
+3522 :                  _138
+3522 : 30c9fe46         	leax	-442,u
+3526 : e684             	ldb	,x
+3528 : 6c84             	inc	,x
+352a : 4f               	clra
+352b : 30c9fe4a         	leax	-438,u
+352f : e684             	ldb	,x
+3531 : 6c84             	inc	,x
+3533 : 4f               	clra
+3534 : 30c9fe4a         	leax	-438,u
+3538 : 3410             	pshs	x
+353a : 30c9fe46         	leax	-442,u
+353e : 3410             	pshs	x
+3540 : 17eef2           	lbsr	printSco
+3543 : 3264             	leas	4,s
+                        * 			undo = true;			
+3545 : cc0001           	ldd	#$1
+3548 : e7c9fe4e         	stb	-434,u
+                        * 			msDelay(PACE);	// execution sync			
+354c : cc0023           	ldd	#$23
+354f : 3406             	pshs	d
+3551 : 17c5d2           	lbsr	msDelay
+3554 : 3262             	leas	2,s
+                        * 			break;
+3556 : 160000           	lbra	_102
+                        * 		}
+                        * 	}
+3559 :                  _129
+3559 :                  _102
+                        * }
+3559 : 16f356           	lbra	_49
+AS09 Assembler for M6809 [1.42].                                     Page   48
+-------------------------------- sokobanC.a09 --------------------------------
+
+355c :                  _48
+355c : 32c4             	leas	,u
+355e : 35c0             	puls	u,pc
+                        * 
+0000 =                  _GLOBALS	equ	0
+                        
+                        *
+                        * micro-c driver under flex
+                        *
+                        *	12-dec-81	m.ohta,h.tezuka
+                        *
+                        
+3560 : 3436             _00001	pshs	d,x,y		;multiply	
+3562 : a6e4             		lda	,s
+3564 : e663             		ldb	3,s
+3566 : 3d               		mul
+3567 : e764             		stb	4,s		
+3569 : ec61             		ldd	1,s
+356b : 3d               		mul
+356c : e765             		stb	5,s		
+356e : a661             		lda	1,s
+3570 : e663             		ldb	3,s
+3572 : 3d               		mul
+3573 : ab64             		adda	4,s
+3575 : ab65             		adda	5,s		
+3577 : 3266             		leas	6,s
+3579 : 39               		rts
+                        
+357a : 6fe2             _00002	clr	,-s				; signed divide	
+357c : 8c0000           		cmpx	#0
+357f : 2a09             		bpl	_02000		
+3581 : 63e4             		com	,s		
+3583 : 1e01             		exg	d,x
+3585 : 170095           		lbsr	_00020
+3588 : 1e01             		exg	d,x
+358a : 4d               _02000	tsta
+358b : 2a05             		bpl	_02001		
+358d : 63e4             		com	,s		
+358f : 17008b           		lbsr	_00020	
+3592 : 17008d           _02001	lbsr	_00010
+3595 : 1f10             		tfr	x,d
+3597 : 6de0             		tst	,s+
+3599 : 2a03             		bpl	_02002		
+359b : 17007f           		lbsr	_00020	
+359e : 39               _02002	rts
+                        
+359f : 170080           _00003	lbsr	_00010		; unsigned divide
+35a2 : 1f10             		tfr	x,d
+35a4 : 39               		rts
+                        
+35a5 : 6fe2             _00004	clr	,-s				; signed modulous	
+35a7 : 8c0000           		cmpx	#0
+35aa : 2a06             		bpl	_04000		
+35ac : 1e01             		exg	d,x
+35ae : 8d6d             		bsr	_00020
+35b0 : 1e01             		exg	d,x
+35b2 : 4d               _04000	tsta
+35b3 : 2a04             		bpl	_04001		
+35b5 : 63e4             		com	,s
+35b7 : 8d64             		bsr	_00020	
+35b9 : 8d67             _04001	bsr	_00010	
+35bb : 6de0             		tst	,s+
+AS09 Assembler for M6809 [1.42].                                     Page   49
+-------------------------------- sokobanC.a09 --------------------------------
+
+35bd : 2a02             		bpl	_04002		
+35bf : 8d5c             		bsr	_00020	
+35c1 : 39               _04002	rts
+                        
+35c2 : 8d5e             _00005	bsr	_00010		; unsigned modulous
+35c4 : 39               		rts
+                        
+35c5 : 8c0000           _00006	cmpx	#0		; signed left shift
+35c8 : 2b08             		bmi	_06001 
+35ca : 270e             _06000	beq	_06009
+35cc : 58               		lslb
+35cd : 49               		rola
+35ce : 301f             		leax	-1,x
+35d0 : 20f8             		bra	_06000	
+35d2 : 2706             _06001	beq	_06009
+35d4 : 47               		asra
+35d5 : 56               		rorb
+35d6 : 3001             		leax	1,x
+35d8 : 20f8             		bra	_06001	
+35da : 39               _06009	rts
+                        
+35db : 8c0000           _00007	cmpx	#0		; unsined left shift
+35de : 2b08             		bmi	_07001	
+35e0 : 270e             _07000	beq	_07009
+35e2 : 58               		lslb
+35e3 : 49               		rola
+35e4 : 301f             		leax	-1,x
+35e6 : 20f8             		bra	_07000	
+35e8 : 2706             _07001	beq	_07009
+35ea : 44               		lsra
+35eb : 56               		rorb
+35ec : 3001             		leax	1,x
+35ee : 20f8             		bra	_07001	
+35f0 : 39               _07009	rts
+                        
+35f1 : 8c0000           _00008	cmpx	#0		; signed right shift
+35f4 : 2b08             		bmi	_08001	
+35f6 : 270e             _08000	beq	_08009
+35f8 : 47               		asra
+35f9 : 56               		rorb
+35fa : 301f             		leax	-1,x
+35fc : 20f8             		bra	_08000
+                        	
+35fe : 2706             _08001	beq	_08009
+3600 : 58               		lslb
+3601 : 49               		rola
+3602 : 3001             		leax	1,x
+3604 : 20f8             		bra	_08001	
+3606 : 39               _08009	rts
+                        
+3607 : 8c0000           _00009	cmpx	#0		; unsined right shift
+360a : 2b08             		bmi	_09001	
+360c : 270e             _09000	beq	_09009
+360e : 44               		lsra
+360f : 56               		rorb
+3610 : 301f             		leax	-1,x
+3612 : 20f8             		bra	_09000	
+3614 : 2706             _09001	beq	_09009
+3616 : 58               		lslb
+3617 : 49               		rola
+3618 : 3001             		leax	1,x
+361a : 20f8             		bra	_09001	
+AS09 Assembler for M6809 [1.42].                                     Page   50
+-------------------------------- sokobanC.a09 --------------------------------
+
+361c : 39               _09009	rts
+                        
+361d : 40               _00020	nega			;negate d reg
+361e : 50               		negb
+361f : 8200             		sbca	#0
+3621 : 39               		rts
+                        
+3622 : 3416             _00010	pshs	d,x		;divide subroutine	
+3624 : 4f               		clra
+3625 : 5f               		clrb	
+3626 : 8e0011           		ldx	#17
+                        	
+3629 : a362             _00011	subd	2,s
+362b : 2402             		bcc	_00012	
+362d : e362             		addd	2,s
+                        	
+362f : 6961             _00012	rol	1,s
+3631 : 69e4             		rol	,s
+3633 : 59               		rolb
+3634 : 49               		rola	
+3635 : 301f             		leax	-1,x
+3637 : 26f0             		bne	_00011	
+3639 : 46               		rora
+363a : 56               		rorb	
+363b : 6361             		com	1,s
+363d : 63e4             		com	,s
+363f : 3510             		puls	x	
+3641 : 3262             		leas	2,s
+3643 : 39               		rts
+                        
+                        
+3644 : 12               _progEnd			nop		; label to init to GV stack C code
+                        
+                        ;----------------- asm resources ROM 2.1.0.3 ---------
+eebc =                  APL_OutputStream	equ		$eebc
+eebc =                  APL_Outp			equ		APL_OutputStream
+f2ed =                  sMONITORSTART 		equ 	$f2ed
+f357 =                  sMonProcessCmd 		equ		$f357
+                        
+fa89 =                  PUTSTR				equ		$fa89
+fa89 =                  print_De 			equ		PUTSTR
+facd =                  HEXBYTE2			equ		$facd
+fa98 =                  HEXWORD2			equ		$fa98
+faed =                  BYTE2MON			equ		$faed
+fb26 =                  msDelay				equ		$fb26
+                        
+efc1 =                  setpoint			equ		$efc1
+efe5 =                  setTile				equ		$efe5
+f025 =                  setSound			equ		$f025
+ef59 =                  isKeyboa			equ		$ef59
+ef3c =                  getKeybo			equ		$ef3c
+f042 =                  sendCont 			equ 	$f042
+                        
+a64e =                  initDISK			equ		$a64e
+b3b7 =                  FILE_Clo 			equ 	$b3b7
+b3ce =                  FILE_Del 			equ 	$b3ce
+b456 =                  FILE_Get 			equ 	$b456
+bc56 =                  FILE_Lis 			equ 	$bc56
+af7c =                  FILE_Ope 			equ 	$af7c
+b574 =                  FILE_Put 			equ 	$b574
+                        
+                        ;-----------------------------------------------------
+AS09 Assembler for M6809 [1.42].                                     Page   51
+-------------------------------- sokobanC.a09 --------------------------------
+
+                        
+                        					end
+No errors in pass 2.

@@ -1,0 +1,33 @@
+_progEnd			nop		; label to init to GV stack C code
+
+;----------------- asm resources ROM 2.1.0.3 ---------------------
+APL_OutputStream	equ		$eebc
+APL_Outp			equ		APL_OutputStream
+sMONITORSTART 		equ 	$f2ed
+sMonProcessCmd 		equ		$f357
+
+PUTSTR				equ		$fa89
+print_De 			equ		PUTSTR
+HEXBYTE2			equ		$facd
+HEXWORD2			equ		$fa98
+BYTE2MON			equ		$faed
+msDelay				equ		$fb26
+
+setpoint			equ		$efc1
+setTile				equ		$efe5
+setSound			equ		$f025
+isKeyboa			equ		$ef59
+getKeybo			equ		$ef3c
+sendCont 			equ 	$f042
+
+initDISK			equ		$a64e
+FILE_Clo 			equ 	$b3b7
+FILE_Del 			equ 	$b3ce
+FILE_Get 			equ 	$b456
+FILE_Lis 			equ 	$bc56
+FILE_Ope 			equ 	$af7c
+FILE_Put 			equ 	$b574
+
+;---------------------------------------------------------------
+
+					end
