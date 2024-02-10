@@ -1,12 +1,12 @@
 # retro-6809-SBC
 6809 based single board computer
 
-COPYRIGHT (C) 2018-2021 Adrian Kundert  
+COPYRIGHT (C) 2018-2023 Adrian Kundert  
 [adrian.kundert@gmail.com](mailto:adrian.kundert@gmail.com)  
 
 <img width='80%' src='doc/retro 6809 SBC overview.png'/>
 
-The [retro 6809 SBC](doc/Retro_6809_SBC.pdf) is a homebrew 8-bit computer running BASIC as made in the 80's but with sound and more modern peripherals like PS/2 keyboard and VGA output.
+The [retro 6809 SBC](doc/Retro_6809_SBC.pdf) is a homebrew 8-bit computer running BASIC as made in the 80's but with sound and more modern peripherals like PS/2 keyboard, VGA output and SD card.
 The system has 32 KB RAM for a MPU clocked at 8 MHz.
 
 # Features Overview
@@ -15,6 +15,7 @@ The system has 32 KB RAM for a MPU clocked at 8 MHz.
 # Demo
 
 ## Microsoft Color Computer Basic (based on [Grant Searle](http://searle.x10host.com/6809/Simple6809.html) reworked source code.
+## Color Computer Basic DISK (SD card capabilities based on [CC Dharmani](ExploreEmbedded) 
 ### Included tokens
 #### (From the Color BASIC ROM)
 
@@ -23,6 +24,10 @@ FOR, GO, REM, ELSE, IF, DATA, PRINT, ON GOSUB, ON GOTO, INPUT, LINE INPUT, END, 
 #### (From the Extended BASIC ROM)
 
 DEL, DEF, LET, RENUM, FN, USING, &, &H, TRON, TROFF, EDIT
+
+#### (From the Disk BASIC ROM)
+
+DIR, LOAD, SAVE, KILL
 
 ### Secondary functions
 
