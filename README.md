@@ -14,8 +14,8 @@ The system has 32 KB RAM for a MPU clocked at 8 MHz.
 
 # Demo
 
-## Microsoft Color Computer Basic (based on [Grant Searle](http://searle.x10host.com/6809/Simple6809.html) reworked source code.
-## Color Computer Basic DISK (SD card capabilities based on [CC Dharmani](ExploreEmbedded) 
+## Microsoft Color Computer Basic (based on [Grant Searle](http://searle.x10host.com/6809/Simple6809.html)) reworked source code.
+## Color Computer Basic DISK (SD card capabilities based on CC Dharmani ExploreEmbedded) 
 ### Included tokens
 #### (From the Color BASIC ROM)
 
