@@ -1,8 +1,9 @@
 # retro-6809-SBC
-6809 based single board computer
+6809 based single board computer (more product info on [Tindie](https://www.tindie.com/products/akund/bare-retro-6809-sbc-pcb-only/))
 
-COPYRIGHT (C) 2018-2023 Adrian Kundert  
-[adrian.kundert@gmail.com](mailto:adrian.kundert@gmail.com)  
+This library is free software.
+
+2018-2023 Adrian Kundert. [adrian.kundert@gmail.com](mailto:adrian.kundert@gmail.com)  
 
 <img width='80%' src='doc/retro 6809 SBC overview.png'/>
 
