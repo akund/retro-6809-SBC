@@ -1,7 +1,7 @@
 # retro-6809-SBC
 6809 based single board computer (more product info on [Tindie](https://www.tindie.com/products/akund/bare-retro-6809-sbc-pcb-only/))
 
-This library is free software.
+This library is free software. WITHOUT ANY WARRANTY
 
 2018-2023 Adrian Kundert. [adrian.kundert@gmail.com](mailto:adrian.kundert@gmail.com)  
 
@@ -15,8 +15,8 @@ The system has 32 KB RAM for a MPU clocked at 8 MHz.
 
 # Demo
 
-## Microsoft Color Computer Basic (based on [Grant Searle](http://searle.x10host.com/6809/Simple6809.html)) reworked source code.
-## Color Computer Basic DISK (SD card capabilities based on CC Dharmani ExploreEmbedded) 
+## Microsoft Color Computer Extended Basic (reworked source code based on [Grant Searle](http://searle.x10host.com/6809/Simple6809.html)) .
+## Color Computer Disk Basic (the FAT32 SD card implmentation is based on CC Dharmani ExploreEmbedded) 
 ### Included tokens
 #### (From the Color BASIC ROM)
 
@@ -57,7 +57,19 @@ As an example, the program [SOKOBAN](app/sokobanC.s19) starting at adress 0x2000
 
 Another example, the demo program [SD_CARD](app/demoSD_C.s19) starting at adress 0x2000 is loaded ("l\r") into the RAM and executed ("g 2000\r").
 
+main() {
+
+	char* pData, filename; 
+	if(initDISK() != 0) return;	
+	dir();	
+	filename = "FILE.TXT";
+	pData = "hello SDcard";
+	writefile(filename, pData);
+	readfile(filename);
+	deletefile(filename);
+}
+
 ## C cross-compiler
-The PC application "mc.exe" is an ANSI C89 cross-compiler for the [SOKOBAN](app/sokoban.c) program targeting the 6809 MPU. 
+The PC application "mc.exe" is an ANSI C89 cross-compiler for program written in C targeting the 6809 MPU. 
 
 
