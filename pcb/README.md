@@ -1,1 +1,1 @@
-gerber files for version 
+gerber files for PCB version 1.0
