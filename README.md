@@ -1,13 +1,13 @@
 # retro-6809-SBC
 6809 based single board computer (more product info on [Tindie](https://www.tindie.com/products/akund/bare-retro-6809-sbc-pcb-only/))
 
-This library is free software. WITHOUT ANY WARRANTY
+This library is free software. - WITHOUT ANY WARRANTY -
 
 2018-2023 Adrian Kundert. [adrian.kundert@gmail.com](mailto:adrian.kundert@gmail.com)  
 
 <img width='80%' src='doc/retro 6809 SBC overview.png'/>
 
-The [retro 6809 SBC](doc/Retro_6809_SBC.pdf) is a homebrew 8-bit computer running BASIC as made in the 80's but with sound and more modern peripherals like PS/2 keyboard, VGA output and SD card.
+The [retro 6809 SBC](doc/Retro_6809_SBC.pdf) is a homebrew 8-bit computer running BASIC as in the 80's but with sound and more modern peripherals like PS/2 keyboard, VGA output and SD card.
 The system has 32 KB RAM for a MPU clocked at 8 MHz. The Audio/Video and Keyboard peripherals are implemented by an ATmega328 ([APL](https://github.com/akund/APL)).
 
 # Features Overview
@@ -30,7 +30,9 @@ DEL, DEF, LET, RENUM, FN, USING, &, &H, TRON, TROFF, EDIT
 
 DIR, LOAD, SAVE, KILL
 
-#### (added BASIC commands)
+<img width='80%' src='doc/disk.png'/>
+
+#### (added to the BASIC commands)
 
 DATE, TIME
 
