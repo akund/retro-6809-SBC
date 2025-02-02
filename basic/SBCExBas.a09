@@ -159,10 +159,11 @@ F_PTR     rmb  2              ; POINTER TO THE FILE STRUCTURE
 PROGST    rmb  1              ; START OF PROGRAM SPACE
 
 BasicRAMend			equ	$7cff ; RAM section reserved for BASIC 0-$7cff
-CSum16_ROM1			equ $C882 ; BASIC ROM CheckSum16
+CSum16_ROM1			equ $f1f5 ; BASIC ROM CheckSum16
 
           org  ROM1_ORG
 		  dw	CSum16_ROM1
+
 BASIC_ORG
 * JUMP TO BASIC COLD START AT START OF ROM FOR CONVENIENCE          
 		  orcc #%01010000	  ; ensure init in case of software reset (no interrupt)
@@ -318,7 +319,7 @@ LA123     lda  >0000
           fdb  $4FC7          ; *RANDON SEED OF MANTISSA
           fdb  $5259          ; *.811635157
 * BASIC COMMAND INTERPRETATION TABLE ROM IMAGE
-COMVEC    fcb  57             ; 57 BASIC COMMANDS
+COMVEC    fcb  59             ; 59 BASIC COMMANDS
           fdb  LAA66          ; POINTS TO RESERVED WORDS
           fdb  LAB67          ; POINTS TO JUMP TABLE FOR COMMANDS
           fcb  29             ; 29 BASIC SECONDARY COMMANDS
@@ -417,7 +418,7 @@ LA554	  jsr  LB3E4		  ; EVALUATE EXPRESSION AND RETURN VALUE IN ACCD
 		  rola				  ; VER VALUE IN ACCA
 		  puls b
 		  andb #$1F			  ; KEEP HOR VALUE
-		  jsr APLsetXY 		  ; GET CHARACTER LOCATION (VER IN ACCa, HOR IN ACCB)
+		  jsr APLsetXY 		  ; GET CHARACTER LOCATION (VER IN ACCA, HOR IN ACCB)
 		  rts
 		
 * INKEY$
@@ -495,12 +496,121 @@ LA942 	  jsr LB70B			; EVALUATE EXPRESSION, RETURN VALUE IN ACCB
 LA948	  jmp LB44A			; ‘ILLEGAL FUNCTION CALL’ IF ZERO
 
 * SOUND  ; SOUND tone,duration [tone and duration are each between 0-255]
-SOUND     bsr LA942			; EVALUATE EXPRESSION (FREQuENCY), RETURN VALUE IN ACCB
+SOUND     bsr LA942			; EVALUATE EXPRESSION (FREQUENCY), RETURN VALUE IN ACCB
 		  pshs b			; SAVE IT
 		  lbsr LA93F		; EVALUATE EXPRESSION (SOUND LENGTH), RETURN VALUE IN ACCB
-		  puls a			; SAVE FREQuENCY IN ACCa, LENGTH OF SOUND IN ACCB
+		  puls a			; SAVE FREQuENCY IN ACCA, LENGTH OF SOUND IN ACCB
 		  jsr  APLsound
 LA950	  rts  
+
+* DATE  ; DATE YY,MM,DD [each between 0-255]
+DATE      tfr  ccr,a		; preserve Z flag
+		  ldb  #'d'			; date command
+		  bra  TIME_01
+		  
+* TIME  ; TIME HH,MM,SS [each between 0-255]
+TIME      tfr  ccr,a		; preserve Z flag
+		  ldb  #'t'		  		  
+TIME_01	  pshs b			; memorize the intial cmd (t or d)
+		  bsr  TIME_02		; 
+		  puls a			; memorized the intial cmd (i or d)
+		  cmpx #0
+		  lbeq LA970		  
+		  bra  LA964		  
+
+TIME_02	  tfr  a,ccr		; restore Z flag
+		  beq  LA960		; BRANCH IF NO ARGUMENT		  
+		  pshs b			; cmd param 1
+		  cmpb #'d'
+		  beq  TIME_03  
+		  lbsr LB70B		; EVALUATE EXPRESSION (HH), RETURN VALUE IN ACCB
+		  bra  TIME_04
+TIME_03	  lbsr LB73D		; EVALUATE EXPRESSION (YYYY), RETURN VALUE IN ACCB
+		  tfr x,d		  
+		  subd #1980		; validate
+		  bpl TIME_04
+		  clrb	  
+TIME_04	  pshs b			; param 2
+		  lbsr LB26D		; SYNTAX CHECK FOR A COMMA
+		  lbsr LB70B		; EVALUATE EXPRESSION (MM or MM), RETURN VALUE IN ACCB
+		  pshs b			; param 3
+		  lbsr LB26D		; SYNTAX CHECK FOR A COMMA
+		  lbsr LB70B		; EVALUATE EXPRESSION (DD or SS), RETURN VALUE IN ACCB
+		  pshs b			; param 4		  
+		  bra  LA961	  
+LA960	  ldb  #'d'			; override with d when no params
+		  clra
+		  pshs d			; date command with 0 0 0 to trigger the timestamp
+		  clrb		  
+		  pshs d
+LA961	  jsr  setDateTime	; launch the date command
+		  leas 4,s			; clear pushed params
+		  clr  APLdate+1	; reset last timestamp lower byte
+		  ldx  #500			; repeat until max 500 reception tentatives
+LA962	  lbsr EXITBAS		; process the income string (timestamp msg)
+		  leax -1,x
+		  beq  LA963		; abort
+		  tst  APLdate+1
+		  beq  LA962		; wait until timestamp received		  
+LA963	  rts
+		  
+LA964	  cmpa #'t'
+		  beq  LA966		; extract the time instead
+		  clra
+		  ldb  APLdate		; year is bit 15-9
+		  lsrb		  
+		  addd #1980
+		  pshs u
+		  lbsr LBDCC		; CONVERT ACCD TO DECIMAL AND PRINT ON SCREEN	
+		  puls u
+		  lda  #'/'
+		  lbsr PUTCHR       ; SEND TO CONSOLE OUT (SCREEN)
+		  ldd  APLdate		; month is bit 8-5
+		  anda #$1
+		  ldx  #5
+LA965	  lsra
+		  rorb
+		  leax -1,x
+		  bne  LA965
+		  pshs u
+		  lbsr LBDCC		; CONVERT ACCD TO DECIMAL AND PRINT ON SCREEN	
+		  puls u
+		  lda  #'/'
+		  lbsr PUTCHR       ; SEND TO CONSOLE OUT (SCREEN)
+		  clra
+		  ldb  APLdate+1	; day is bit 4-0
+		  andb #$1f
+		  bra  LA968
+LA966	  clra
+		  ldb  APLtime		; hour is bit 15-11
+		  lsrb
+		  lsrb
+		  lsrb
+		  pshs u
+		  lbsr LBDCC		; CONVERT ACCD TO DECIMAL AND PRINT ON SCREEN	
+		  puls u
+		  lda  #':'
+		  lbsr PUTCHR       ; SEND TO CONSOLE OUT (SCREEN)
+		  ldd  APLtime		; minute is bit 10-5
+		  anda #$7
+		  ldx  #5
+LA967	  lsra
+		  rorb
+		  leax -1,x
+		  bne  LA967		  		  
+		  pshs u
+		  lbsr LBDCC		; CONVERT ACCD TO DECIMAL AND PRINT ON SCREEN	
+		  puls u
+		  lda  #':'
+		  lbsr PUTCHR       ; SEND TO CONSOLE OUT (SCREEN)
+		  ldb  APLtime+1	; seconde is bit 4-0
+		  andb #$1f
+		  lslb
+LA968	  clra
+		  pshs u
+		  lbsr LBDCC		; CONVERT ACCD TO DECIMAL AND PRINT ON SCREEN	
+		  puls u
+LA970	  rts
 
 * SET CARRY IF NUMERIC - RETURN WITH
 * ZERO FLAG SET IF ACCA = 0 OR 3A(:) - END
@@ -658,49 +768,53 @@ TOK_GO    equ  $81
           fcb  $80+'D'
           fcc  "SAV"          ; A5
           fcb  $80+'E'          
+          fcc  "DAT"          ; A6
+          fcb  $80+'E'
+          fcc  "TIM"          ; A7
+          fcb  $80+'E'          
 * END OF EXECUTABLE COMMANDS. THE REMAINDER OF THE TABLE ARE NON-EXECUTABLE TOKENS
-          fcc  "TAB"          ; A6
+          fcc  "TAB"          ; A8
           fcb  $80+'('
-TOK_TAB   equ  $A6
-          fcc  "T"            ; A7
+TOK_TAB   equ  $A8
+          fcc  "T"            ; A9
           fcb  $80+'O'
-TOK_TO    equ  $A7
-          fcc  "SU"           ; A8
+TOK_TO    equ  $A9
+          fcc  "SU"           ; AA
           fcb  $80+'B'
-TOK_SUB   equ  $A8
-          fcc  "THE"          ; A9
+TOK_SUB   equ  $AA
+          fcc  "THE"          ; AB
           fcb  $80+'N'
-TOK_THEN  equ  $A9
-          fcc  "NO"           ; AA
+TOK_THEN  equ  $AB
+          fcc  "NO"           ; AC
           fcb  $80+'T'
-TOK_NOT   equ  $AA
-          fcc  "STE"          ; AB
+TOK_NOT   equ  $AC
+          fcc  "STE"          ; AD
           fcb  $80+'P'
-TOK_STEP  equ  $AB
-          fcc  "OF"           ; AC
+TOK_STEP  equ  $AD
+          fcc  "OF"           ; AE
           fcb  $80+'F'
-          fcb  '+'+$80        ; AD
-TOK_PLUS  equ  $AD
-          fcb  $80+'-'        ; AE
-TOK_MINUS equ  $AE
-          fcb  $80+'*'        ; AF
-          fcb  $80+'/'        ; B0
-          fcb  $80+'^'        ; B1
-          fcc  "AN"           ; B2
+          fcb  '+'+$80        ; AF
+TOK_PLUS  equ  $AF
+          fcb  $80+'-'        ; B0
+TOK_MINUS equ  $B0
+          fcb  $80+'*'        ; B1
+          fcb  $80+'/'        ; B2
+          fcb  $80+'^'        ; B3
+          fcc  "AN"           ; B4
           fcb  $80+'D'
-          fcc  "O"            ; B3
+          fcc  "O"            ; B5
           fcb  $80+'R'
-          fcb  $80+'>'        ; B4
-TOK_GREATER equ  $B4
-          fcb  $80+'='        ; B5
-TOK_EQUALS equ  $B5
-          fcb  $80+'<'        ; B6
-          fcc  "F"            ; B7
+          fcb  $80+'>'        ; B6
+TOK_GREATER equ  $B6
+          fcb  $80+'='        ; B7
+TOK_EQUALS equ  $B7
+          fcb  $80+'<'        ; B8
+          fcc  "F"            ; B9
           fcb  $80+'N'
-TOK_FN    equ  $B7
-          fcc  "USIN"         ; B8
+TOK_FN    equ  $B9
+          fcc  "USIN"         ; BA
           fcb  $80+'G'
-TOK_USING equ  $B8
+TOK_USING equ  $BA
 *
 
 * FIRST SET ALWAYS HAS ONE PARAMETER
@@ -813,7 +927,9 @@ LL12      fdb  END            ; 8A
           fdb  KILL           ; A3
           fdb  LOAD           ; A4
           fdb  SAVE           ; A5		  
-TOK_HIGH_EXEC equ  $a5 ; (LABAF-CMD_TAB)/2+$7F
+          fdb  DATE           ; A6
+          fdb  TIME           ; A7
+TOK_HIGH_EXEC equ  $a7 ; (LABAF-CMD_TAB)/2+$7F
 
 * ERROR MESSAGES AND THEIR NUMBERS AS USED INTERNALLY
 LABAF     fcc  "NF"           ; 0 NEXT WITHOUT FOR
@@ -3487,7 +3603,7 @@ LBDA5     ldb  V47
           aslb                ; TIMES 4
           addb V47            ; ADD 1 = TIMES 5
           aslb                ; TIMES 10
-          suba #'0'            ; *MASK OFF ASCII FROM ACCa, PUSH
+          suba #'0'            ; *MASK OFF ASCII FROM ACCA, PUSH
           pshs b              ; *RESULT ONTO THE STACK AND
           adda ,s+            ; ADD lT TO ACCB
           sta  V47            ; SAVE IN V47
@@ -5556,8 +5672,9 @@ LOAD 	  leas -FILELENGTH,s; ALLOCATE FILENAME STORAGE
 
 * SAVE COMMAND
 SAVE 	  leas -FILELENGTH,s; ALLOCATE FILENAME STORAGE
-		  jsr GET_FN
-		  jsr DSK_FWR		; CALL THE DISK FILE WRITING FUNCTION
+		  jsr  GET_FN
+		  lbsr LA960		; get the timestamp updated
+		  jsr  DSK_FWR		; CALL THE DISK FILE WRITING FUNCTION
 		  leas FILELENGTH,s	; FREE FILENAME STACK
 		  leas 2,s          ; PURGE RETURN ADDRESS FROM THE STACK		  
 		  jmp  LAC73        ; RETURN TO BASIC'S MAIN INPUT LOOP
@@ -5611,124 +5728,135 @@ LC6EA	  clra
 * 	fileInfo fileList; //18 bytes
 * 	
 * 	while(FILE_List(&fileList) != END_OF_FILE_LIST) {
-DSK_FDIR		
-	pshs 	u,x,y
-	leau 	,s
-	leas -18,s				; alloc 18 bytes
-	lbsr    initDISK
-	lbne    FDIR_2			; return when failed
-FDIR_3	  
-	leax -18,u
-	pshs 	x
-	lbsr	FILE_Lis
-	leas 2,s		
-	subd #$9
-	lbeq 	FDIR_2
+DSK_FDIR  pshs 	u,x,y
+		  leau 	,s
+		  leas 	-18,s			; alloc 18 bytes
+		  lbsr  initDISK
+		  lbne  FDIR_2			; return when failed
+FDIR_3	  leax 	-18,u
+		  pshs 	x
+		  lbsr	FILE_Lis
+		  leas 	2,s		
+		  subd 	#$9
+		  lbeq 	FDIR_2
 * 		PUTCHR('\r');
-	lda	#$d
-	lbsr	PUTCHR	
+		  lda	#$d
+		  lbsr	PUTCHR	
 * 		if(fileList.FI_Attr == ATTR_VOLUME_ID) {
-	ldb	-14,u
-	cmpb	#$8
-	bne	FDIR_4
+		  ldb	-14,u
+		  cmpb	#$8
+		  bne	FDIR_4
 * 		L85B4("VOLUME NAME IS ");
-	leax	FDIR_5_,pc
-	bra	FDIR_5
+		  leax	FDIR_5_,pc
+		  bra	FDIR_5
 FDIR_5_
 	fcb	$56, $4f, $4c, $55, $4d, $45, $20, $4e
 	fcb	$41, $4d, $45, $20, $49, $53, $20, $0
-FDIR_5
-	lbsr	L85B4
+FDIR_5    lbsr	L85B4
 * 		}
 * 		L85B4(fileList.FI_Name); PUTCHR(' ');
-FDIR_4
-	leax -13,u
-	jsr 	L85B4			; PRINT STRING TO THE SCREEN
-	lda #SPACE
-	lbsr	PUTCHR         	; SEND TO CONSOLE OUT (SCREEN)
+FDIR_4    leax 	-13,u
+		  jsr 	L85B4			; PRINT STRING TO THE SCREEN
+		  lda 	#SPACE
+		  lbsr	PUTCHR         	; SEND TO CONSOLE OUT (SCREEN)
 * 		if((fileList.FI_Attr != ATTR_VOLUME_ID) && (fileList.FI_Attr != ATTR_DIRECTORY)) {
-	ldb	-14,u
-	cmpb	#$8
-	beq		FDIR_6
-	ldb	-14,u
-	cmpb	#$10
-	beq		FDIR_6	
-* 			if(fileList.FI_Size.h != 0) {
-	ldd	-18,u
-	beq		FDIR_7
-* 				if(fileList.FI_Size.h > 0xf) {
-	cmpd	#$f
-	lbls	FDIR_8
-* 					LBDCC(fileList.FI_Size.h >> 4); PUTCHR(' '); PUTCHR('M');
-	lsra
-	rorb
-	lsra
-	rorb
-	lsra
-	rorb
-	lsra
-	rorb
-	pshs	u
-	lbsr 	LBDCC			; CONVERT ACCD TO DECIMAL AND PRINT ON SCREEN	
-	puls	u
-	lda #SPACE
-	lbsr	PUTCHR         	; SEND TO CONSOLE OUT (SCREEN)
-	lda	#'M'
-	lbsr	PUTCHR	
+		  ldb	-14,u
+		  cmpb	#$8
+		  beq	FDIR_6	
+		  cmpb	#$10
+		  beq	FDIR_6	
+* 			if(fileList.FI_Size.h > 0xf) { // bigger than 1M (16*64K)
+		  ldd	-18,u
+		  cmpd	#$f
+		  lbls	FDIR_8
+* 				PutWhitespace(fileList.FI_Size.h >> 4); PUTCHR('M');
+		  lsra
+		  rorb
+		  lsra
+		  rorb
+		  lsra
+		  rorb
+		  lsra
+		  rorb
+		  pshs	d
+		  lbsr	PutWS
+		  leas	2,s
+		  lda	#'M'
+		  lbsr	PUTCHR	
 * 				}
 * 				else {
-	lbra	FDIR_9
+		  lbra	FDIR_11
 FDIR_8
-* 					reg = ((fileList.FI_Size.h & 0xf) << 8) | (fileList.FI_Size.l >> 8);
-	ldd	-18,u
-	andb	#$f
-	tfr b,a
-	ldb	-16,u	
-* 					reg = reg >> 2;
-	lsra
-	rorb
-	lsra
-	rorb	
-* 					LBDCC(i);  PUTCHR(' '); PUTCHR('K');					
-	pshs	u
-	lbsr 	LBDCC			; CONVERT ACCD TO DECIMAL AND PRINT ON SCREEN	
-	puls	u
-	lda #SPACE
-	lbsr	PUTCHR         	; SEND TO CONSOLE OUT (SCREEN)
-	lda	#'K'
-	lbsr	PUTCHR	
+* 				if((fileList.FI_Size.h == 0) && (fileList.FI_Size.l < 1000)) {  //less than 1K
+		  ldd	-18,u
+		  bne	FDIR_10
+		  ldd	-16,u
+		  cmpd	#1000
+		  bhs 	FDIR_10
+* 					PutWhitespace(fileList.FI_Size.l);
+		  pshs	d
+		  lbsr	PutWS
+		  leas	2,s
+		  lda	#' '
+		  lbsr	PUTCHR
+* 				}
+* 				else {
+		  lbra	FDIR_11
+FDIR_10
+* 					i = ((fileList.FI_Size.h & 0xf) << 8) | (fileList.FI_Size.l >> 8);
+		  ldd	-18,u
+		  andb	#$f
+		  tfr 	b,a
+		  ldb	-16,u	
+* 					PutWhitespace(i >> 2); PUTCHR('K');					
+		  lsra
+		  rorb
+		  lsra
+		  rorb	
+		  pshs	d
+		  lbsr	PutWS
+		  leas	2,s
+		  lda	#'K'
+		  lbsr	PUTCHR
 * 				}
 * 			}
-FDIR_9
-* 			else {
-	lbra	FDIR_10
-FDIR_7
-* 				LBDCC(fileList.FI_Size.l); PUTCHR(' ');
-	ldd	-16,u
-	pshs	u
-	lbsr 	LBDCC			; CONVERT ACCD TO DECIMAL AND PRINT ON SCREEN	
-	puls	u
-	lda #SPACE
-	lbsr	PUTCHR         	; SEND TO CONSOLE OUT (SCREEN)
-* 			}
-* 			L85B4("byte(s)");
-FDIR_10
-	leax	FDIR_11_,pc
-	bra	FDIR_11
-FDIR_11_
-	fcb	$62, $79, $74, $65, $28, $73, $29, $0
-FDIR_11
-	pshs	x
-	lbsr	L85B4
-	leas	2,s
+* 			PUTCHR('B');
+FDIR_11	  lda 	#'B'
+		  lbsr	PUTCHR         	; SEND TO CONSOLE OUT (SCREEN)
+		  lda 	#' '
+		  lbsr	PUTCHR         	; SEND TO CONSOLE OUT (SCREEN)
+		  lda  	#'d'
+		  lbsr  LA964			; print the date
 * 		}
 * 	}
 FDIR_6
 * }
-	lbra	FDIR_3
+		  lbra	FDIR_3
 FDIR_2
-	leas	,u			; free allocated bytes
-	puls	u,x,y,pc
+		  leas	,u			; free allocated bytes
+		  puls	u,x,y,pc
+
+* PutWhitespace(n) unsigned int n; {
+* 	if (n < 100) PUTCHR(' ');
+PutWS
+		  ldd	2,s
+		  cmpd	#100
+		  bhs	PutWS2
+		  lda	#' '
+		  lbsr	PUTCHR	
+* 	if (n < 10) PUTCHR(' ');
+PutWS2	  ldd	2,s
+		  cmpb	#10
+		  bhs	PutWS3
+		  lda	#' '
+		  lbsr	PUTCHR	
+* 	LBDCC(n);  
+PutWS3	  ldd	2,s
+		  pshs	u	
+		  lbsr	LBDCC
+		  puls	u	
+* }
+		  rts
 
 DSK_FDEL 
 		  pshs u,x,y
