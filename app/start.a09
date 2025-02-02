@@ -11,14 +11,9 @@
 					org     $2000
 
 ;-------------------- program start ----------------------------					
-START				ldx		#VERSION							; version at run begin					
-					pshs	x
-					lbsr	PUTSTR 					
-					leas	2,s
-
-					ldy		#_progEnd							; the current program global variables allocation					
+START				ldy		#_progEnd							; the current program global variables allocation					
 					lbsr	main								; C environement recussive call					
 					rts
 					
-VERSION     		db      13,"demo 0.1, ",0					; version
+
 		

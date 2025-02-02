@@ -23,6 +23,7 @@
 * 
 * #define TileMemSize 	32
 * #define RAMcontCnt 		10
+* #define RAMtileoffset   0xE0
 * 
 * // APL PS2 keyboard
 * #define UPARROW			0x5e
@@ -450,7 +451,7 @@ _11
 _12
 * 	}
 _10
-* 	sendContainerData(tileIndex, RAM_Container_tmp);
+* 	sendContainerData(tileIndex + RAMtileoffset -'0', RAM_Container_tmp);  //tmp hack
 _5
 	leax	-34,u
 	ldb	,x
@@ -462,6 +463,8 @@ _3
 	pshs	x
 	ldb	7,u
 	sex
+	addd	#$e0
+	subd	#$30
 	pshs	d
 	lbsr	sendCont
 	leas	4,s
@@ -485,10 +488,10 @@ _13_
 _13
 	tfr	x,d
 	std	-2,u
-* 	sendContainerData(iSOUND, step_sound);	
+* 	sendContainerData(iSOUND + RAMtileoffset - '0', step_sound);	//tmp hack
 	ldd	-2,u
 	pshs	d
-	ldd	#$5
+	ldd	#$b5
 	pshs	d
 	lbsr	sendCont
 	leas	4,s
@@ -518,7 +521,7 @@ updateMa
 	clra
 	stb	0,x
 * 	
-* 	setpointXY(x, y); setTile(tileIndex | 0x80); // ram tile only
+* 	setpointXY(x, y); setTile(tileIndex + RAMtileoffset);
 	ldb	9,u
 	clra
 	pshs	d
@@ -529,8 +532,7 @@ updateMa
 	leas	4,s
 	ldb	11,u
 	clra
-	ora	#$0
-	orb	#$80
+	addd	#$e0
 	pshs	d
 	lbsr	setTile
 	leas	2,s
@@ -594,7 +596,7 @@ _15
 	subd	#$0
 	lbne	_16
 	lbra	_14
-* 		if (c >= 'A') c -= '@';	// re-mapping
+* 		if (c >= 'A') c -= '@';	// re-mapping ASCII to PETSCII
 _16
 	ldb	-2,u
 	clra

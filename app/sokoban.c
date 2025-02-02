@@ -1,8 +1,8 @@
 /***************************************************************************************************/
 /*                                                                                                 */
-/* file:           main.c			                                                               */
+/* file:          main.c			                                                               */
 /*                                                                                                 */
-/* source:        2021, written by Adrian Kundert (adrian.kundert@gmail.com)                       */
+/* source:        2021-2025, written by Adrian Kundert (adrian.kundert@gmail.com)                  */
 /*                                                                                                 */
 /* description:   Sokoban game (C application for micro-c compiler)                                */
 /*                                                                                                 */
@@ -22,6 +22,7 @@
 
 #define TileMemSize 	32
 #define RAMcontCnt 		10
+#define RAMtileoffset   0xE0
 
 // APL PS2 keyboard
 #define UPARROW			0x5e
@@ -234,7 +235,7 @@ updateRAMTile(heading, tileIndex) unsigned char heading; unsigned char tileIndex
 				RAM_Container_tmp[n] = value;
 		}			
 	}
-	sendContainerData(tileIndex, RAM_Container_tmp);
+	sendContainerData(tileIndex + RAMtileoffset -'0', RAM_Container_tmp);  //tmp hack
 }
 
 sendstepSound() {
@@ -242,15 +243,15 @@ sendstepSound() {
 	// re-use the standing data container for the sound
 	unsigned char* step_sound;
 	step_sound = {1, 200, 0};
-	sendContainerData(iSOUND, step_sound);	
+	sendContainerData(iSOUND + RAMtileoffset - '0', step_sound);	//tmp hack
 }
 
 updateMap(pMap, x, y, tileIndex) unsigned char* pMap; unsigned char x; unsigned char y; unsigned char tileIndex;
 {
 	
-	pMap[y*SCREEN_COL + x] = tileIndex;
+	pMap[y*SCREEN_COL + x] = tileIndex;						// internal map
 	
-	setpointXY(x, y); setTile(tileIndex | 0x80); // ram tile only
+	setpointXY(x, y); setTile(tileIndex + RAMtileoffset);  // displayed map
 }
 
 getMapTileIndex(pMap, x, y) unsigned char* pMap; unsigned char x; unsigned char y;
@@ -266,7 +267,7 @@ sendString(x, y, str) unsigned char x; unsigned char y; char* str;
 	while(1) {
 		c = str[n];
 		if (c == 0) break;
-		if (c >= 'A') c -= '@';	// re-mapping
+		if (c >= 'A') c -= '@';	// re-mapping ASCII to PETSCII
 		setTile(c);
 		n++;
 	}
@@ -365,7 +366,7 @@ main() {
 		updateRAMTile(heading, x);
 	}
 
-	// get the the ROM map
+	// init the screen with the ROM map
 	for (y=0; y<SCREEN_ROW; y++) {
 		for (x=0; x<SCREEN_COL; x++) {
 			i = y*SCREEN_COL + x;
